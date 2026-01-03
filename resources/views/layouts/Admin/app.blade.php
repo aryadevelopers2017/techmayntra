@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
     <!-- Styles -->
     <link href="{{ asset('asset/css/lib/data-table/buttons.bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('asset/css/lib/calendar2/pignose.calendar.min.css') }}" rel="stylesheet" type="text/css" />    
+    <link href="{{ asset('asset/css/lib/calendar2/pignose.calendar.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- <link href="{{ asset('asset/css/lib/chartist/chartist.min.css') }}" rel="stylesheet" type="text/css"> -->
     <!-- <link href="{{ asset('asset/css/lib/font-awesome.min.css') }}" rel="stylesheet" type="text/css" /> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -51,7 +51,7 @@
     <style>
         .form-inline
         {
-            display: block!important;   
+            display: block!important;
         }
 
         .dataTables_length
@@ -60,9 +60,9 @@
         }
         .pace-done
         {
-            padding-right: 0px !important; 
+            padding-right: 0px !important;
         }
-        
+
         /*.paginate_button
         {
             margin-right: 10px !important;
@@ -103,7 +103,7 @@
                         <!-- <li>
                             <a href="{{ url('/client_list') }}"><i class="ti-user"></i>Client Master</a>
                         </li> -->
-                        
+
                         <li>
                             <a href="{{ url('/item') }}"><i class="ti-layers"></i>Item Master</a>
                         </li>
@@ -116,6 +116,26 @@
                         <li>
                             <a href="{{ url('/invoice_list/0') }}"><i class="ti-comment-alt"></i>Invoice</a>
                         </li>
+
+                          <li>
+                            <a class="sidebar-sub-toggle">
+                                <i class="ti-briefcase"></i> Service Master
+                                <span class="sidebar-collapse-icon ti-angle-down"></span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="{{ url('/service_category_list') }}">
+                                        <i class="ti-notepad"></i> Service Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/service_list') }}">
+                                        <i class="ti-settings"></i> Services
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                         @php
                             $sub_admin=Auth::user()->sub_admin;
                             if($sub_admin==0)
@@ -136,6 +156,10 @@
                         <li>
                             <a href="{{ url('/vendor_list') }}"><i class="ti-comment-alt"></i>Vendor</a>
                         </li>
+
+
+
+
                     </ul>
                 </div>
             </div>
@@ -196,7 +220,7 @@
             </div>
         </div>
         @yield('content')
-        @include('layouts.Admin.footer') 
+        @include('layouts.Admin.footer')
     </div>
 </body>
 </html>

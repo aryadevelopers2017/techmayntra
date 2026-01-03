@@ -91,6 +91,26 @@ Route::post('/update_purchase_order', [App\Http\Controllers\PurchaseOrderControl
 Route::get('/purchase_order_generate_invoice/{id}', [App\Http\Controllers\PurchaseOrderController::class, 'purchase_order_generate_invoice']);
 Route::get('/purchase_order_project_list/{id}', [App\Http\Controllers\PurchaseOrderController::class, 'purchase_order_project_list']);
 
+
+
+Route::get('/service_category_list', [App\Http\Controllers\ServiceCategoryController::class, 'index']);
+Route::get('/service_category_add', [App\Http\Controllers\ServiceCategoryController::class, 'service_category_add']);
+Route::post('/add_service_category', [App\Http\Controllers\ServiceCategoryController::class, 'add_service_category']);
+Route::get('/service_category_edit/{id}', [App\Http\Controllers\ServiceCategoryController::class, 'service_category_edit']);
+Route::post('/update_service_category', [App\Http\Controllers\ServiceCategoryController::class, 'update_service_category']);
+Route::get('/service_category_delete/{id}', [App\Http\Controllers\ServiceCategoryController::class, 'service_category_delete']);
+
+
+Route::get('/service_list', [App\Http\Controllers\ServiceController::class, 'index']);
+Route::get('/service_add', [App\Http\Controllers\ServiceController::class, 'service_add']);
+Route::post('/add_service', [App\Http\Controllers\ServiceController::class, 'add_service']);
+Route::get('/service_edit/{id}', [App\Http\Controllers\ServiceController::class, 'service_edit']);
+Route::post('/update_service', [App\Http\Controllers\ServiceController::class, 'update_service']);
+Route::get('/service_by_category/{id}', [App\Http\Controllers\ServiceController::class, 'service_by_category']);
+Route::get('/service_delete/{id}', [App\Http\Controllers\ServiceController::class, 'service_delete']);
+
+
+
 Route::get('/vendor_list', [App\Http\Controllers\VendorController::class, 'index']);
 Route::get('/vendor_add', [App\Http\Controllers\VendorController::class, 'vendor_add']);
 Route::post('/add_vendor', [App\Http\Controllers\VendorController::class, 'add_vendor']);
