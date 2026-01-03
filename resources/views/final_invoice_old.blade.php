@@ -1,0 +1,321 @@
+<style>
+    .modal-backdrop
+    {
+        background-color: rgba(0, 0, 0, 0.4) !important;;
+        -webkit-transition: 0.5s;
+        overflow: auto;
+        transition: all 0.3s linear;
+    }
+    body
+    {
+        margin: 10px !important;
+    }
+    .loader
+    {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+    h2
+    {
+        padding-top: 5px;
+    }
+    
+    table { page-break-inside:auto }
+    tr    { page-break-inside:auto; page-break-after:auto }
+    thead { display:table-header-group }
+    tfoot { display:table-footer-group }
+    table, th, td
+    {
+        border: 1px solid black;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin
+    {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin
+    {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+@extends('layouts.Admin.invoice_app')
+
+@section('content')
+    <div id="app">
+        <div class="row">
+            <div class="col-md-11" style="text-align: right;">
+                <button id="pdfdownload" class="btn btn-primary">Generate PDF</button>
+            </div>
+        </div>
+        @php
+            $currency_data=$data['currency_data'];
+        @endphp
+        <div class="unix-invoice" id="unix-invoice">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="invoice" class="effect2 m-t-5" style="border: 1px solid #000000;">
+                            <div id="invoice-top">
+                                <div class="invoice-logo">
+                                    <img  id="invoice-logo" src="{{ asset('asset/images/'.$data['company_data']->company_logo) }}" height="50px" alt=""/>
+                                </div>
+                                <!--End Info-->
+                                <div class="title">
+                                <h5>Invoice No : {{ $data['invoice_no'] }}</h5>
+                                    <p>Date : {{ $data['entrydate'] }}
+                                    </p>
+                                </div>
+                                <!--End Title-->
+                            </div>
+                            <!--End InvoiceTop-->
+
+                            <div class="row">
+                                <div class="col-md-6" style="text-align: left;">
+                                    <h2 style="font-size: 14px;"><strong>{{ strtoupper($data['company_data']->company_name) }}</strong></h2>
+                                    @php echo $data['company_address']; @endphp 
+                                    <p>{{ $data['company_city'].','. $data['company_state'] }}</p>
+                                    <p>Email-ID : {{ $data['company_email'] }}</p>
+                                    <p>Mobile : {{ $data['company_mobile'] }}</p>
+                                    <p><strong>GST No : {{ $data['company_data']->gst_no }}</strong><br>
+                                    <strong>PAN No : {{ $data['company_data']->pan_no }}</strong></p>
+                                </div>
+                                <div class="col-md-6" style="text-align: right;">
+                                    <h2 style="font-size: 14px;"><strong>Buyer (Bill to)</strong> </h2>
+                                    <h2 style="font-size: 14px;"><strong>{{ $data['customer_company_name'] }}</strong></h2>
+                                    <p>{{ strip_tags($data['address']) }}<br> {{ $data['city'] }}, {{ $data['state'] }}
+                                    <br><strong>GST No :{{ $data['gst_no'] }}</strong></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <h4>Tax Invoice</h4>
+                                </div>
+                            </div>
+                            <!--End Invoice Mid-->
+                            <div id="invoice-bot">
+                                <div id="invoice-table">
+                                    <div class="table-responsive">
+                                        <table class="table bordered" style="width: 99%!important;border: 1px solid #000000;">
+                                            <tr class="tabletitle1">
+                                                <td class="Hours th">
+                                                    <h2>SR No.</h2>
+                                                </td>
+                                                <td class="table-item th" style="text-align: center;">
+                                                    <h2>Description of Services</h2>
+                                                </td>
+                                                <td class="Rate th">
+                                                    <h2>Rate</h2>
+                                                </td>
+                                                <td class="Hour th">
+                                                    <h2>Qty</h2>
+                                                </td>
+                                                <td class="subtotal th">
+                                                    <h2 style="margin-right: 10px;">Amount</h2>
+                                                </td>
+                                            </tr>
+                                            @php
+                                                $i=1;
+                                            @endphp
+                                            @foreach($data['item_data'] as $item )
+                                                <tr class="service1">
+                                                    <td class="tableitem Hours">
+                                                        {{ $i++ }}
+                                                    </td>
+                                                    <td class="tableitem" style="text-align: left;">
+                                                        <label class="m-t-3" style="font-weight: 500;margin-bottom: 0px!important;"><h6>{{ $item->item_name }}</h6></label>
+                                                        <!-- <div style="margin-left: 25px;">
+                                                            <p class="text-justify">
+                                                                @php
+                                                                    echo $item->description;
+                                                                @endphp
+                                                            </p>
+                                                        </div> -->
+                                                    </td>
+                                                    <td class="tableitem">
+                                                        <p class="itemtext">{{ $currency_data->symbol }} @php echo ROUND( $item->net_rate *$data['currency_amount'],2); @endphp </p>
+                                                    </td>
+                                                    <td class="tableitem">
+                                                        <p class="itemtext">{{ $item->qty }} {{ $item->qty_name }}</p>
+                                                    </td>
+                                                    <td class="tableitem">
+                                                        <p class="itemtext" style="margin-right: 10px;">{{ $currency_data->symbol }} @php echo ROUND($item->net_price*$data['currency_amount'],2); @endphp</p>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            <tr class="tabletitle" style="border: 1px solid;">
+                                                <td colspan="2" class="tableitem"></td>
+                                                <td class="tableitem">
+                                                    <h2>Sub Total</h2>
+                                                </td>
+                                                <td class="tableitem">
+                                                    <p class="itemtext"></p>
+                                                </td>
+                                                <td class="tableitem"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }}  @php  echo ROUND($data['taxable_amount']*$data['currency_amount'],2) @endphp</h6></td>
+                                            </tr>
+                                            @if($data['gst_per']>0)
+                                                @if($data['igst']==1)
+                                                    <tr class="service1">
+                                                        <td class="tableitem"></td>
+                                                        <td class="tableitem"></td>
+                                                        <td class="tableitem">
+                                                            <h2>IGST {{ $data['gst_per'] }}(%)</h2>
+                                                        </td>
+                                                        <td class="tableitem">
+                                                            <p class="itemtext"></p>
+                                                        </td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }} {{ $data['gst_amount']}}</h6></td>
+                                                    </tr>
+                                                @else
+                                                    <tr class="service1">
+                                                        <td colspan="2" class="tableitem"></td>
+                                                        <td class="tableitem">
+                                                            <h2>CGST {{ $data['gst_per']/2 }}(%)</h2>
+                                                        </td>
+                                                        <td class="tableitem">
+                                                            <p class="itemtext"></p>
+                                                        </td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }} {{ $data['gst_amount']/2}}</h6></td>
+                                                    </tr>
+                                                    <tr class="service1">
+                                                        <td colspan="2" class="tableitem"></td>
+                                                        <td class="tableitem">
+                                                            <h2>SGST {{ $data['gst_per']/2 }}(%)</h2>
+                                                        </td>
+                                                        <td class="tableitem">
+                                                            <p class="itemtext"></p>
+                                                        </td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }} {{ $data['gst_amount']/2}}</h6></td>
+                                                    </tr>
+                                                @endif
+                                            @endif
+                                            <tr class="tabletitle" style="border: 1px solid;">
+                                                <td colspan="2" class="tableitem"></td>
+                                                <td class="tableitem">
+                                                    <h2>Total Amount</h2>
+                                                </td>
+                                                <td class="tableitem">
+                                                    <p class="itemtext"></p>
+                                                </td>
+                                                <td class="tableitem"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }} @php echo ROUND($data['total_amount']*$data['currency_amount'],2) @endphp</h6></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tableitem" style="text-align: left;" colspan="5"><b>Amount In words :  {{ ucwords($data['amount_word']) }}</b></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--End Table-->
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div id="legalcopy">
+                                            <p class="legal"><strong><b>Payment Details are as mentioned below :</b></strong></p>
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    @php 
+                                                        if($data['bank_details']!='')
+                                                        {
+                                                            echo $data['bank_details'];
+                                                        }
+                                                        else
+                                                        {
+                                                            echo $data['company_data']->bank_details;   
+                                                        }
+                                                    @endphp
+                                                </div>
+                                                <!-- <div class="col-md-6">
+                                                    <p style="text-align: right;"><b>For,  {{ $data['company_data']->company_name }}</b></p>
+                                                    <p style="text-align: right;"><b>Authorised Signatory <b></p>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mt-5">
+                                        <div class="legalcopy" style="text-align: right;">
+                                            <p style="font-family: cursive; font-style: oblique; font-stretch: ultra-condensed; font-size: 22px;margin-right: 25px;"><i>Nidhi</i></p>
+                                            <p style="text-align: right;">Authorised Signatory </p>
+                                            <br>
+                                            <p style="text-align: right;"><b>({{ $data['company_data']->company_name }})</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-12" style="text-align: right;">
+                                        <p style="font-family: cursive; font-style: oblique; font-stretch: ultra-condensed; font-size: 22px;margin-right: 25px;"><i>Nidhi</i></p>
+                                        <p style="text-align: right;">Authorised Signatory</p>
+                                        <br>
+                                        <p style="text-align: right;"><b> ({{ $data['company_data']->company_name }})</b> </p>
+                                    </div>
+                                </div> -->
+                                <div class="legalcopy">
+                                    <p><b>Declaration</b></p>
+                                    <p style="margin-left: 10px;font-weight: 400;">We declare that this invoice shows the actual price of the goods/services described and that all particulars are true and correct.</p>
+                                    <!--End Info-->
+                                    <!--End Title-->
+                                </div>
+                            </div>
+                            <!--End InvoiceBot-->
+                        </div>
+                        <div class="pt-1" id="legalcopy" style="font-size: 14px;">
+                            <div class="text-center" style="margin-left: 25px;font-weight:400;">
+                                <p>Option 1: Online Transfer. <br> Option 2: Cheque on the name of {{ $data['company_data']->company_name }}, JURISDICTION SUBJECT TO AHMEDABAD</p>
+                                <p>This is a Computer Generated Invoice</p>
+                            </div>
+                        </div>
+                        <!--End Invoice-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="myModal" class="Modal is-hidden is-visuallyHidden"  tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog">
+            <div class="modal-dialog" style="max-width: 400px !important;">
+                <div class="modal-content">
+                    <div class="modal-body" align="center">
+                        <div class="loader" id="loader">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        var invoice_no= "{{ $data['invoice_no'] }}";
+        
+        window.onload = function ()
+        {
+            $("#pdfdownload").click(function()
+            {
+                $("#myModal").show(0).delay(5500).hide(0);
+                $("#pdfdownload").text('');
+                printpdf(); 
+                $("#pdfdownload").text('Generate PDF');
+            });   
+        }
+
+        function printpdf()
+        {
+            var element = document.getElementById("unix-invoice");
+
+            var opt = {
+                margin:       [30, 0, 30, 0],
+                pagebreak: { mode: ['avoid-all', 'css', 'A4'], after:'.break-page' },
+                filename:     invoice_no+'.pdf',
+                image:        { type: 'png', quality: 1 },
+                html2canvas:  { dpi: 192, scale: 2, letterRendering: true },
+                jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().from(element).set(opt).save();
+        }
+    </script>
+@endsection

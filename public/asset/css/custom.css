@@ -1,0 +1,16 @@
+.select2-container .select2-selection--single {
+  height: 42px !important; 
+  border-radius: 0px !important;
+  box-shadow: none;
+  border-color: #e7e7e7 !important;
+  font-family: 'Roboto', sans-serif;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow
+{
+	top:7px !important;
+}
+.select2-container .select2-selection--single .select2-selection__rendered
+{
+	padding-top:7px;
+}
+ 
