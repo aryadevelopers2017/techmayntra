@@ -26,17 +26,29 @@ Route::get('/clear-cache', [App\Http\Controllers\CacheClearController::class, 'c
 Route::get('/customer', [App\Http\Controllers\CustomerController::class, 'index']);
 Route::get('/customer_add', [App\Http\Controllers\CustomerController::class, 'customer_add']);
 Route::post('/customer_add_checkemail', [App\Http\Controllers\CustomerController::class, 'customer_checkemail']);
+Route::post('/user_add_checkemail', [App\Http\Controllers\userController::class, 'user_checkemail']);
+
+
+
 Route::get('/customer_info/{id}', [App\Http\Controllers\CustomerController::class, 'customer_info']);
 Route::get('/delete_customer/{id}', [App\Http\Controllers\CustomerController::class, 'delete_customer']);
 
 Route::post('/add_customer', [App\Http\Controllers\CustomerController::class, 'add_customer']);
 
-Route::get('/item', [App\Http\Controllers\ItemController::class, 'index']);
-Route::get('/item_master_add', [App\Http\Controllers\ItemController::class,'item_master_add']);
+Route::get('/service', [App\Http\Controllers\ItemController::class, 'index']);
+Route::get('/service_master_add', [App\Http\Controllers\ItemController::class,'item_master_add']);
 Route::post('/add_item_master', [App\Http\Controllers\ItemController::class,'add_item_master']);
-Route::get('/item_master_edit/{id}', [App\Http\Controllers\ItemController::class,'item_master_edit']);
+Route::get('/service_master_edit/{id}', [App\Http\Controllers\ItemController::class,'item_master_edit']);
 Route::post('/edit_item_master', [App\Http\Controllers\ItemController::class,'edit_item_master']);
 Route::get('/item_cancel/{id}', [App\Http\Controllers\ItemController::class,'item_cancel']);
+
+Route::get('/get-subcategories', [App\Http\Controllers\ItemController::class,'service_subcategories']);
+
+// Route::get('/get-subcategories', function (Request $request) {
+//
+// });
+
+
 
 Route::get('/quotation/{id}', [App\Http\Controllers\QuotationController::class, 'index']);
 Route::get('/quotation_add', [App\Http\Controllers\QuotationController::class, 'get_customer_item_list']);

@@ -71,97 +71,115 @@
     </div>
 </div>
 <script type="text/javascript">
-    $("#finalbtn").click(function()
-    {
-        var name=$("#name").val();
-        var email=$("#email").val();
-        var password=$("#password").val();
-        var confirm_password=$("#confirm_password").val();
-        var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        
-        $("#name").parent().removeClass("has-error");
+let emailValid = false; // flag to track if email is available
+
+// Submit button click
+$("#finalbtn").click(function() {
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var password = $("#password").val();
+    var confirm_password = $("#confirm_password").val();
+
+    $("#name").parent().removeClass("has-error");
+    $("#email").parent().removeClass("has-error");
+
+    // Basic validation
+    if(name == '' || name == null) {
+        $("#errname").show(0).delay(3500).hide(0);
+        $("#name").parent().addClass("has-error");
+        $("#name").focus();
+        return false;
+    }
+    if(email == '' || email == null) {
+        $("#erremail").show(0).delay(3500).hide(0);
+        $("#email").parent().addClass("has-error");
+        $("#email").focus();
+        return false;
+    }
+    if(!emailValid) { // check email availability
+        $("#erralreadyemail").show(0).delay(3500).hide(0);
+        $("#email").parent().addClass("has-error");
+        $("#email").focus();
+        return false;
+    }
+    if(password == '' || password == null) {
+        $("#emppass").show(0).delay(3500).hide(0);
+        $("#password").parent().addClass("has-error");
+        $("#password").focus();
+        return false;
+    }
+    if(confirm_password == '' || confirm_password == null) {
+        $("#empconfirm_pass").show(0).delay(3500).hide(0);
+        $("#confirm_password").parent().addClass("has-error");
+        $("#confirm_password").focus();
+        return false;
+    }
+    if(password != confirm_password) {
+        $("#errconfirm_pass").show(0).delay(3500).hide(0);
+        $("#confirm_password").parent().addClass("has-error");
+        $("#confirm_password").focus();
+        return false;
+    }
+
+    // All good, submit form
+    $("#formsubmit").submit();
+});
+
+// Check email availability on focusout
+$("#email").focusout(function () {
+    var email = $("#email").val();
+
+
+    if(email == '' || email == null) {
+
+        return;
+    }
+
+    // disable button until AJAX finishes
+    $("#finalbtn").prop('disabled', true);
+
+
+    $.ajax({
+        type: "POST",
+        url: "{{ url('/user_add_checkemail') }}",
+        data: {'email': email, '_token': "{{ csrf_token() }}"},
+        success: function(result) {
+    result = result.trim(); // <-- remove extra whitespace
+
+
+    if(result !== 'success') {
+        emailValid = false; // email exists
+
+        $("#erralreadyemail").show(0).delay(3500).hide(0);
+        $("#email").parent().addClass("has-error");
+        $("#email").focus();
+    } else {
+        emailValid = true; // email available
+
+        $("#erralreadyemail").hide();
         $("#email").parent().removeClass("has-error");
-        $("#mobile").parent().removeClass("has-error");
-        
-        if(name=='' || name == null)
-        {
-            $("#errname").show(0).delay(3500).hide(0);
-            $("#name").parent().addClass("has-error");
-            $("#name").focus();
-            return false;
-        }
+    }
 
-        if(email=='' || email == null)
-        {
-            $("#erremail").show(0).delay(3500).hide(0);
+    // re-enable button
+    $("#finalbtn").prop('disabled', false);
+   
+},
+        error: function(xhr, status, error) {
+            console.error("[DEBUG] AJAX error:", status, error);
+            emailValid = false;
+            $("#erralreadyemail").show();
             $("#email").parent().addClass("has-error");
-            $("#email").focus();
-            return false;
+            $("#finalbtn").prop('disabled', false);
         }
-
-        if(password=='' || password == null)
-        {
-            $("#emppass").show(0).delay(3500).hide(0);
-            $("#password").parent().addClass("has-error");
-            $("#password").focus();
-            return false;
-        }
-
-        if(confirm_password=='' || confirm_password == null)
-        {
-            $("#empconfirm_pass").show(0).delay(3500).hide(0);
-            $("#confirm_password").parent().addClass("has-error");
-            $("#confirm_password").focus();
-            return false;
-        }
-
-        if(password!=confirm_password)
-        {
-            $("#errconfirm_pass").show(0).delay(3500).hide(0);
-            $("#confirm_password").parent().addClass("has-error");
-            $("#confirm_password").focus();
-            return false;   
-        }
-
-        $("#formsubmit").submit();
     });
-    
-    $("#email").focusout(function ()
-    {
-        var email=$("#email").val();
-        var name=$("#name").val();
+});
 
-        if(name=='' || name == null)
-        {
-            $("#errname").show(0).delay(3500).hide(0);
-            $("#name").parent().addClass("has-error");
-            $("#name").focus();
-            return false;
-        }
 
-        $("#finalbtn").prop('disabled',true);
-        $.ajax({
-            type: "POST",
-            url: "{{ url('/customer_add_checkemail') }}",
-            data:{'email':email, '_token': "{{ csrf_token() }}"},
-            success: function(result)
-            {
-                if(result!='success')
-                {
-                    $("#erralreadyemail").show(0).delay(3500).hide(0);
-                    $("#email").parent().addClass("has-error");
-                    $("#email").focus();
-                    return false;
-                }
-                $("#finalbtn").prop('disabled',false);
-            }
-        });
-    });
-
-    $(".number").on('keypress focusout', function(event)
-    {
-        this.value = this.value.replace(/[^0-9\.]/g,'');
-    });
+// Only allow numbers in certain inputs
+$(".number").on('keypress focusout', function(event) {
+    this.value = this.value.replace(/[^0-9\.]/g,'');
+});
 </script>
+
 
 @endsection

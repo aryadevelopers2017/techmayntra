@@ -8,7 +8,7 @@
                 <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Item Master</h1>
+                            <h1>Service Master</h1>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Item Master</li>
+                                <li class="breadcrumb-item active">Service Master</li>
                             </ol>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
-                        <a href="{{ url('/item_master_add') }}" class="btn btn-primary">Add New Item</a>
+                        <a href="{{ url('/service_master_add') }}" class="btn btn-primary">Add New Service</a>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                                             @foreach($item_list as $item)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                    <td style="text-align: left;"><a href="{{ url('/item_master_edit').'/'.$item->id }}">{{ $item->item_name }}</a></td>
+                                                    <td style="text-align: left;"><a href="{{ url('/service_master_edit').'/'.$item->id }}">{{ $item->item_name }}</a></td>
                                                     <td style="text-align: left;">@php echo strip_tags( $item->description); @endphp</td>
                                                     <td style="text-align: left;"><a href="{{ url('/item_cancel/').'/'.$item->id }}" class="btn btn-danger btn sweetalert sweet-success-cancel" title=""><i class="fa fa-close"></i></a></td>
                                                 </tr>

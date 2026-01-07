@@ -13,7 +13,16 @@ class item_master extends Model
     protected $table = 'item_master';
 
     protected $dates = ['deleted_at'];
-    protected $fillable = ['item_name', 'description'];
+   protected $fillable = [
+    'item_name',
+    'description',
+    'vendor_id',
+    'admin_cost',
+    'category_id',
+    'subcategory_id',
+    'status'
+];
+
 
     public static function item_list()
     {
@@ -26,18 +35,26 @@ class item_master extends Model
         $data=item_master::find($id);
         return $data;
     }
-    
+
     public static function add_item($request)
     {
-        $item_master =new item_master();
+        $item_master = new item_master();
 
-        $item_master->item_name=$request->item_name;
-        $item_master->description=$request->description;
-        $item_master->status=0;
+        $item_master->item_name = $request->item_name;
+        $item_master->description = $request->description;
+
+        $item_master->vendor_id = $request->vendor_id ?? null;
+        $item_master->admin_cost = $request->admin_cost ?? 0;
+
+        $item_master->category_id = $request->category_id ?? null;
+        $item_master->subcategory_id = $request->subcategory_id ?? null;
+
+        $item_master->status = 0;
         $item_master->save();
 
         return $item_master;
     }
+
 
     public static function cancel_item($id)
     {
@@ -46,19 +63,27 @@ class item_master extends Model
         $item_master->status=1;
 
         $item_master->update();
-        return $item_master;   
-    }
-
-    public static function update_item($request)
-    {
-        $item_master =item_master::find($request->id);
-
-        // $item_master->item_name=$request->item_name;
-        $item_master->description=$request->description;
-        $item_master->update();
-
         return $item_master;
     }
+
+   public static function update_item($request)
+{
+    $item_master = item_master::find($request->id);
+
+    $item_master->item_name = $request->item_name;
+    $item_master->description = $request->description;
+
+    $item_master->vendor_id = $request->vendor_id;
+    $item_master->admin_cost = $request->admin_cost;
+
+    $item_master->category_id = $request->category_id;
+    $item_master->subcategory_id = $request->subcategory_id;
+
+    $item_master->update();
+
+    return $item_master;
+}
+
 
     public static function quotation_item_check($id, $item_id)
     {
@@ -68,7 +93,7 @@ class item_master extends Model
                 $join->on('item_master.id', '=', 'quotation_item.item_id')
                 ->whereIn('quotation_item.item_id', explode(',',$item_id))
                 ->where('quotation_item.quotation_id', '=', $id);
-                
+
             })
             ->get();
 
@@ -86,7 +111,7 @@ class item_master extends Model
 
         return $data;
     }
-    
+
     public static function proforma_invoice_item($id, $item_id)
     {
         $data=item_master::select('item_master.id', 'item_master.item_name', 'proforma_invoice_item.description', 'proforma_invoice_item.price', 'proforma_invoice_item.rate', 'proforma_invoice_item.net_price', 'proforma_invoice_item.net_rate', 'proforma_invoice_item.qty')
@@ -110,4 +135,20 @@ class item_master extends Model
 
         return $data;
     }
+
+    public function vendor()
+{
+    return $this->belongsTo(\App\Models\vendor_master::class, 'vendor_id');
+}
+
+public function category()
+{
+    return $this->belongsTo(\App\Models\ServiceCategory::class, 'category_id');
+}
+
+public function subcategory()
+{
+    return $this->belongsTo(\App\Models\Service::class, 'subcategory_id');
+}
+
 }

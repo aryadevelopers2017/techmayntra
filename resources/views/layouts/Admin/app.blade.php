@@ -105,7 +105,7 @@
                         </li> -->
 
                         <li>
-                            <a href="{{ url('/item') }}"><i class="ti-layers"></i>Item Master</a>
+                            <a href="{{ url('/service') }}"><i class="ti-layers"></i>Service</a>
                         </li>
                         <li>
                             <a href="{{ url('/quotation/0') }}"><i class="ti-comment-alt"></i>Quotation</a>
@@ -130,7 +130,7 @@
                                 </li>
                                 <li>
                                     <a href="{{ url('/service_list') }}">
-                                        <i class="ti-settings"></i> Services
+                                        <i class="ti-settings"></i> Services Type
                                     </a>
                                 </li>
                             </ul>

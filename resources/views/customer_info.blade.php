@@ -80,6 +80,24 @@
                                             </div>
                                         </div>
 
+                                          <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Country</label>
+                                            </div>
+                                            <div class="col-md-2"> : </div>
+                                            <div class="col-md-6">
+                                                <label>{{ $data->country }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>State</label>
+                                            </div>
+                                            <div class="col-md-2"> : </div>
+                                            <div class="col-md-6">
+                                                <label>{{ $data->state }}</label>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>City</label>
@@ -90,15 +108,99 @@
                                             </div>
                                         </div>
 
+
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <label>State</label>
+                                                <label>Departure Date</label>
                                             </div>
                                             <div class="col-md-2"> : </div>
                                             <div class="col-md-6">
-                                                <label>{{ $data->state }}</label>
+                                                <label>{{ $data->departure_date }}</label>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Return Date</label>
+                                            </div>
+                                            <div class="col-md-2"> : </div>
+                                            <div class="col-md-6">
+                                                <label>{{ $data->return_date }}</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Travel Country</label>
+                                            </div>
+                                            <div class="col-md-2"> : </div>
+                                            <div class="col-md-6">
+                                                <label>{{ $data->getTravelCountryName() }}</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Travel State</label>
+                                            </div>
+                                            <div class="col-md-2"> : </div>
+                                            <div class="col-md-6">
+                                                <label>{{ $data->getTravelStateName() }}</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Travel City</label>
+                                            </div>
+                                            <div class="col-md-2"> : </div>
+                                            <div class="col-md-6">
+                                                <label>{{ $data->getTravelCityName() }}</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Assigned Staff</label>
+                                            </div>
+                                            <div class="col-md-2"> : </div>
+                                            <div class="col-md-6">
+                                                <label>{{ $data->getAssignedStaffName() }}</label>
+                                            </div>
+                                        </div>
+
+                                       <div class="row mb-2">
+                                            <div class="col-md-4">
+                                                <label>Documents</label>
+                                            </div>
+                                            <div class="col-md-2"> : </div>
+                                            <div class="col-md-6">
+                                                @php
+                                                    $documents = $data->getDocumentsGrouped();
+                                                @endphp
+
+                                                @if($documents->count())
+                                                    @foreach($documents as $type => $files)
+                                                        <div class="mb-2">
+                                                            <strong>{{ ucfirst(str_replace('_',' ', $type)) }}:</strong>
+                                                            <ul class="mb-0">
+                                                                @foreach($files as $file)
+                                                                    <li>
+                                                                        <a href="{{ asset('storage/'.$file->file_path) }}" target="_blank">
+                                                                            View Document
+                                                                        </a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    -
+                                                @endif
+                                            </div>
+                                        </div>
+
+
 
                                         <div class="row">
                                             <div class="col-md-4">

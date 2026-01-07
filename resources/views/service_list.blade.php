@@ -8,7 +8,7 @@
                 <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Services</h1>
+                            <h1>Services Type</h1>
                         </div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                                     <a href="{{ url('/home') }}">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    Services
+                                    Services Type
                                 </li>
                             </ol>
                         </div>

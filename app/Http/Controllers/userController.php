@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
+
 
 class userController extends Controller
 {
@@ -16,7 +18,7 @@ class userController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public static function index()
     {
         $data=userServiceprovider::user_list();
@@ -68,4 +70,35 @@ class userController extends Controller
 
         return redirect('/changepassword')->with($status, $message);
     }
+
+
+
+    public static function user_checkemail(Request $request)
+    {
+
+
+
+        if (!$request->filled('email')) {
+
+
+            return 'fail';
+        }
+
+
+        $data = userServiceprovider::checkemail($request);
+
+
+
+        if ($data['data'] === true) {
+          
+
+            return 'fail';
+        }
+
+
+        return 'success';
+    }
+
+
+
 }

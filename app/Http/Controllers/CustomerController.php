@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Providers\CustomerServiceProvider;
 use App\Models\Customer;
+use App\Models\User;
+
+
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -18,7 +21,7 @@ class CustomerController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public static function index()
     {
     	$data=CustomerServiceProvider::customer_list();
@@ -29,7 +32,14 @@ class CustomerController extends Controller
     public static function customer_add()
     {
         $data=[];
+           $data['country_data'] = Customer::getCountry();
         $data['state_data']=Customer::getState();
+
+         $data['staff_data'] = User::all(); // or any query to get active staff
+
+          // Document types from service provider
+    $data['document_types'] = CustomerServiceProvider::getDocumentTypes();
+
     	return view('customer_add')->with('data', $data);
     }
 
@@ -45,6 +55,9 @@ class CustomerController extends Controller
 
     public static function add_customer(Request $request)
     {
+
+        // dd( $request->all());
+
         $customer=CustomerServiceProvider::add_customer($request);
 
         if($customer['status_code']==200)
@@ -56,21 +69,21 @@ class CustomerController extends Controller
             $status='fail';
         }
         $message=$customer['message'];
-        
+
         return redirect('/customer')->with($status, $message);
     }
 
     public static function customer_info($id)
     {
         $data=CustomerServiceProvider::get_customer_info($id);
-        
+
         return view('customer_info')->with('data', $data['data']);
     }
 
     public static function delete_customer($id)
     {
         $data=CustomerServiceProvider::delete_customer($id);
-        
+
         return redirect('/customer');
     }
 
@@ -81,11 +94,12 @@ class CustomerController extends Controller
         return response()->json(array('city'=> $data), 200);
     }
 	public static function getStateBycountryId(Request $request)
-    { 
+    {
         $data=CustomerServiceProvider::getStateBycountryId($request->country_id);
 
         return response()->json(array('state'=>  $data), 200);
     }
-	
-	
+
+
+
 }

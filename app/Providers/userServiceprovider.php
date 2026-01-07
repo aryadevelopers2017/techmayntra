@@ -30,7 +30,7 @@ class userServiceprovider extends ServiceProvider
     {
         //
     }
-    
+
     public static function user_list()
     {
         try
@@ -81,7 +81,7 @@ class userServiceprovider extends ServiceProvider
                 $status_code=402;
                 $message="password and confirm password are not same";
             }
-            elseif(!Hash::check($request->currentpassword, $user_data->password)) 
+            elseif(!Hash::check($request->currentpassword, $user_data->password))
             {
                 $status_code=402;
                 $message="Current Password is wrong";
@@ -101,4 +101,19 @@ class userServiceprovider extends ServiceProvider
             return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
         }
     }
+
+public static function checkemail($request)
+{
+    $exists = User::where(
+        'email',
+        trim(strtolower($request->email))
+    )->exists();
+
+    return [
+        'status_code' => 200,
+        'data' => $exists // BOOLEAN
+    ];
+}
+
+
 }
