@@ -37,6 +37,8 @@ Route::post('/add_customer', [App\Http\Controllers\CustomerController::class, 'a
 
 Route::get('/service', [App\Http\Controllers\ItemController::class, 'index']);
 Route::get('/service_master_add', [App\Http\Controllers\ItemController::class,'item_master_add']);
+Route::get('/item_master_add', [App\Http\Controllers\ItemController::class,'item_master_add']);
+
 Route::post('/add_item_master', [App\Http\Controllers\ItemController::class,'add_item_master']);
 Route::get('/service_master_edit/{id}', [App\Http\Controllers\ItemController::class,'item_master_edit']);
 Route::post('/edit_item_master', [App\Http\Controllers\ItemController::class,'edit_item_master']);
@@ -124,6 +126,10 @@ Route::get('/service_delete/{id}', [App\Http\Controllers\ServiceController::clas
 
 
 Route::get('/vendor_list', [App\Http\Controllers\VendorController::class, 'index']);
+
+Route::get('/vendor_info/{id}', [App\Http\Controllers\VendorController::class, 'vendor_info']);
+Route::get('/delete_vendor/{id}', [App\Http\Controllers\VendorController::class, 'vendor_delete']);
+
 Route::get('/vendor_add', [App\Http\Controllers\VendorController::class, 'vendor_add']);
 Route::post('/add_vendor', [App\Http\Controllers\VendorController::class, 'add_vendor']);
 
@@ -144,10 +150,24 @@ Route::post('/getStateBycountryId', [App\Http\Controllers\CustomerController::cl
 Route::get('/changepassword', [App\Http\Controllers\userController::class, 'changePassword']);
 Route::POST('/updatepass', [App\Http\Controllers\userController::class, 'updatePassword']);
 
+Route::get('staff-report/{id}', [App\Http\Controllers\userController::class, 'report'])
+    ->name('staff.report');
+
 
 Route::group(['middleware' => ['admin']], function ()
 {
-	Route::get('/user_list', [App\Http\Controllers\userController::class, 'index']);
-	Route::get('/user_add', [App\Http\Controllers\userController::class, 'user_add']);
+	Route::get('/staff_list', [App\Http\Controllers\userController::class, 'index']);
+	Route::get('/staff_add', [App\Http\Controllers\userController::class, 'user_add']);
 	Route::post('/add_user', [App\Http\Controllers\userController::class, 'add_user']);
+
+    Route::get('assign-customers/{id}', [App\Http\Controllers\userController::class, 'assignCustomers'])
+     ->name('assign.customers');
+
+    Route::put('customer-unassign/{id}', [App\Http\Controllers\userController::class, 'unassign'])
+    ->name('customer.unassign');
+
+    Route::post('customer-assign', [App\Http\Controllers\userController::class, 'assign'])
+    ->name('customer.assign');
+
+
 });

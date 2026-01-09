@@ -60,7 +60,8 @@
                                             @foreach($data as $item)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                    <td>{{$item->name}}</td>
+                                                  
+                                                    <td> <a href="{{ url('/vendor_info').'/'.$item->id }}"> {{$item->name}}</a></td>
                                                     <td>{{$item->company_name}}</td>
                                                     <td>{{$item->mobile}}</td>
                                                     <td>{{$item->email}}</td>

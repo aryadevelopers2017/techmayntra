@@ -76,12 +76,12 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
             $data=[];
             $invoice=invoice_master::add($request);
             $data['invoice_data']=$invoice;
-            
+
             proforma_invoice::update_paid_amount($invoice);
-            
+
             $invoice_item_data=invoice_item_master::add($invoice);
             $data['invoice_item_data']=$invoice_item_data;
-            
+
             return array('status_code' => 200, 'message' => 'Payment Successfully Save', 'data' => $data);
         }
         catch (\Exception $e)
@@ -236,7 +236,7 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $item=item_master::final_invoice_item($id, $item_id);
 
         $data['item_data']=$item;
-        
+
         // $company_data=company_module_master::module_data();
         // $data['company_data']=$company_data;
 
@@ -293,4 +293,58 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
             return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
         }
     }
+
+
+    public static function staff_invoice_list_data($userId, $month, $year)
+{
+    try {
+        $data = invoice_master::get_staff_invoice_list($userId, $month, $year);
+
+        return [
+            'status_code' => 200,
+            'message' => 'Get Record Successfully',
+            'data' => $data
+        ];
+    } catch (\Exception $e) {
+        Log::error([
+            'method' => __METHOD__,
+            'error' => [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'message' => $e->getMessage()
+            ],
+            'created_at' => date("Y-m-d H:i:s")
+        ]);
+
+        return [
+            'status_code' => 500,
+            'message' => trans('api.messages.general.error')
+        ];
+    }
+}
+
+
+public static function staff_invoice_totals($userId, $month, $year)
+{
+    try {
+        return [
+            'status_code' => 200,
+            'month_total' => invoice_master::get_staff_month_total($userId, $month, $year),
+            'year_total'  => invoice_master::get_staff_year_total($userId, $year),
+        ];
+    } catch (\Exception $e) {
+        Log::error([
+            'method' => __METHOD__,
+            'error' => $e->getMessage(),
+        ]);
+
+        return [
+            'status_code' => 500,
+            'month_total' => 0,
+            'year_total'  => 0,
+        ];
+    }
+}
+
+
 }

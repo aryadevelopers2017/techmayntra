@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">User</li>
+                                <li class="breadcrumb-item active">Staff</li>
                             </ol>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
-                        <a href="{{ url('/user_add') }}" class="btn btn-primary">Add New User</a>
+                        <a href="{{ url('/staff_add') }}" class="btn btn-primary">Add New Staff</a>
                     </div>
                 </div>
             </div>
@@ -46,6 +46,8 @@
                                                 <th>Sr No</th>
                                                 <th>Name</th>
                                                 <th class="text-left">Email-ID</th>
+                                                <th class="text-left">Assigned Customers</th>
+                                                <th class="text-left">Report</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -57,6 +59,18 @@
                                                     <td>{{ $i++ }}</td>
                                                     <td>{{$user->name}}</td>
                                                     <td class="text-left">{{$user->email}}</td>
+                                                    <td class="text-left">
+                                                        <a href="{{ url('assign-customers/'.$user->id) }}"
+                                                        class="btn btn-danger btn-sm">
+                                                            Assign Customers
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <a href="{{ url('staff-report/'.$user->id) }}"
+                                                        class="btn btn-success btn-sm">
+                                                            View Report
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

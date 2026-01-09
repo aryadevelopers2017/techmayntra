@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>TechMayntra Service PVT LTD</title>
+    <title>{{ isset($module_data[0]->company_name) ? $module_data[0]->company_name : ''}}</title>
 
     <!-- Scripts -->
     <!-- <script src="{{ asset('app.js') }}" defer></script> -->
@@ -142,7 +142,7 @@
                             {
                                 @endphp
                                 <li>
-                                    <a href="{{ url('/user_list/') }}"><i class="ti-comment-alt"></i>User</a>
+                                    <a href="{{ url('/staff_list/') }}"><i class="ti-comment-alt"></i>Staff</a>
                                 </li>
                                 @php
                             }
@@ -197,9 +197,9 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ url('/user_add') }}" onClick="redirecturl_fun('/user_add');" target="_blank">
+                                                    <a href="{{ url('/staff_add') }}" onClick="redirecturl_fun('/staff_add');" target="_blank">
                                                         <i class="ti-user"></i>
-                                                        Add Users
+                                                        Add Staff
                                                     </a>
                                                 </li>
                                                 <li>

@@ -57,13 +57,48 @@
                                                     <span id="erremobile" style="display:none;color: #ff0000;">Please Enter Mobile No</span>
                                                     <span id="errevalidmobile" style="display:none;color: #ff0000;">Enter Valid Mobile No</span>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label>Service</label>
+                                                    <select name="service_id" id="service_id" class="form-control select2">
+                                                        <option value="">Please Select Service</option>
+                                                        @foreach($data['services'] ?? [] as $service)
+                                                            <option value="{{ $service->id }}">{{ $service->item_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+
+
+                                                <div class="form-group">
+                                                    <label>Rate & Rate Option</label>
+                                                    <input
+                                                        type="text"
+                                                        name="rate_option"
+                                                        class="form-control"
+                                                        placeholder="e.g. Hourly / Per Day / Per Project"
+                                                    >
+                                                </div>
+
+
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Address</label>
                                                     <input type="text" id="address" name="address"  class="form-control" value="{{ isset($data->address) ? $data->address : '' }}"  placeholder="Address">
                                                 </div>
+
                                                 <div class="form-group">
+                                                <label>Country</label>
+                                                <select name="country" id="country" class="form-control select2" onchange="getStateByCountry();">
+                                                    <option value="" selected>Please Select Country</option>
+                                                    @foreach($data['country_data'] as $country)
+                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                </div>
+
+                                                <!-- <div class="form-group">
                                                     <label>State</label>
                                                     <select name="state" id="state" onChange="getcity();" class="form-control select2">
                                                         <option value="" selected>Please Select State</option>
@@ -82,8 +117,17 @@
                                                             <option value="{{ $state->id }}" {{ $selected }}>{{ $state->name }} </option>
                                                         @endforeach
                                                     </select>
-                                                </div>
-                                                <div class="form-group" style="margin-top:40px;">
+                                                </div> -->
+
+
+                                                 <div class="form-group">
+                                       <label>State</label>
+                                       <select name="state" id="state" class="form-control select2" onchange="getcity();">
+                                          <option value="">Please Select State</option>
+                                       </select>
+                                    </div>
+
+                                                <div class="form-group" >
                                                     <label>City</label>
                                                     <!-- <input type="text" id="city" name="city"  class="form-control" value="{{ isset($data->city) ? $data->city : '' }}"  placeholder="City"> -->
                                                     <select id="city" name="city" class="form-control select2">
@@ -106,13 +150,51 @@
                                                         @endif
                                                     </select>
                                                 </div>
-                                                
+
                                                 <div class="form-group">
                                                     <label>GST No</label>
                                                     <input type="text" id="gst_no" name="gst_no"  class="form-control" placeholder="GST No">
                                                 </div>
                                             </div>
                                         </div>
+
+
+                                        <hr>
+                                            <h4>Bank Details</h4>
+
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Bank Name</label>
+                                                        <input type="text" name="bank_name" class="form-control" placeholder="Bank Name">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Account Holder Name</label>
+                                                        <input type="text" name="account_holder_name" class="form-control" placeholder="Account Holder Name">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Account Number</label>
+                                                        <input type="text" name="account_number" class="form-control number" placeholder="Account Number">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>IFSC Code</label>
+                                                        <input type="text" name="ifsc_code" class="form-control" placeholder="IFSC Code">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Branch Name</label>
+                                                        <input type="text" name="branch_name" class="form-control" placeholder="Branch Name">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
                                         <button type="button" id="finalbtn" class="btn btn-primary">Submit</button>
                                     </form>
                                 </div>
@@ -125,6 +207,38 @@
     </div>
 </div>
 <script type="text/javascript">
+
+
+
+function getStateByCountry()
+{
+    var country_id = $("#country").val();
+    $("#state").html('');
+    $("#city").html('<option value="">Please Select City</option>');
+
+    $.ajax({
+        type: 'POST',
+        url: "{{ url('/getStateBycountryId') }}",
+        data: {
+            country_id: country_id,
+            "_token": "{{ csrf_token() }}"
+        },
+        success: function (data)
+        {
+            if (data.state.status_code == 200)
+            {
+                var option = '<option value="">Please Select State</option>';
+                $.each(data.state.data, function (index, value)
+                {
+                    option += '<option value="'+value.id+'">'+value.name+'</option>';
+                });
+                $("#state").html(option);
+            }
+        }
+    });
+}
+
+
     function getcity()
     {
         var state_id=$("#state").val();
@@ -158,12 +272,12 @@
         var email=$("#email").val();
         var mobile=$("#mobile").val();
         var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        
+
         $("#name").parent().removeClass("has-error");
         $("#company_name").parent().removeClass("has-error");
         $("#email").parent().removeClass("has-error");
         $("#mobile").parent().removeClass("has-error");
-        
+
         if(name=='' || name == null)
         {
             $("#errname").show(0).delay(3500).hide(0);
@@ -207,7 +321,7 @@
             $("#errevalidmobile").show(0).delay(3500).hide(0);
             $("#mobile").parent().addClass("has-error");
             $("#mobile").focus();
-            return false;   
+            return false;
         }
 
         $("#formsubmit").submit();

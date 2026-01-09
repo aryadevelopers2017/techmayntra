@@ -8,7 +8,7 @@
                 <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Add New User </h1>
+                            <h1>Add New Staff </h1>
                         </div>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">User</li>
+                                <li class="breadcrumb-item active">Staff</li>
                             </ol>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ $("#email").focusout(function () {
 
     // re-enable button
     $("#finalbtn").prop('disabled', false);
-   
+
 },
         error: function(xhr, status, error) {
             console.error("[DEBUG] AJAX error:", status, error);

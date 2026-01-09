@@ -55,6 +55,11 @@ class VendorServiceprovider extends ServiceProvider
             $city=Customer::getCityName($request->city);
             $request->city=$city[0]->name;
 
+            if($request->country!=''){
+                $country=Customer::getCountryName($request->country);
+                $request->country=$country[0]->name;
+            }
+
             $data=vendor_master::add_vendor($request);
 
             return array('status_code' => 200, 'message' => 'vendor successfully added', 'data' => $data);
@@ -65,4 +70,21 @@ class VendorServiceprovider extends ServiceProvider
             return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
         }
     }
+
+        public static function get_vendor_info($id)
+    {
+        try
+        {
+            $data=[];
+            $data=vendor_master::get_vendorById($id);
+          
+            return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
+        }
+        catch (\Exception $e)
+        {
+            Log::error(['method' => __METHOD__, 'error' => ['file' => $e->getFile(), 'line' => $e->getLine(), 'message' => $e->getMessage()], 'created_at' => date("Y-m-d H:i:s")]);
+            return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
+        }
+    }
+
 }

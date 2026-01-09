@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
     <!-- Styles -->
     <link href="{{ asset('asset/css/lib/data-table/buttons.bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('asset/css/lib/calendar2/pignose.calendar.min.css') }}" rel="stylesheet" type="text/css" />    
+    <link href="{{ asset('asset/css/lib/calendar2/pignose.calendar.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- <link href="{{ asset('asset/css/lib/chartist/chartist.min.css') }}" rel="stylesheet" type="text/css"> -->
     <!-- <link href="{{ asset('asset/css/lib/font-awesome.min.css') }}" rel="stylesheet" type="text/css" /> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -50,7 +50,7 @@
     <style>
         .form-inline
         {
-            display: block!important;   
+            display: block!important;
         }
 
         .dataTables_length
@@ -59,9 +59,9 @@
         }
         .pace-done
         {
-            padding-right: 0px !important; 
+            padding-right: 0px !important;
         }
-        
+
         /*.paginate_button
         {
             margin-right: 10px !important;
@@ -102,7 +102,7 @@
                         <!-- <li>
                             <a href="{{ url('/client_list') }}"><i class="ti-user"></i>Client Master</a>
                         </li> -->
-                        
+
                         <li>
                             <a href="{{ url('/item') }}"><i class="ti-layers"></i>Item Master</a>
                         </li>
@@ -121,7 +121,7 @@
                             {
                                 @endphp
                                 <li>
-                                    <a href="{{ url('/user_list/') }}"><i class="ti-comment-alt"></i>User</a>
+                                    <a href="{{ url('/staff_list/') }}"><i class="ti-comment-alt"></i>User</a>
                                 </li>
                                 @php
                             }
@@ -172,7 +172,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ url('/user_add') }}" onClick="redirecturl_fun('/user_add');" target="_blank">
+                                                    <a href="{{ url('/user_add') }}" onClick="redirecturl_fun('/staff_add');" target="_blank">
                                                         <i class="ti-user"></i>
                                                         Add Users
                                                     </a>
@@ -201,7 +201,7 @@
             </div>
         </div>
         @yield('content')
-        @include('layouts.Admin.footer') 
+        @include('layouts.Admin.footer')
     </div>
 </body>
 </html>

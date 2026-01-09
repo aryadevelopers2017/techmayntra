@@ -29,7 +29,7 @@ class invoice_master extends Model
         {
             $per=$per_data[0]->per;
         }
-        
+
     	$result=proforma_invoice::find($request->id);
         $gst_per=$result->gst_per;
     	$max_invoice_no=0;
@@ -52,12 +52,12 @@ class invoice_master extends Model
 
         $proforma_invoice_data=proforma_invoice::find($request->id);
         $quotation_id=$proforma_invoice_data->quotation_id;
-        
+
 
         if($gst_per>0)
         {
             $res1=invoice_master::where('entrydate','>=',$firstdate)->where('gst_per','>',0)->orderBy('id','DESC')->take(1)->get();
-            
+
             if(isset($res1[0]->max_invoice_no))
             {
                 $max_invoice_no=$res1[0]->max_invoice_no;
@@ -83,7 +83,7 @@ class invoice_master extends Model
         }
 
     	$data=new invoice_master();
-    	
+
     	$data->entrydate=$date;
     	$data->title=$result->title;
     	$data->c_id=$result->c_id;
@@ -102,7 +102,7 @@ class invoice_master extends Model
     	$data->price=$total_amount;
     	$remaining_amount=$total_amount - $result->paid_amount;
     	$data->remaining_amount=$remaining_amount;
-    	
+
         if($request->payment_per==100)
         {
             $request->payment_per=ROUND($request->payment_per-$per,2);
@@ -112,13 +112,13 @@ class invoice_master extends Model
     	$gst_per=$result->gst_per;
         $request->payment_amount;
     	$taxable_amount=ROUND(($request->payment_amount*100)/(100+$gst_per),2);
-    	
+
     	$data->total_amount=$request->payment_amount;
     	$data->taxable_amount=$taxable_amount;
-    	
+
     	$data->gst_per=$gst_per;
     	$data->gst_amount=ROUND($request->payment_amount-$taxable_amount,2);
-    	
+
     	$data->bank_details=$result->bank_details;
         $data->gst_no=$result->gst_no;
         $data->status=0;
@@ -159,4 +159,75 @@ class invoice_master extends Model
 
         return $data;
     }
+
+    public static function get_staff_invoice_list($userId, $month, $year)
+    {
+        return invoice_master::select(
+                'invoice_master.id',
+                'invoice_master.entrydate',
+                'invoice_master.title',
+                'invoice_master.invoice_no',
+                'invoice_master.total_amount',
+                'customer.name',
+                'customer.company_name',
+                'currency.code',
+                'currency.symbol'
+            )
+            ->join('customer', 'customer.id', '=', 'invoice_master.c_id')
+            ->join('currency', 'currency.id', '=', 'invoice_master.currency_id')
+            ->where('customer.assigned_staff', $userId)
+            ->whereMonth('invoice_master.entrydate', $month)
+            ->whereYear('invoice_master.entrydate', $year)
+            ->orderBy('invoice_master.id', 'DESC')
+            ->get();
+    }
+
+    public static function get_staff_month_total($userId, $month, $year)
+        {
+            return invoice_master::join('customer', 'customer.id', '=', 'invoice_master.c_id')
+                ->where('customer.assigned_staff', $userId)
+                ->whereMonth('invoice_master.entrydate', $month)
+                ->whereYear('invoice_master.entrydate', $year)
+                ->sum('invoice_master.total_amount');
+        }
+
+        public static function get_staff_year_total($userId, $year)
+        {
+            return invoice_master::join('customer', 'customer.id', '=', 'invoice_master.c_id')
+                ->where('customer.assigned_staff', $userId)
+                ->whereYear('invoice_master.entrydate', $year)
+                ->sum('invoice_master.total_amount');
+        }
+
+public static function get_staff_month_total_by_currency($userId, $month, $year)
+{
+    return invoice_master::join('customer', 'customer.id', '=', 'invoice_master.c_id')
+        ->join('currency', 'currency.id', '=', 'invoice_master.currency_id')
+        ->where('customer.assigned_staff', $userId)
+        ->whereMonth('invoice_master.entrydate', $month)
+        ->whereYear('invoice_master.entrydate', $year)
+        ->groupBy('currency.code', 'currency.symbol')
+        ->select(
+            'currency.code',
+            'currency.symbol',
+            DB::raw('SUM(invoice_master.total_amount) as total')
+        )
+        ->get();
+}
+public static function get_staff_year_total_by_currency($userId, $year)
+{
+    return invoice_master::join('customer', 'customer.id', '=', 'invoice_master.c_id')
+        ->join('currency', 'currency.id', '=', 'invoice_master.currency_id')
+        ->where('customer.assigned_staff', $userId)
+        ->whereYear('invoice_master.entrydate', $year)
+        ->groupBy('currency.code', 'currency.symbol')
+        ->select(
+            'currency.code',
+            'currency.symbol',
+            DB::raw('SUM(invoice_master.total_amount) as total')
+        )
+        ->get();
+}
+
+
 }
