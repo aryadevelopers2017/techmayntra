@@ -17,7 +17,7 @@ class QuotationController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public static function index($id)
     {
     	$data=QuotationServiceProvider::quotation_list($id);
@@ -34,6 +34,10 @@ class QuotationController extends Controller
 
     public static function add_quotation(Request $request)
     {
+
+
+        // dd($request->all());
+
         $data=QuotationServiceProvider::add_quotation($request);
 
         if($data['status_code']==200)
@@ -46,14 +50,14 @@ class QuotationController extends Controller
         }
 
         $message=$data['message'];
-        
+
         return redirect('/quotation/0')->with($status, $message);
     }
 
     public static function quotation_edit($id)
     {
         $data=QuotationServiceProvider::quotation_edit($id);
-        
+
         return view('quotation_add')->with('details_array', $data['data']);
     }
 
@@ -78,14 +82,14 @@ class QuotationController extends Controller
     public static function invoice($id)
     {
         $data=QuotationServiceProvider::invoice($id);
-        
+
         return view('invoice')->with('data', $data['data']);
     }
 
     public static function delete_quotation($id)
     {
         $data=QuotationServiceProvider::delete_quotation($id);
-        
+
         if($data['status_code']==200)
         {
             $status='success';
@@ -114,7 +118,7 @@ class QuotationController extends Controller
         }
 
         $message=$data['message'];
-        
+
         return redirect('/quotation/0')->with($status, $message);
     }
 

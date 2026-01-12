@@ -28,6 +28,11 @@ class quotation extends Model
 
     public static function add($request)
     {
+
+        $items = json_decode($request->services_item, true);
+$itemIds = collect($items)->pluck('item_id')->unique()->toArray();
+
+
         $max_invoice_no=0;
         date_default_timezone_set("Asia/Kolkata");
         $date = date("Y-m-d h:i:s");
@@ -50,17 +55,21 @@ class quotation extends Model
         $data->currency_id=$request->currency_id;
         $data->max_invoice_no=$max_invoice_no;
         $data->title=$request->title;
-        $data->quotation_item_id=$request->item_id;
+       $data->quotation_item_id = implode(',', $itemIds);
+
         $data->price=$request->price;
         $data->discount=$request->discount;
         $discount_amount=ROUND(($request->price*$request->discount)/100,2);
         $amount=$request->price - $discount_amount;
         $data->discount_amount=$discount_amount;
         $data->amount=$amount;
+
         $data->gst=isset($request->gst) ?? '0';
         $data->igst=isset($request->gst) ? isset($request->igst) : '0';
         $data->gst_per=isset($request->gst) ? $request->gst_per : '0';
+
         $gst_amount=ROUND(($amount*$request->gst_per)/100,2);
+
         $data->gst_amount=$gst_amount;
         $total_amount=$amount + $gst_amount;
         $data->total_amount=$total_amount;
@@ -71,7 +80,7 @@ class quotation extends Model
         $data->terms_conditions_flag=isset($request->terms_conditions_flag) ?? '0';
 
         $data->terms_conditions=$request->terms_conditions;
-        
+
         $data->payment_terms_conditions_flag=isset($request->payment_terms_conditions_flag) ?? '0';
 
         $data->payment_terms_conditions=$request->payment_terms_conditions;
@@ -88,14 +97,14 @@ class quotation extends Model
         $data->gst_no=$customer->gst_no;
         $data->company_address_id=$request->company_address;
         $data->save();
-        
+
         return $data;
     }
 
     public static function quotation_list($id)
     {
         $qry='!=';
-        
+
         if($id!=0)
         {
             $qry='=';
@@ -135,10 +144,17 @@ class quotation extends Model
         $data->discount_amount=$discount_amount;
         $amount=$request->price - $discount_amount;
         $data->amount=$amount;
-        $data->gst=isset($request->gst) ?? '0';
-        $data->igst=isset($request->gst) ? isset($request->igst) : '0';
-        $data->gst_per=isset($request->gst) ? $request->gst_per : '0';
-        $gst_amount=ROUND(($amount*$request->gst_per)/100,2);
+
+        $data->gst = $request->has('gst') ? 1 : 0;
+        $data->igst = $request->has('gst') && $request->has('igst') ? 1 : 0;
+        $data->gst_per = $request->has('gst') ? $request->gst_per : 0;
+
+       $gst_amount = 0;
+
+if ($request->has('gst')) {
+    $gst_amount = round(($amount * $request->gst_per) / 100, 2);
+}
+
         $data->gst_amount=$gst_amount;
         $total_amount=$amount + $gst_amount;
         $data->total_amount=$total_amount;
@@ -149,11 +165,11 @@ class quotation extends Model
         $data->terms_conditions_flag=isset($request->terms_conditions_flag) ?? '0';
 
         $data->terms_conditions=$request->terms_conditions;
-        
+
         $data->payment_terms_conditions_flag=isset($request->payment_terms_conditions_flag) ?? '0';
 
         $data->payment_terms_conditions=$request->payment_terms_conditions;
-        
+
         $data->bank_details_flag=isset($request->bank_details_flag) ?? '0';
 
         $data->bank_details=$request->bank_details;
@@ -162,11 +178,11 @@ class quotation extends Model
         {
             $data->bank_details=$request->personal_bank_details;
         }
-        
+
         $data->company_address_id=$request->company_address;
-        
+
         $data->update();
-        
+
         return $data;
     }
 

@@ -52,8 +52,6 @@
                                     @else
                                         <form action="{{ url('/add_quotation') }}" id="quotationform" method="POST">
                                     @endif
-                                    <input type="hidden" name="services_item" id="services_item">
-
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                         <input type="hidden" name="currency_id" value="{{ $currency_data->id }}" />
                                         <div class="row">
@@ -106,43 +104,34 @@
                                         </div>
                                         <label>Service</label>
                                         <div class="form-group" id="items"></div>
-                                     @if(isset($details_array['quotation_id']))
-    @foreach($details_array['item_data'] as $item)
-        @if($item->price > 0)
-            <div class="row form-group item-row" data-item-id="{{ $item->item_id }}">
-
-                <div class="col-md-1">
-                    <label><b>{{ $item->item_name }}</b></label>
-                </div>
-
-                <div class="col-md-5">
-                    <textarea class="form-control item-desc"
-                        placeholder="{{ $item->item_name }} Description"
-                        rows="5">{{ $item->desc }}</textarea>
-                </div>
-
-                <div class="col-md-2">
-                    <input type="text"
-                           class="form-control item-qty"
-                           value="{{ $item->qty }}">
-                </div>
-
-                <div class="col-md-2">
-                    <input type="text"
-                           class="form-control item-price"
-                           value="{{ $item->price }}">
-                </div>
-
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-danger remove-item">
-                        Remove
-                    </button>
-                </div>
-            </div>
-        @endif
-    @endforeach
-@endif
-
+                                        @if(isset($details_array['quotation_id']))
+                                            @foreach($details_array['item_data'] as $item)
+                                                @if($item->price>0)
+                                                    <div class="row form-group" id="{{ $item->id }}">
+                                                        @if(isset($item->item_id))
+                                                            <input type="checkbox" class="item" id="item[]" name="item[]" value="{{ $item->id }}" checked hidden>
+                                                        @else
+                                                            <input type="checkbox" class="item" id="item[]" name="item[]" value="{{ $item->id }}" hidden>
+                                                        @endif
+                                                        <div class="col-md-1">
+                                                            <label for="name"><b>{{ $item->item_name }}</b></label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <textarea type="textarea" class="summernote" placeholder="{{ $item->item_name }} Description" id="item_desc_{{ $item->id }}" name="item_desc_{{ $item->id }}" rows="5" cols="40">{{ $item->desc }}</textarea>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input type="text" class="form-control number1" id="item_qty_{{ $item->id }}" name="item_qty_{{ $item->id }}" placeholder="Qty" value="{{ $item->qty }}">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input type="text" class="form-control number" id="item_price_{{ $item->id }}" name="item_price_{{ $item->id }}" placeholder="Price ({{ $currency_data->symbol }})" value="{{ $item->price}}">
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <button type="button" class="btn btn-danger" id="btn_'+id+'" onclick="removefun('{{ $item->id }}')" name="btn_'+id+'" >Remove</button>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @endif
                                         <span id="erritem" style="display: none; color: #ff0000;">Please Select item</span>
                                         <div class="row">
                                             <div class="col-lg-6">
@@ -450,7 +439,7 @@
                                                         <div class="row">
                                                             <div class="col-lg-12">
                                                                 <div class="form-group">
-                                                                    <select id="item_id" name="item_id" class="form-control select2" required >
+                                                                    <select id="item_id" name="item_id" class="form-control select2" required onchange="itemchange()">
                                                                         <option value="">Please Select Item</option>
                                                                         @foreach($details_array['item_data'] as $item)
                                                                             <option value="{{ $item->id }}" data-id="{{ $item->item_name }}" data-name="{{ strip_tags($item->description) }}">{{ $item->item_name }}</option>
@@ -518,87 +507,79 @@
         calculate_amount();
     });
 
-
-    // Whenever quantity or price changes
-    $(document).on("input", ".item-qty, .item-price", calculate_amount);
-
-    // Whenever discount or GST changes
-    $("#discount, #gst_per").on("input", calculate_amount);
-
-    function calculate_amount() {
-        let total = 0;
-        let discount = parseFloat($("#discount").val()) || 0;
-        let gst_per = parseFloat($("#gst_per").val()) || 0;
-
-        // Loop through all items
-        $(".item-row").each(function() {
-            const qty = parseFloat($(this).find(".item-qty").val()) || 0;
-            const price = parseFloat($(this).find(".item-price").val()) || 0;
-            total += qty * price;
+    function calculate_amount()
+    {
+        var gst_per=$("#gst_per").val();
+        var discount=$("#discount").val();
+        var total_amount=0;
+        var amount=0;
+        $('.item').each(function ()
+        {
+            if($(this).is(':checked'))
+            {
+                var id=$(this).val();
+                var amt=$("#item_price_"+id+"").val();
+                if(amt>=0 && amt!='')
+                {
+                    amount=parseInt(amount)+parseInt(amt);
+                }
+            }
         });
 
-        // Validate discount
-        if (discount < 0 || discount > 100) {
-            discount = 0;
+        if(parseFloat(discount)<0 || parseFloat(discount)>100 || discount=='')
+        {
             $("#discount").val(0);
+            discount=0;
         }
 
-        // Apply discount
-        const discountAmount = total * discount / 100;
-        const amountAfterDiscount = total - discountAmount;
+        var discount_amount=((parseFloat(amount)*parseFloat(discount))/100).toFixed(2);
+        var dp_amount=(parseFloat(amount)-parseFloat(discount_amount)).toFixed(2);
 
-        // Validate GST
-        if (gst_per < 0) gst_per = 0;
-        if (gst_per > 100) gst_per = 100;
-        $("#gst_per").val(gst_per);
+        if(parseFloat(gst_per)>100)
+        {
+            $("#gst_per").val(100);
+            gst_per=100;
+        }
+        else if(parseFloat(gst_per)<0)
+        {
+            $("#gst_per").val(0);
+            gst_per=0;
+        }
+        else if(gst_per=='')
+        {
+            $("#gst_per").val(0);
+            gst_per=0;
+        }
 
-        // Apply GST
-        const gstAmount = amountAfterDiscount * gst_per / 100;
-
-        // Final total
-        const totalAmount = amountAfterDiscount + gstAmount;
-
-        $("#total_amount").val(totalAmount.toFixed(2));
+        var gst_amount=((parseFloat(dp_amount)*parseFloat(gst_per))/100).toFixed(2);
+        total_amount=(parseFloat(dp_amount)+parseFloat(gst_amount)).toFixed(2);
+        $("#total_amount").val(total_amount);
     }
 
+    $("#finalbtn").click(function(e)
+    {
+        var flag=0;
+        $('.item').each(function()
+        {
+            var id=$(this).val();
+            if($(this).is(':checked'))
+            {
+                flag=1;
+            }
+        });
 
-   $("#finalbtn").click(function (e) {
-    e.preventDefault(); // stop default submit
-
-    const itemsData = [];
-
-    // Collect all service rows
-    $(".item-row").each(function () {
-        const itemId = $(this).data("item-id");
-        const description = $(this).find(".item-desc").val();
-        const qty = parseFloat($(this).find(".item-qty").val()) || 0;
-        const price = parseFloat($(this).find(".item-price").val()) || 0;
-
-        if (qty > 0 && price > 0) {
-            itemsData.push({
-                item_id: itemId,
-                description: description,
-                qty: qty,
-                price: price
-            });
+        if(flag!=1)
+        {
+            $(".item").prop('required', true);
+            e.preventdefault();
+            $("#erritem").show(0).delay(2500).hide(0);
         }
+        else
+        {
+            $(".item").prop('required', false);
+        }
+
     });
-
-    //  No service added
-    if (itemsData.length === 0) {
-        $("#erritem").show().delay(2500).hide();
-        return;
-    }
-
-    // Assign JSON to hidden input
-    $("#services_item").val(JSON.stringify(itemsData));
-
-    // Recalculate total one last time
-    calculate_amount();
-
-    // Submit the form
-    $("#quotationform").submit();
-});
 
     $(".number").on('keypress keyup focusout', function()
     {
@@ -688,60 +669,46 @@
         gst_fun();
     });
 </script>
-
-<!-- -------  add services -------- -->
 <script>
+    $("#add_item").click(function ()
+    {
+        var id=$("#item_id").val();
+        if(id!='')
+        {
+            itembox(id);
+            $("#add_item").css('display', 'none');
 
-let rowCounter = 0;
+        }
+    });
 
-// Add Item Button
-$("#add_item").on("click", function() {
-    const itemId = $("#item_id").val();
-    if (!itemId) return;
+    function itemchange()
+    {
+        var id=$("#item_id").val();
+        if(id!='')
+        {
+            $("#add_item").css('display', 'block');
+        }
+    }
 
-    rowCounter++;
-    addItemRow(itemId, rowCounter);
-});
+    function removefun(id)
+    {
+        $('#item_id option[value="'+id+'"]').attr("disabled", false);
+        $("#"+id+"").text('');
+        $("#"+id+"").remove();
+    }
 
+    function itembox(id)
+    {
+        var symbol="{{ $currency_data->symbol }}";
+        var name=$("#item_id").find(":selected").text();
+        var description=$("#item_id").find(":selected").data('name');
+        var field='<div class="row form-group" id="'+id+'"><div class="col-md-1"><label for="name"><b>'+name+'</b></label></div><div class="col-md-5"><input type="checkbox" class="item" id="item[]" name="item[]" value="'+id+'" checked hidden> <textarea required type="textarea" class="summernote" placeholder="'+name+' Description" id="item_desc_'+id+'" name="item_desc_'+id+'" rows="5" cols="40">'+description+'</textarea></div><div class="col-md-2"><input type="number" required class="form-control number" id="item_qty_'+id+'" value="1" name="item_qty_'+id+'" placeholder="Qty"></div><div class="col-md-2"><input required type="text" class="form-control number1" onkeyup="number1('+id+')" id="item_price_'+id+'" name="item_price_'+id+'" placeholder="Price ('+symbol+')" value=""></div><div class="col-md-1"><button type="button" class="btn btn-danger" id="btn_'+id+'" onclick="removefun('+id+')" name="btn_'+id+'" >Remove</button></div></div>';
 
-// Generate row for selected service
-function addItemRow(itemId, rowId) {
-    const symbol = "{{ $currency_data->symbol }}";
-    const name = $("#item_id option:selected").text();
-    const description = $("#item_id option:selected").data("name");
-
-    const row = `
-    <div class="row form-group item-row" data-row-id="${rowId}" data-item-id="${itemId}">
-        <div class="col-md-1"><b>${name}</b></div>
-
-        <div class="col-md-5">
-            <textarea class="item-desc summernote" placeholder="${name} Description" rows="5" required>${description}</textarea>
-        </div>
-
-        <div class="col-md-2">
-            <input type="number" class="form-control item-qty number" value="1" min="1" required>
-        </div>
-
-        <div class="col-md-2">
-            <input type="text" class="form-control item-price number1" placeholder="Price (${symbol})" required>
-        </div>
-
-        <div class="col-md-1">
-            <button type="button" class="btn btn-danger remove-item">Remove</button>
-        </div>
-    </div>
-    `;
-
-    $("#items").after(row);
-    $('.summernote').summernote(); // initialize summernote
-}
-
-// Remove Item (Event Delegation)
-$(document).on("click", ".remove-item", function() {
-    $(this).closest(".item-row").remove();
-});
+        $("#items").after(field).load();
+        $("#item_id").find(":selected").attr("disabled","disabled");
+        $('.summernote').summernote();
+    }
 </script>
-
 @if(isset($details_array['igst']))
     <script>
         $( document ).ready(function()
@@ -807,3 +774,4 @@ $(document).on("click", ".remove-item", function() {
     });
 </script>
 @endsection
+    

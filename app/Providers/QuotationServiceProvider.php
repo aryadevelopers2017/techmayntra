@@ -40,28 +40,52 @@ class QuotationServiceProvider extends ServiceProvider
 
     public static function add_quotation($request)
     {
-        try
-        {
-            $request->item_id=implode(",", $request->item);
-            $amount=0;
-            foreach ($request->item as $key => $value)
-            {
-                $field='item_price_'.$value;
-                $amount=$amount+$request->$field;
+        try {
+            $items = json_decode($request->services_item, true);
+
+            if (!is_array($items)) {
+                throw new \Exception('Invalid services_item data');
             }
-            $request->price=$amount;
 
-            $data=quotation::add($request);
-            $request->invoice_id=$data->id;
+            // Item IDs
+            $itemIds = collect($items)->pluck('item_id')->unique()->toArray();
+            $request->item_id = implode(',', $itemIds);
 
+            // Total price
+            $total = 0;
+            foreach ($items as $item) {
+                $total += ((float)$item['qty'] * (float)$item['price']);
+            }
+            $request->price = $total;
+
+            // Save quotation
+            $data = quotation::add($request);
+
+            // Save items
+            $request->invoice_id = $data->id;
             quotation_item::add($request);
 
-            return array('status_code' => 200, 'message' => 'Quotation Successfully Saved', 'data' => $data);
+            return [
+                'status_code' => 200,
+                'message' => 'Quotation Successfully Saved',
+                'data' => $data
+            ];
         }
-        catch (\Exception $e)
-        {
-            Log::error(['method' => __METHOD__, 'error' => ['file' => $e->getFile(), 'line' => $e->getLine(), 'message' => $e->getMessage()], 'created_at' => date("Y-m-d H:i:s")]);
-            return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
+        catch (\Exception $e) {
+            Log::error([
+                'method' => __METHOD__,
+                'error' => [
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                    'message' => $e->getMessage()
+                ],
+                'created_at' => now()
+            ]);
+
+            return [
+                'status_code' => 500,
+                'message' => 'Something went wrong. Please try again.'
+            ];
         }
     }
 
@@ -165,31 +189,56 @@ class QuotationServiceProvider extends ServiceProvider
     }
 
     public static function update_quotation($request)
-    {
-        try
-        {
-            $request->item_id=implode(",", $request->item);
-            $amount=0;
-            foreach ($request->item as $key => $value)
-            {
-                $field='item_price_'.$value;
-                $amount=$amount+$request->$field;
-            }
-            $request->price=$amount;
+{
+    try {
+        $items = json_decode($request->services_item, true);
 
-            $data=quotation::update_quotation($request);
-            $request->invoice_id=$data->id;
+        if (!is_array($items)) {
+            throw new \Exception('Invalid services_item data');
+        }
 
-            quotation_item::update_quotation_item($request);
-            
-            return array('status_code' => 200, 'message' => 'Quotation Successfully Updated', 'data' => $data);
+        // item ids
+        $itemIds = collect($items)->pluck('item_id')->unique()->toArray();
+        $request->item_id = implode(',', $itemIds);
+
+        // total price
+        $total = 0;
+        foreach ($items as $item) {
+            $total += ((float)$item['qty'] * (float)$item['price']);
         }
-        catch (\Exception $e)
-        {
-            Log::error(['method' => __METHOD__, 'error' => ['file' => $e->getFile(), 'line' => $e->getLine(), 'message' => $e->getMessage()], 'created_at' => date("Y-m-d H:i:s")]);
-            return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
-        }
+        $request->price = $total;
+
+        // update quotation
+        $data = quotation::update_quotation($request);
+
+        // update quotation items
+        $request->invoice_id = $data->id;
+        quotation_item::update_items($request);
+
+        return [
+            'status_code' => 200,
+            'message' => 'Quotation Successfully Updated',
+            'data' => $data
+        ];
     }
+    catch (\Exception $e) {
+        Log::error([
+            'method' => __METHOD__,
+            'error' => [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'message' => $e->getMessage()
+            ],
+            'created_at' => now()
+        ]);
+
+        return [
+            'status_code' => 500,
+            'message' => 'Something went wrong'
+        ];
+    }
+}
+
 
     public static function invoice($id)
     {
@@ -264,9 +313,9 @@ class QuotationServiceProvider extends ServiceProvider
         try
         {
             quotation::delete_quotation($id);
-            
+
             quotation_item::delete_quotation_item($id);
-            
+
             return array('status_code' => 200, 'message' => 'Quotation Successfully Deleted');
         }
         catch (\Exception $e)
@@ -289,7 +338,7 @@ class QuotationServiceProvider extends ServiceProvider
 
             $pro_inv_item=proforma_invoice_item::add($pro_inv);
             $data['pro_inv_item']=$pro_inv_item;
-            
+
             return array('status_code' => 200, 'message' => 'Quotation Successfully Approved', 'data' => $data);
         }
         catch (\Exception $e)
@@ -304,7 +353,7 @@ class QuotationServiceProvider extends ServiceProvider
         try
         {
             $data=quotation::quotation_cancel($id);
-            
+
             return array('status_code' => 200, 'message' => 'Quotation Successfully Cancel', 'data' => $data);
         }
         catch (\Exception $e)
