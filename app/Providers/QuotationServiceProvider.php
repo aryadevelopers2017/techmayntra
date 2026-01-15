@@ -41,6 +41,10 @@ class QuotationServiceProvider extends ServiceProvider
     public static function add_quotation($request)
     {
         try {
+
+        // dd($request->all());
+
+
             $items = json_decode($request->services_item, true);
 
             if (!is_array($items)) {
@@ -124,7 +128,7 @@ class QuotationServiceProvider extends ServiceProvider
         $data['total_amount']=$quotation_data[0]['total_amount'];
 
         $data['milestone']=$quotation_data[0]['milestone'];
-        $data['working_days']=$quotation_data[0]['working_days'];
+        $data['working_days']=$quotation_data[0]['working_days'] ?? 0;
         $data['terms_conditions_flag']=$quotation_data[0]['terms_conditions_flag'];
         $data['terms_conditions']=$quotation_data[0]['terms_conditions'];
         $data['payment_terms_conditions_flag']=$quotation_data[0]['payment_terms_conditions_flag'];
@@ -153,6 +157,11 @@ class QuotationServiceProvider extends ServiceProvider
         $qty=qty_master::qty_list();
         $data['qty_data']=$qty;
 
+
+
+            $data['service_types'] = self::serviceTypes();
+
+
         return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
     }
 
@@ -178,6 +187,9 @@ class QuotationServiceProvider extends ServiceProvider
             $currency_id=$company_data[0]->currency_id;
 
             $data['currency_data']=Currency::getByID($currency_id);
+
+            $data['service_types'] = self::serviceTypes();
+
 
             return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
         }
@@ -266,7 +278,7 @@ class QuotationServiceProvider extends ServiceProvider
         $data['gst_amount']=$quotation_data[0]['gst_amount'];
         $total_amount=$quotation_data[0]['total_amount'];
         $data['total_amount']=$total_amount;
-        $data['working_days']=$quotation_data[0]['working_days'];
+        $data['working_days']=$quotation_data[0]['working_days'] ?? 0;
 
         $data['technology']=$quotation_data[0]['technology'];
         $data['milestone']=$quotation_data[0]['milestone'];
@@ -362,4 +374,49 @@ class QuotationServiceProvider extends ServiceProvider
             return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
         }
     }
+
+
+
+
+    public static function serviceTypes()
+        {
+            return [
+                [
+                    'id' => 1,
+                    'code' => 'AIR_TICKET',
+                    'name' => 'Air Ticket ( One way, Round Trip, Rebooking, Cancellation, Visa change, Ticket Only, Booking Live PNR)',
+                ],
+                [
+                    'id' => 2,
+                    'code' => 'UAE_VISA_CHANGE',
+                    'name' => 'UAE Visa Change ( A2A & B2B)',
+                ],
+                [
+                    'id' => 3,
+                    'code' => 'INSURANCE',
+                    'name' => 'Insurance (Inbound & Outbound)',
+                ],
+                [
+                    'id' => 4,
+                    'code' => 'WORLDWIDE_VISA',
+                    'name' => 'Worldwide Visa Assistance ( All Countries list except UAE)',
+                ],
+                [
+                    'id' => 5,
+                    'code' => 'TOURS',
+                    'name' => 'Tours (Name of Tours will be mentioned in Descriptions) - for all Countries',
+                ],
+                [
+                    'id' => 6,
+                    'code' => 'TRANSFERS',
+                    'name' => 'Transfers (Type of transfer will be mentioned in Descriptions) - for all countries',
+                ],
+                [
+                    'id' => 7,
+                    'code' => 'TOUR_PACKAGE',
+                    'name' => 'Tour Package (Details will be mentioned in Descriptions) - for all Countries',
+                ],
+            ];
+        }
+
 }

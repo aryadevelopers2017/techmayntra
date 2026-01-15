@@ -151,7 +151,7 @@
                             <a href="{{ url('/project_list') }}"><i class="ti-comment-alt"></i>Project</a>
                         </li>
                         <li>
-                            <a href="{{ url('/purchase_order_list') }}"><i class="ti-comment-alt"></i>Purchase Order</a>
+                            <a href="{{ url('/purchase_order_list') }}"><i class="ti-comment-alt"></i>Vendor Receipt</a>
                         </li>
                         <li>
                             <a href="{{ url('/vendor_list') }}"><i class="ti-comment-alt"></i>Vendor</a>

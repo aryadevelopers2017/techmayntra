@@ -8,7 +8,7 @@
                 <div class="col-lg-7 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Add New Purchase Order </h1>
+                            <h1>Add New Vendor Receipt </h1>
                         </div>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home')}}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Add Purchase Order</li>
+                                <li class="breadcrumb-item active">Add Vendor Receipt</li>
                             </ol>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                                 <div class="basic-form">
                                     @if(isset($data->id))
                                         <form action="{{ url('/update_purchase_order') }}" id="purchaseorderform" method="POST">
-                                        <input type="hidden" name="id" id="id" value="{{ $data->id }}" />    
+                                        <input type="hidden" name="id" id="id" value="{{ $data->id }}" />
                                     @else
                                         <form action="{{ url('/add_purchase_order') }}" id="purchaseorderform" method="POST">
                                     @endif
@@ -298,7 +298,7 @@
     function get_project_list()
     {
         var vender_id=$("#vender_id").val();
-        
+
         $("#div_subject").css('display', 'none');
         $("#div_project").css('display', 'none');
         $("#subject").prop('required', false);
@@ -351,7 +351,7 @@
     {
         var amount=$("#amount").val();
         var tamt=amount;
-        
+
         if(parseFloat(amount)<0 || amount=='')
         {
             $("#amount").val(0);
@@ -439,7 +439,7 @@
             $("#div_project").css('display', 'none');
             $("#subject").prop('required', false);
             $("#project_id").prop('required', false);
-            
+
             if(vender_id=='other')
             {
                 $("#div_subject").css('display', 'block');

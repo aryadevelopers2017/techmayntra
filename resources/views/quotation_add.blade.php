@@ -105,43 +105,101 @@
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Service</button>
                                         </div>
                                         <label>Service</label>
-                                        <div class="form-group" id="items"></div>
-                                     @if(isset($details_array['quotation_id']))
-    @foreach($details_array['item_data'] as $item)
-        @if($item->price > 0)
-            <div class="row form-group item-row" data-item-id="{{ $item->item_id }}">
+                                            <div class="form-group" id="items"></div>
 
-                <div class="col-md-1">
-                    <label><b>{{ $item->item_name }}</b></label>
-                </div>
+                                            @if(isset($details_array['quotation_id']))
+                                            @php $rowCounter = 0; @endphp
 
-                <div class="col-md-5">
-                    <textarea class="form-control item-desc"
-                        placeholder="{{ $item->item_name }} Description"
-                        rows="5">{{ $item->desc }}</textarea>
-                </div>
+                                            @foreach($details_array['item_data'] as $item)
+                                            @if($item->price > 0)
 
-                <div class="col-md-2">
-                    <input type="text"
-                           class="form-control item-qty"
-                           value="{{ $item->qty }}">
-                </div>
+                                            @php $rowCounter++; @endphp
 
-                <div class="col-md-2">
-                    <input type="text"
-                           class="form-control item-price"
-                           value="{{ $item->price }}">
-                </div>
+                                            <div class="row form-group item-row"
+                                                data-row-id="{{ $rowCounter }}"
+                                                data-item-id="{{ $item->item_id }}">
 
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-danger remove-item">
-                        Remove
-                    </button>
-                </div>
-            </div>
-        @endif
-    @endforeach
-@endif
+                                                <!-- LEFT PART -->
+                                                <div class="col-md-6">
+                                                    <h4><b>{{ $item->item_name }}</b></h4>
+
+                                                    <textarea class="item-desc summernote"
+                                                            placeholder="{{ $item->item_name }} Description"
+                                                            rows="5">{{ $item->description }}</textarea>
+                                                </div>
+
+                                                <!-- RIGHT PART -->
+                                                <div class="col-md-6">
+
+                                                    <!-- CHILD ROW 1 -->
+                                                    <div class="row mb-2">
+                                                        <div class="col-md-4">
+                                                            <input type="number"
+                                                                class="form-control item-qty"
+                                                                value="{{ $item->qty }}"
+                                                                min="1">
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <input type="text"
+                                                                class="form-control item-price"
+                                                                value="{{ $item->price }}">
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <button type="button"
+                                                                    class="btn btn-danger remove-item w-100">
+                                                                Remove
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- CHILD ROW 2 -->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label><b>Passenger Type</b></label><br>
+
+                                                            <label>
+                                                                <input type="radio"
+                                                                    name="passenger_{{ $rowCounter }}"
+                                                                    value="adult"
+                                                                    {{ $item->passenger_type == 'adult' ? 'checked' : '' }}>
+                                                                Adult
+                                                            </label>
+
+                                                            &nbsp;&nbsp;
+
+                                                            <label>
+                                                                <input type="radio"
+                                                                    name="passenger_{{ $rowCounter }}"
+                                                                    value="child"
+                                                                    {{ $item->passenger_type == 'child' ? 'checked' : '' }}>
+                                                                Child
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label><b>Ticket Type</b></label>
+
+                                                            <select class="form-control service-type">
+                                                                <option value="">Select Ticket Type</option>
+
+                                                                @foreach($details_array['service_types'] as $type)
+                                                                    <option value="{{ $type['code'] }}"
+                                                                        {{ $item->service_type == $type['code'] ? 'selected' : '' }}>
+                                                                        {{ $type['name'] }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            @endif
+                                            @endforeach
+                                            @endif
 
                                         <span id="erritem" style="display: none; color: #ff0000;">Please Select item</span>
                                         <div class="row">
@@ -173,10 +231,10 @@
                                                     <label>Total Amount ({{ $currency_data->symbol }})</label>
                                                     <input type="text" class="form-control number" id="total_amount" name="total_amount" readonly disabled value="{{ isset($details_array['total_amount']) ? $details_array['total_amount'] : '0'}}" required>
                                                 </div>
-                                                <div class="form-group">
+                                                <!-- <div class="form-group ">
                                                     <label>Total Working Days </label>
                                                     <input type="text" class="form-control number" id="working_days" name="working_days" value="{{ isset($details_array['working_days']) ? $details_array['working_days'] : '0'}}" required>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
 
@@ -487,6 +545,12 @@
     </div>
 </div>
 <script type="text/javascript">
+
+
+    const SERVICE_TYPES = @json($details_array['service_types']);
+
+
+
     $('.item').click(function()
     {
         $('.item').each(function () {
@@ -574,12 +638,17 @@
         const qty = parseFloat($(this).find(".item-qty").val()) || 0;
         const price = parseFloat($(this).find(".item-price").val()) || 0;
 
+        const passengerType = $(this).find("input[type=radio]:checked").val();
+        const serviceType = $(this).find(".service-type").val();
+
         if (qty > 0 && price > 0) {
             itemsData.push({
                 item_id: itemId,
                 description: description,
                 qty: qty,
-                price: price
+                price: price ,
+                passenger_type: passengerType,
+                service_type: serviceType
             });
         }
     });
@@ -704,7 +773,6 @@ $("#add_item").on("click", function() {
 });
 
 
-// Generate row for selected service
 function addItemRow(itemId, rowId) {
     const symbol = "{{ $currency_data->symbol }}";
     const name = $("#item_id option:selected").text();
@@ -712,28 +780,83 @@ function addItemRow(itemId, rowId) {
 
     const row = `
     <div class="row form-group item-row" data-row-id="${rowId}" data-item-id="${itemId}">
-        <div class="col-md-1"><b>${name}</b></div>
 
-        <div class="col-md-5">
-            <textarea class="item-desc summernote" placeholder="${name} Description" rows="5" required>${description}</textarea>
+        <!-- LEFT PART -->
+        <div class="col-md-6">
+            <h4><b>${name}</b></h4>
+            <textarea
+                class="item-desc summernote"
+                placeholder="${name} Description"
+                rows="5"
+                required
+            >${description}</textarea>
         </div>
 
-        <div class="col-md-2">
-            <input type="number" class="form-control item-qty number" value="1" min="1" required>
-        </div>
+        <!-- RIGHT PART -->
+        <div class="col-md-6">
 
-        <div class="col-md-2">
-            <input type="text" class="form-control item-price number1" placeholder="Price (${symbol})" required>
-        </div>
+            <!-- CHILD ROW 1 -->
+            <div class="row mb-2">
+                <div class="col-md-4">
+                    <input
+                        type="number"
+                        class="form-control item-qty"
+                        value="1"
+                        min="1"
+                        placeholder="Qty"
+                        required
+                    >
+                </div>
 
-        <div class="col-md-1">
-            <button type="button" class="btn btn-danger remove-item">Remove</button>
+                <div class="col-md-4">
+                    <input
+                        type="text"
+                        class="form-control item-price"
+                        placeholder="Price (${symbol})"
+                        required
+                    >
+                </div>
+
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-danger remove-item w-100">
+                        Remove
+                    </button>
+                </div>
+            </div>
+
+            <!-- CHILD ROW 2 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Passenger Type</b></label><br>
+                    <label>
+                        <input type="radio" name="passenger_${rowId}" value="adult" checked>
+                        Adult
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>
+                        <input type="radio" name="passenger_${rowId}" value="child">
+                        Child
+                    </label>
+                </div>
+
+                <div class="col-md-6">
+                    <label><b>Ticket Type</b></label>
+                    <select class="form-control service-type">
+                        <option value="">Select Ticket Type</option>
+                        ${SERVICE_TYPES.map(s =>
+                            `<option value="${s.code}">${s.name}</option>`
+                        ).join('')}
+                    </select>
+
+                </div>
+            </div>
+
         </div>
     </div>
     `;
 
     $("#items").after(row);
-    $('.summernote').summernote(); // initialize summernote
+    $('.summernote').summernote();
 }
 
 // Remove Item (Event Delegation)
@@ -792,6 +915,7 @@ $(document).on("click", ".remove-item", function() {
 <script>
     $( document ).ready(function()
     {
+    //    console.log('Document ready fired');
         $('#item_id').select2({
             dropdownParent: $('#myModal'),
             width:'100%'
@@ -802,7 +926,15 @@ $(document).on("click", ".remove-item", function() {
 
         $('.tox-notifications-container').css('display', 'none !important');
 
-        $('.summernote').summernote();
+        // $('.summernote').summernote();
+
+         try {
+            // console.log('Initializing Summernote');
+            $('.summernote').summernote();
+        } catch (e) {
+            console.error('Summernote error:', e);
+        }
+
         gst_fun();
     });
 </script>

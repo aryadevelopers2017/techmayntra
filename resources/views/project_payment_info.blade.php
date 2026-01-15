@@ -145,7 +145,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <label>Quotation</label>  
+                                                            <label>Quotation</label>
                                                         </div>
                                                         <div class="col-md-2"> : </div>
                                                         <div class="col-md-6">
@@ -155,7 +155,7 @@
 
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <label>Invoice</label>  
+                                                            <label>Invoice</label>
                                                         </div>
                                                         <div class="col-md-2"> : </div>
                                                         <div class="col-md-6">
@@ -165,11 +165,11 @@
 
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <label>Purchase Order</label>  
+                                                            <label>Vendor Receipt</label>
                                                         </div>
                                                         <div class="col-md-2"> : </div>
                                                         <div class="col-md-6">
-                                                            <a target="_blank" href="{{ url('/purchase_order_project_list').'/'.$data->id }}">Go To Purchase Order</a>
+                                                            <a target="_blank" href="{{ url('/purchase_order_project_list').'/'.$data->id }}">Go To Vendor Receipt</a>
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -180,7 +180,7 @@
                                             $milestone_arr=explode('</p>',$milestone);
                                             $i=0;
                                         @endphp
-                                        
+
                                         @if(isset($milestone_arr))
                                             @foreach($milestone_arr as $milestonedata)
                                                 @if(strip_tags($milestonedata)!='')
@@ -198,7 +198,7 @@
                                                             $remarks=$project_milestone[$milestonedata]->remarks;
                                                         @endphp
                                                     @endif
-                                                    
+
                                                     <fieldset class="mt-2 pt-2" style="border: 1px solid #000;">
                                                         <div class="row">
                                                             <div class="col-lg-3">

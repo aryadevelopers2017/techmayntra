@@ -12,7 +12,8 @@ class quotation_item extends Model
     protected $table = 'quotation_item';
 
     protected $dates = ['deleted_at'];
-    protected $fillable = ['name', 'company_name', 'address', 'email', 'mobile', 'city', 'state'];
+    protected $fillable = ['name', 'company_name', 'address', 'email', 'mobile', 'city', 'state', 'passenger_type',
+    'service_type' ];
 
     public static function customer_list()
     {
@@ -49,6 +50,9 @@ class quotation_item extends Model
         $result->rate          = $rate;
         $result->net_price     = round($price - $discount_price_amount, 2);
         $result->net_rate      = round($rate - $discount_rate_amount, 2);
+
+        $result->passenger_type = $item['passenger_type'] ?? null;
+        $result->service_type   = $item['service_type'] ?? null;
 
         $result->save();
     }
@@ -142,6 +146,11 @@ class quotation_item extends Model
         $row->rate         = $rate;
         $row->net_price    = round($price - $discount_price_amount, 2);
         $row->net_rate     = round($rate - $discount_rate_amount, 2);
+
+
+        $row->passenger_type = $item['passenger_type'] ?? null;
+        $row->service_type   = $item['service_type'] ?? null;
+
 
         $row->save();
     }

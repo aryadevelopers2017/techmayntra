@@ -8,7 +8,7 @@
                 <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Purchase Order Report</h1>
+                            <h1>Vendor Receipt Report</h1>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Purchase Order Report</li>
+                                <li class="breadcrumb-item active">Vendor Receipt Report</li>
                             </ol>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
-                        <a href="{{ url('/purchase_order_add')}}" class="btn btn-primary">Add New Purchase Order</a>
+                        <a href="{{ url('/purchase_order_add')}}" class="btn btn-primary">Add New Vendor Receipt</a>
                     </div>
                 </div>
             </div>

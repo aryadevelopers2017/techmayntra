@@ -34,8 +34,6 @@ class QuotationController extends Controller
 
     public static function add_quotation(Request $request)
     {
-
-
         // dd($request->all());
 
         $data=QuotationServiceProvider::add_quotation($request);
@@ -57,6 +55,8 @@ class QuotationController extends Controller
     public static function quotation_edit($id)
     {
         $data=QuotationServiceProvider::quotation_edit($id);
+
+        // dd($data);
 
         return view('quotation_add')->with('details_array', $data['data']);
     }

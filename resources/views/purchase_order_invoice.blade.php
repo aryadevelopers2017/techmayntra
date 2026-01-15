@@ -39,7 +39,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12" style="text-align: center;">
-                                    <h4>Purchase Order</h4>
+                                    <h4>Vendor Receipt</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -100,7 +100,7 @@
                                             </tr>
                                             <tr class="tabletitle">
                                                 <td class="tableitem"></td>
-                                                <td class="tableitem"></td> 
+                                                <td class="tableitem"></td>
                                                 <td class="tableitem"></td>
                                                 <td class="tableitem">
                                                     <h2>Sub Total</h2>
@@ -171,7 +171,7 @@
                                 </div>
                                 <!--End Table-->
                                 <div id="legalcopy">
-                                    
+
                                 </div>
                                 <div id="invoice-top1">
                                     <div class="col-md-9 invoice-logo mt-3">
@@ -209,21 +209,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         var invoice_no= "{{ $data['invoice_no'] }}";
-        
+
         window.onload = function ()
         {
             $("#pdfdownload").click(function()
             {
                 $("#pdfdownload").text('');
-                printpdf(); 
+                printpdf();
                 $("#pdfdownload").text('Generate PDF');
-            });   
+            });
         }
 
         function printpdf()
         {
             var element = document.getElementById("unix-invoice");
-            
+
             var opt = {
                 margin:       [30, 0, 30, 0],
                 pagebreak: { mode: ['avoid-all', 'css', 'A4'], after:'.break-page' },
