@@ -8,7 +8,7 @@
                 <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Invoice Report</h1>
+                            <h1>Payment Receipt</h1>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Invoice Report</li>
+                                <li class="breadcrumb-item active">Payment Receipt</li>
                             </ol>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                                         <thead>
                                             <th>Sr No</th>
                                             <!-- <th style="text-align: left;">Invoice Action</th> -->
-                                            <th style="text-align: left;">Invoice No</th>
+                                            <th style="text-align: left;">Receipt No</th>
                                             <th style="text-align: left;">Date</th>
                                             <th style="text-align: left;">Title</th>
                                             <th style="text-align: left;">Name</th>

@@ -8,7 +8,7 @@
                 <div class="col-lg-7 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Proforma Invoice Payment </h1>
+                            <h1> Invoice Payment </h1>
                         </div>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Proforma Invoice Payment</li>
+                                <li class="breadcrumb-item active"> Invoice Payment</li>
                             </ol>
                         </div>
                     </div>
@@ -37,8 +37,8 @@
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label>Proforma Invoice No </label>
-                                                    <input type="text" class="form-control" id="invoice_no" name="invoice_no" placeholder="Proforma Invoice No" value="{{ $data[0]->invoice_no }} " disabled>
+                                                    <label> Invoice No </label>
+                                                    <input type="text" class="form-control" id="invoice_no" name="invoice_no" placeholder=" Invoice No" value="{{ $data[0]->invoice_no }} " disabled>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
@@ -106,7 +106,7 @@
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <input type="radio" class="radio" id="part" name="payment_type" value="part" required><strong>&nbsp;&nbsp;&nbsp;Full</strong><br> 
+                                                    <input type="radio" class="radio" id="part" name="payment_type" value="part" required><strong>&nbsp;&nbsp;&nbsp;Full</strong><br>
                                                     <input type="radio" class="radio" id="partial" name="payment_type" value="partial" required><strong>&nbsp;&nbsp;&nbsp;Partial</strong>
                                                 </div>
                                             </div>
@@ -181,7 +181,7 @@
             $("#payment_amount").val(amount);
             $("#payable_currency_amount").val(payable_currency_amount);
         }
-        
+
     }
 
     $("#finalbtn").click(function(e)
@@ -201,7 +201,7 @@
         $("#amt").css("display", "none");
         $("#amt1").css("display", "none");
         $("#payment_per").attr("required", false);
-        
+
         if(type!='part')
         {
             $("#amt").css("display", "block");

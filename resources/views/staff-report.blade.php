@@ -11,7 +11,7 @@
                     <div class="page-header">
                         <div class="page-title">
                             <h1>
-                                Invoice Report
+                                Staff Receipt Report
                                 <small style="font-size:14px;">
                                     ({{ $user->name }})
                                 </small>
@@ -29,7 +29,7 @@
                                 </li>
 
                                 <li class="breadcrumb-item active">
-                                    Invoice Report
+                                   Staff Receipt Report
                                 </li>
                             </ol>
                         </div>

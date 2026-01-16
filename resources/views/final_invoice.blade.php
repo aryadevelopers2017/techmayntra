@@ -9,7 +9,7 @@
     }
     body
     {
-        margin: 10px !important;
+        /* margin: 10px !important; */
     }
     .loader
     {
@@ -21,7 +21,7 @@
         -webkit-animation: spin 2s linear infinite; /* Safari */
         animation: spin 2s linear infinite;
     }
-    
+
     table { page-break-inside:auto }
     tr    { page-break-inside:auto; page-break-after:auto }
     thead { display:table-header-group }
@@ -39,6 +39,10 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
+    #invoice-logo{
+        height: auto;
+    }
 </style>
 @extends('layouts.Admin.invoice_app')
 
@@ -53,7 +57,9 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div id="invoice" class="effect2 m-t-10" style="border: 1px solid #000000;">
+                        <div id="invoice" class="effect2 " >
+                             <img src="{{ asset('asset/images/leterhead-header.jpg') }}" style="width: 100%;">
+
                             <div id="invoice-top">
                                 <div class="invoice-logo">
                                     <img  id="invoice-logo" src="{{ asset('asset/images/'.$data['company_data']->company_logo) }}" height="50px" alt=""/>
@@ -71,9 +77,19 @@
                             <div class="row">
                                 <div class="col-md-6" style="text-align: left;">
                                     <h2 style="font-size: 14px;">{{ strtoupper($data['company_data']->company_name) }}</h2>
-                                    @php echo $data['company_address']; @endphp 
-                                    <p>{{ $data['company_city'].','. $data['company_state'] }}<br><strong>GST No : {{ $data['company_data']->gst_no }}</strong><br>
-                                    <strong>Pan No : {{ $data['company_data']->pan_no }}</strong></p>
+                                    @php echo $data['company_address']; @endphp
+                                    <p>{{ $data['company_city'].','. $data['company_state'] }}<br>
+
+                                    <!-- <strong>GST No : {{ $data['company_data']->gst_no }}</strong><br>
+                                    <strong>Pan No : {{ $data['company_data']->pan_no }}</strong> -->
+
+
+                                    @if(!empty($data['trn_no']))
+                                        <strong>Trn No : {{ $data['trn_no'] }}</strong>
+                                    @endif
+
+
+                                </p>
                                 </div>
                                 <div class="col-md-6" style="text-align: right;">
                                     <h2 style="font-size: 14px;">Buyer (Bill to) </h2>
@@ -155,7 +171,7 @@
                                             </tr>
                                             <tr class="tabletitle" style="border: 1px solid;">
                                                 <td class="tableitem"></td>
-                                                <td class="tableitem"></td> 
+                                                <td class="tableitem"></td>
                                                 <td class="tableitem"></td>
                                                 <td class="tableitem">
                                                     <h2>Sub Total</h2>
@@ -229,14 +245,14 @@
                                     <p class="legal"><strong><b>Payment Details are as mentioned below :</b></strong></p>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            @php 
+                                            @php
                                                 if($data['bank_details']!='')
                                                 {
                                                     echo $data['bank_details'];
                                                 }
                                                 else
                                                 {
-                                                    echo $data['company_data']->bank_details;   
+                                                    echo $data['company_data']->bank_details;
                                                 }
                                             @endphp
                                         </div>
@@ -247,6 +263,21 @@
                                     </div>
                                 </div>
                                 <div class="legalcopy" style="text-align: right;">
+
+                                    <!-- <img  id="invoice-logo" src="{{ asset('asset/images/'.$data['company_data']->company_logo) }}" height="50px" alt=""/> -->
+
+                                        <img
+                                            src="{{ asset('asset/images/paid.webp') }}"
+                                            alt="PAID"
+                                            style="
+                                                width: 140px;
+
+                                                top: -90px;
+                                                right: 20px;
+
+                                            "
+                                        >
+
                                     <p style="font-family: 'Shadows Into Light', cursive; font-style: oblique; font-stretch: ultra-condensed; font-size: 22px;margin-right: 25px;"><i>Subhash</i></p>
                                     <p style="text-align: right;"><b>Authorised Signatory <b></p>
                                     <p style="text-align: right;"><b>For,  {{ $data['company_data']->company_name }}</b></p>
@@ -267,6 +298,29 @@
                                 <p>This is a Computer Generated Invoice</p>
                             </div>
                         </div>
+
+
+                          <div style="
+
+                                        text-align: center;
+                                        font-size: 15px;
+                                        border-top: 1px solid #000;
+                                        padding-top: 6px;
+                                    ">
+
+                                        <div>
+                                            Office # 301-09 Riser Business Center, Rigga Business Center Building,
+                                        </div>
+                                        <div>
+                                            IBIS Hotel, Al Rigga, Deira, Dubai - UAE
+                                        </div>
+                                        <div>
+                                            Mob: +971 55 556 6410 |
+                                            Email: info@tripmantra.ae |
+                                            Web: www.tripmantra.ae
+                                        </div>
+                                    </div>
+
                         <!--End Invoice-->
                     </div>
                 </div>
@@ -287,16 +341,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         var invoice_no= "{{ $data['invoice_no'] }}";
-        
+
         window.onload = function ()
         {
             $("#pdfdownload").click(function()
             {
                 $("#myModal").show(0).delay(5500).hide(0);
                 $("#pdfdownload").text('');
-                printpdf(); 
+                printpdf();
                 $("#pdfdownload").text('Generate PDF');
-            });   
+            });
         }
 
         function printpdf()
@@ -304,7 +358,7 @@
             var element = document.getElementById("unix-invoice");
 
             var opt = {
-                margin:       [30, 0, 30, 0],
+                margin:       [0, 0, 0, 0],
                 pagebreak: { mode: ['css', 'A4'], after:'.break-page', avoid: ['tr', 'td'] },
                 filename:     invoice_no+'.pdf',
                 image:        { type: 'png', quality: 1 },

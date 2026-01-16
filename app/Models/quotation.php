@@ -13,7 +13,8 @@ class quotation extends Model
     protected $table = 'quotation';
 
     protected $dates = ['deleted_at'];
-    protected $fillable = ['id', 'entrydate', 'c_id', 'title', 'invoice_no', 'max_invoice_no', 'quotation_item_id', 'price', 'discount', 'discount_amount', 'amount', 'gst', 'igst', 'gst_per', 'gst_amount', 'total_amount', 'milestone', 'working_days', 'terms_conditions_flag', 'terms_conditions', 'payment_terms_conditions_flag', 'payment_terms_conditions', 'bank_details_flag', 'bank_details'];
+    protected $fillable = ['id', 'entrydate', 'c_id',   'v_id', 'trn_no',
+    'vat','title', 'invoice_no', 'max_invoice_no', 'quotation_item_id', 'price', 'discount', 'discount_amount', 'amount', 'gst', 'igst', 'gst_per', 'gst_amount', 'total_amount', 'milestone', 'working_days', 'terms_conditions_flag', 'terms_conditions', 'payment_terms_conditions_flag', 'payment_terms_conditions', 'bank_details_flag', 'bank_details'];
 
 
     public static function accept_quotation_list()
@@ -51,6 +52,8 @@ $itemIds = collect($items)->pluck('item_id')->unique()->toArray();
         $data=new quotation();
         $data->entrydate=$date;
         $data->c_id=$request->c_id;
+        $data->v_id=$request->v_id;
+
         $data->invoice_no=$invoice_no;
         $data->currency_id=$request->currency_id;
         $data->max_invoice_no=$max_invoice_no;
@@ -58,21 +61,41 @@ $itemIds = collect($items)->pluck('item_id')->unique()->toArray();
        $data->quotation_item_id = implode(',', $itemIds);
 
         $data->price=$request->price;
-        $data->discount=$request->discount;
-        $discount_amount=ROUND(($request->price*$request->discount)/100,2);
+         $discount  = $request->discount ?? 0;
+        $data->discount = $discount;
+        // $discount_amount=ROUND(($request->price*$request->discount)/100,2);
+
+
+$discount_amount = ROUND(($request->price * $discount) / 100, 2);
+
+
         $amount=$request->price - $discount_amount;
         $data->discount_amount=$discount_amount;
         $data->amount=$amount;
 
-        $data->gst=isset($request->gst) ?? '0';
+        // $data->gst=isset($request->gst) ?? '0';
+        $data->gst = isset($request->gst) ? 1 : 0;
+        $data->vat = isset($request->vat) ? 1 : 0;
+
         $data->igst=isset($request->gst) ? isset($request->igst) : '0';
-        $data->gst_per=isset($request->gst) ? $request->gst_per : '0';
 
-        $gst_amount=ROUND(($amount*$request->gst_per)/100,2);
+        $data->trn_no = $request->trn_no ?? null;
 
-        $data->gst_amount=$gst_amount;
-        $total_amount=$amount + $gst_amount;
-        $data->total_amount=$total_amount;
+        // $data->gst_per=isset($request->gst) ? $request->gst_per : '0';
+
+        // $gst_amount=ROUND(($amount*$request->gst_per)/100,2);
+
+        // $data->gst_amount=$gst_amount;
+        // $total_amount=$amount + $gst_amount;
+        // $data->total_amount=$total_amount;
+$tax_per = $request->gst_per ?? 0;
+        $data->gst_per = $tax_per;
+
+        $gst_amount = round(($amount * $tax_per) / 100, 2);
+        $data->gst_amount = $gst_amount;
+
+        $data->total_amount = $amount + $gst_amount;
+
         $data->technology=$request->technology;
         $data->milestone=$request->milestone;
         $data->working_days=$request->working_days;
@@ -124,6 +147,7 @@ $itemIds = collect($items)->pluck('item_id')->unique()->toArray();
         $data=quotation::find($request->id);
         $data->title=$request->title;
         $data->c_id=$request->c_id;
+        $data->v_id  = $request->v_id;
         $data->currency_id=$request->currency_id;
         $invoice_no=$data->invoice_no;
         if(strpos($data->invoice_no,'.V')!='')
@@ -139,25 +163,56 @@ $itemIds = collect($items)->pluck('item_id')->unique()->toArray();
 
         $data->quotation_item_id=$request->item_id;
         $data->price=$request->price;
-        $data->discount=$request->discount;
-        $discount_amount=ROUND(($request->price*$request->discount)/100,2);
-        $data->discount_amount=$discount_amount;
-        $amount=$request->price - $discount_amount;
-        $data->amount=$amount;
 
-        $data->gst = $request->has('gst') ? 1 : 0;
-        $data->igst = $request->has('gst') && $request->has('igst') ? 1 : 0;
-        $data->gst_per = $request->has('gst') ? $request->gst_per : 0;
 
-       $gst_amount = 0;
+//         $data->discount = $request->discount ?? 0;
+//         $discount_amount=ROUND(($request->price*$request->discount)/100,2);
+//         $data->discount_amount=$discount_amount;
+//         $amount=$request->price - $discount_amount;
+//         $data->amount=$amount;
+//         $data->gst = $request->has('gst') ? 1 : 0;
+//         $data->igst = $request->has('gst') && $request->has('igst') ? 1 : 0;
+//         $data->gst_per = $request->has('gst') ? $request->gst_per : 0;
 
-if ($request->has('gst')) {
-    $gst_amount = round(($amount * $request->gst_per) / 100, 2);
-}
+//        $gst_amount = 0;
 
-        $data->gst_amount=$gst_amount;
-        $total_amount=$amount + $gst_amount;
-        $data->total_amount=$total_amount;
+// if ($request->has('gst')) {
+//     $gst_amount = round(($amount * $request->gst_per) / 100, 2);
+// }
+
+//         $data->gst_amount=$gst_amount;
+//         $total_amount=$amount + $gst_amount;
+//         $data->total_amount=$total_amount;
+
+
+  // Discount (SAFE)
+    $discount = $request->discount ?? 0;
+    $data->discount = $discount;
+
+    $discount_amount = round(($request->price * $discount) / 100, 2);
+    $data->discount_amount = $discount_amount;
+
+    $amount = $request->price - $discount_amount;
+    $data->amount = $amount;
+
+    // GST / VAT flags
+    $data->gst = $request->has('gst') ? 1 : 0;
+    $data->vat = $request->has('vat') ? 1 : 0;
+    $data->igst = ($request->has('gst') && $request->has('igst')) ? 1 : 0;
+
+    $data->trn_no = $request->trn_no ?? null;
+
+
+    // Tax calculation (GST or VAT – same logic)
+    $tax_per = $request->gst_per ?? 0;
+    $data->gst_per = $tax_per;
+
+    $gst_amount = round(($amount * $tax_per) / 100, 2);
+    $data->gst_amount = $gst_amount;
+
+    $data->total_amount = $amount + $gst_amount;
+
+
         $data->technology=$request->technology;
         $data->milestone=$request->milestone;
         $data->working_days=$request->working_days;

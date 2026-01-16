@@ -65,11 +65,18 @@ Route::get('/quotation_cancel/{id}', [App\Http\Controllers\QuotationController::
 Route::get('/company_module', [App\Http\Controllers\CompanyModuleController::class, 'index']);
 Route::post('/update_module', [App\Http\Controllers\CompanyModuleController::class, 'update_module']);
 
-Route::get('/proforma_invoice', [App\Http\Controllers\ProformaInvoiceController::class, 'index']);
+Route::get('/proforma_invoice', [App\Http\Controllers\ProformaInvoiceController::class, 'index'])->name('proforma_invoice.list');
+
+Route::get('/invoice_add', [App\Http\Controllers\ProformaInvoiceController::class, 'add_new']);
+Route::post('/save_invoice', [App\Http\Controllers\ProformaInvoiceController::class, 'save_invoice']);
+
+
+
 Route::get('/proforma_invoice_payment/{id}', [App\Http\Controllers\ProformaInvoiceController::class, 'proforma_invoice_payment']);
 Route::post('/add_proforma_invoice_payment', [App\Http\Controllers\ProformaInvoiceController::class, 'add_proforma_invoice_payment']);
 
 Route::get('/proforma_invoice_generate/{id}', [App\Http\Controllers\ProformaInvoiceController::class, 'proforma_invoice_generate']);
+
 
 Route::get('/proforma_invoice_approve/{id}', [App\Http\Controllers\ProformaInvoiceController::class, 'proforma_invoice_approve']);
 Route::get('/proforma_invoice_cancel/{id}', [App\Http\Controllers\ProformaInvoiceController::class, 'proforma_invoice_cancel']);

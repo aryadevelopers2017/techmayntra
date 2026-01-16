@@ -21,10 +21,6 @@
         -webkit-animation: spin 2s linear infinite; /* Safari */
         animation: spin 2s linear infinite;
     }
-    h2
-    {
-        padding-top: 5px;
-    }
 
     /* Safari */
     @-webkit-keyframes spin
@@ -52,14 +48,15 @@
                 <button id="pdfdownload" class="btn btn-primary">Generate PDF</button>
             </div>
         </div>
-        @php
-            $currency_data=$data['currency_data'];
-        @endphp
         <div class="unix-invoice" id="unix-invoice">
             <div class="container-fluid">
+
                 <div class="row">
+
                     <div class="col-md-12">
-                        <div id="invoice" class="effect2 m-t-10" style="border: 2px solid #000000;">
+
+                        <div id="invoice" class="effect2 m-t-10" >
+                             <img src="{{ asset('asset/images/leterhead-header.jpg') }}" style="width: 100%;">
                             <div id="invoice-top">
                                 <div class="invoice-logo">
                                     <img  id="invoice-logo" src="{{ asset('asset/images/'.$data['company_data']->company_logo) }}" height="50px" alt=""/>
@@ -76,15 +73,12 @@
 
                             <div class="row">
                                 <div class="col-md-6" style="text-align: left;">
-                                    <h2 style="font-size: 14px;"><strong>{{ $data['company_data']->company_name }}</strong></h2>
+                                    <h2 style="font-size: 14px;">{{ $data['company_data']->company_name }}</h2>
                                     @php echo $data['company_address']; @endphp
-                                    <p>{{ $data['company_city'].','. $data['company_state'] }}</p>
-                                    <p>Email-ID : {{ $data['company_email'] }}</p>
-                                    <p>Mobile : {{ $data['company_mobile'] }}</p>
+                                    <p>{{ $data['company_city'].','. $data['company_state'] }}
                                 </div>
-                                <div class="col-md-3"></div>
-                                <div class="col-md-3" style="text-align: left;">
-                                    <h2 style="font-size: 14px;"><strong>Buyer (Bill to)</strong> </h2><h2 style="font-size: 14px;"><strong>{{ $data['customer_company_name'] }}</strong></h2>
+                                <div class="col-md-6" style="text-align: right;">
+                                    <h2 style="font-size: 14px;">Buyer (Bill to) </h2><h2 style="font-size: 14px;"> {{ $data['customer_company_name'] }}</h2>
                                     <p>{{ $data['customer_name'] }} <br> {{ strip_tags($data['address']) }}<br> {{ $data['city'] }}, {{ $data['state'] }}
                                 </div>
                             </div>
@@ -105,14 +99,14 @@
                                         <table class="table" style="width: 99%!important;border: 1px solid #000000;">
                                             <tr class="tabletitle1">
                                                 <td class="Hours">
-                                                    <h2>SR No.</h2>
+                                                    <h2>#</h2>
                                                 </td>
                                                 <td class="table-item" style="text-align: center;">
                                                     <h2>Description of Services</h2>
                                                 </td>
-                                                <!-- <td class="Rate">
+                                                <td class="Rate">
                                                     <h2>HSN Code</h2>
-                                                </td> -->
+                                                </td>
                                                 <td class="Rate">
                                                     <h2>Rate</h2>
                                                 </td>
@@ -141,21 +135,22 @@
                                                             </p> -->
                                                         </div>
                                                     </td>
-                                                    <!-- <td class="tableitem">
-                                                        998313
-                                                    </td> -->
                                                     <td class="tableitem">
-                                                        <p class="itemtext">{{ $currency_data->symbol }} @php echo ROUND( $item->net_rate,2); @endphp </p>
+                                                        998313
+                                                    </td>
+                                                    <td class="tableitem">
+                                                        <p class="itemtext">₹ @php echo ROUND( $item->net_rate,2); @endphp </p>
                                                     </td>
                                                     <td class="tableitem">
                                                         <p class="itemtext">{{ $item->qty }} {{ $item->qty_name }}</p>
                                                     </td>
                                                     <td class="tableitem">
-                                                        <p class="itemtext" style="margin-right: 10px;">{{ $currency_data->symbol }} @php echo ROUND($item->net_price,2); @endphp</p>
+                                                        <p class="itemtext" style="margin-right: 10px;">₹ @php echo ROUND($item->net_price,2); @endphp</p>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                             <tr class="tabletitle">
+                                                <td class="tableitem"></td>
                                                 <td class="tableitem"></td>
                                                 <td class="tableitem"></td>
                                                 <td class="tableitem">
@@ -164,11 +159,12 @@
                                                 <td class="tableitem">
                                                     <p class="itemtext"></p>
                                                 </td>
-                                                <td class="tableitem" style="margin-right: 10px;"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }} {{ $data['taxable_amount']}}</h6></td>
+                                                <td class="tableitem" style="margin-right: 10px;"><h6 style="margin-right: 10px;">₹ {{ $data['taxable_amount']}}</h6></td>
                                             </tr>
                                             @if($data['gst_per']>0)
                                                 @if($data['igst']==1)
                                                     <tr class="service1">
+                                                        <td class="tableitem"></td>
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem">
@@ -177,10 +173,11 @@
                                                         <td class="tableitem">
                                                             <p class="itemtext"></p>
                                                         </td>
-                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }} {{ $data['gst_amount']}}</h6></td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['gst_amount']}}</h6></td>
                                                     </tr>
                                                 @else
                                                     <tr class="service1">
+                                                        <td class="tableitem"></td>
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem">
@@ -189,9 +186,10 @@
                                                         <td class="tableitem">
                                                             <p class="itemtext"></p>
                                                         </td>
-                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }} {{ $data['gst_amount']/2}}</h6></td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['gst_amount']/2}}</h6></td>
                                                     </tr>
                                                     <tr class="service1">
+                                                        <td class="tableitem"></td>
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem">
@@ -200,11 +198,12 @@
                                                         <td class="tableitem">
                                                             <p class="itemtext"></p>
                                                         </td>
-                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }} {{ $data['gst_amount']/2}}</h6></td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['gst_amount']/2}}</h6></td>
                                                     </tr>
                                                 @endif
                                             @endif
                                             <tr class="tabletitle">
+                                                <td class="tableitem"></td>
                                                 <td class="tableitem"></td>
                                                 <td class="tableitem"></td>
                                                 <td class="tableitem">
@@ -213,10 +212,10 @@
                                                 <td class="tableitem">
                                                     <p class="itemtext"></p>
                                                 </td>
-                                                <td class="tableitem"><h6 style="margin-right: 10px;">{{ $currency_data->symbol }} {{ $data['total_amount']}}</h6></td>
+                                                <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['total_amount']}}</h6></td>
                                             </tr>
                                             <tr>
-                                                <td class="tableitem" style="text-align: left;" colspan="5"><b>Amount In words :  {{ ucwords($data['amount_word']) }}</b></td>
+                                                <td class="tableitem" style="text-align: left;" colspan="5"><b>Amount In words :  {{ $data['amount_word'] }}</b></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -244,14 +243,10 @@
                                     </div>
                                     <!--End Info-->
                                     <div class="col-md-3 title">
-                                        <!-- @if(file_exists($data['company_signature']))
-                                            <p>
-                                                <img src="{{ asset($data['company_signature']) }}" height="70" width="100">
-                                            </p>
-                                        @endif -->
-                                        <p style="font-family: 'Shadows Into Light', cursive;font-size: 22px;font-weight:400;margin-right: 25px;"><i>Subhash</i></p>
-                                        <p style="text-align: right;">Authorised Signatory </p>
+                                        <p style="font-family: 'Shadows Into Light', cursive;font-size: 22px;margin-right: 25px;"><i>Subhash</i></p>
                                         <p><b>For,  {{ $data['company_data']->company_name }}</b></p>
+                                        <br>
+                                        <p style="text-align: right;">Authorised Signatory </p>
                                     </div>
                                     <!--End Title-->
                                 </div>
@@ -268,8 +263,11 @@
                             </div> -->
                         </div>
                         <!--End Invoice-->
+                        <img src="{{ asset('asset/images/footer.jpg') }}" style="width: 100%;">
                     </div>
+
                 </div>
+
             </div>
         </div>
         <div id="myModal" class="Modal is-hidden is-visuallyHidden"  tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog">
@@ -307,8 +305,8 @@
                 margin:       [30, 0, 30, 0],
                 pagebreak: { mode: ['avoid-all', 'css', 'A4'], after:'.break-page' },
                 filename:     invoice_no+'.pdf',
-                image:        { type: 'png', quality: 1 },
-                html2canvas:  { dpi: 192, scale: 2, letterRendering: true },
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { dpi: 192, scale: 2, useCORS: true, letterRendering: true },
                 jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
             };
 

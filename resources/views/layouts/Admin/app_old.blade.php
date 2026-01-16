@@ -110,7 +110,7 @@
                             <a href="{{ url('/quotation/0') }}"><i class="ti-comment-alt"></i>Quotation</a>
                         </li>
                         <li>
-                            <a href="{{ url('/proforma_invoice') }}"><i class="ti-comment-alt"></i>Proforma Invoice</a>
+                            <a href="{{ url('/proforma_invoice') }}"><i class="ti-comment-alt"></i> Invoice</a>
                         </li>
                         <li>
                             <a href="{{ url('/invoice_list/0') }}"><i class="ti-comment-alt"></i>Invoice</a>

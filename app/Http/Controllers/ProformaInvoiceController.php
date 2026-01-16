@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\ProformaInvoiceServiceProvider;
 use Illuminate\Http\Request;
 
+use App\Providers\QuotationServiceProvider;
+
 class ProformaInvoiceController extends Controller
 {
     /**
@@ -18,12 +20,25 @@ class ProformaInvoiceController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public static function index()
     {
     	$data=ProformaInvoiceServiceProvider::proforma_invoice_list();
-        
+
         return view('proforma_invoice_list')->with('proforma_invoice_list', $data['data']);
+    }
+
+       public static function add_new()
+    {
+        $data=QuotationServiceProvider::get_customer_item_list();
+
+        return view('add_invoice')->with('details_array', value: $data['data']);
+    }
+
+    public static function save_invoice(Request $request){
+    	  $Quotation=QuotationServiceProvider::add_quotation($request);
+         $quotation_approve = QuotationServiceProvider::quotation_approve($Quotation['data']['id']);
+        return redirect()->route('proforma_invoice.list');
     }
 
     public static function proforma_invoice_generate($id)
@@ -33,9 +48,12 @@ class ProformaInvoiceController extends Controller
         return view('proforma_invoice')->with('data', $data['data']);
     }
 
+
     public static function proforma_invoice_payment($id)
     {
         $data=ProformaInvoiceServiceProvider::proformainvoice_payment($id);
+
+
 
         return view('proforma_invoice_payment_add')->with('data', $data['data'])->with('currency', $data['currency']);
     }
@@ -43,7 +61,7 @@ class ProformaInvoiceController extends Controller
     public static function add_proforma_invoice_payment(Request $request)
     {
         $data=ProformaInvoiceServiceProvider::add_proformainvoice_payment($request);
-        
+
         if($data['status_code']==200)
         {
             $status='success';
@@ -68,14 +86,14 @@ class ProformaInvoiceController extends Controller
     public static function final_invoice($id)
     {
         $data=ProformaInvoiceServiceProvider::final_invoice_data($id);
-        
+
         return view('final_invoice')->with('data', $data['data']);
     }
-    
+
     public static function invoice_list($id)
     {
         $data=ProformaInvoiceServiceProvider::invoice_list_data($id);
-        
+
         return view('invoice_list')->with('list_data', $data['data']);
     }
 

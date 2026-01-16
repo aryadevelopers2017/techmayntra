@@ -21,7 +21,7 @@
                 <div class="col-lg-7 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Add New Quotation </h1>
+                            <h1>Add New Invoice </h1>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home')}}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Add Quotation</li>
+                                <li class="breadcrumb-item active">Add Invoice</li>
                             </ol>
                         </div>
                     </div>
@@ -47,10 +47,10 @@
                                         $currency_data=$details_array['currency_data'];
                                     @endphp
                                     @if(isset($details_array['quotation_id']))
-                                        <form action="{{ url('/update_quotation') }}" id="quotationform" method="POST">
+                                        <form action="{{ url('/update_invoice') }}" id="quotationform" method="POST">
                                             <input type="hidden" name="id" id="id" value="{{ $details_array['quotation_id'] }}" />
                                     @else
-                                        <form action="{{ url('/add_quotation') }}" id="quotationform" method="POST">
+                                        <form action="{{ url('/save_invoice') }}" id="quotationform" method="POST">
                                     @endif
                                     <input type="hidden" name="services_item" id="services_item">
 
@@ -83,28 +83,7 @@
 
 
 
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>Select Vendor</label>
-                                                    <select id="v_id" name="v_id" class="form-control select2" required>
-                                                        <option value="">Please Select Vendor</option>
-                                                        @foreach($details_array['vendor_data'] as $vendor)
-                                                            @if(isset($details_array['v_id']) && $details_array['v_id'] == $vendor->id)
-                                                                <option value="{{ $vendor->id }}" selected>
-                                                                    {{ $vendor->name }} - {{ $vendor->company_name }}
-                                                                </option>
-                                                            @else
-                                                                <option value="{{ $vendor->id }}">
-                                                                    {{ $vendor->name }} - {{ $vendor->company_name }}
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                    <span id="errvendor" style="display:none;color: #ff0000;">
-                                                        Please Select Vendor
-                                                    </span>
-                                                </div>
-                                            </div>
+
 
                                             <div class="col-lg-6">
                                                 <div class="form-group">

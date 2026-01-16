@@ -14,7 +14,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
     <script src=" {{ asset('asset/css/jquery.min.js') }}"></script>
     <!-- Styles -->
     <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">

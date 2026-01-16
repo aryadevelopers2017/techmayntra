@@ -9,7 +9,7 @@
     }
     body
     {
-        margin: 10px !important;
+        /* margin: 10px !important; */
     }
     .loader
     {
@@ -34,6 +34,10 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
+    #invoice-logo{
+        height: auto;
+    }
 </style>
 @extends('layouts.Admin.invoice_app')
 
@@ -46,12 +50,16 @@
         </div>
         <div class="unix-invoice" id="unix-invoice">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="invoice" class="effect2 m-t-10" style="border: 2px solid #000000;">
+
+                <div class="row" >
+
+                    <div class="col-md-12 " >
+
+                        <div id="invoice" class="effect2 " >
+                             <img src="{{ asset('asset/images/leterhead-header.jpg') }}" style="width: 100%;">
                             <div id="invoice-top">
                                 <div class="invoice-logo">
-                                    <img  id="invoice-logo" src="{{ asset('asset/images/'.$data['company_data']->company_logo) }}" height="50px" alt=""/>
+                                    <!-- <img  id="invoice-logo" src="{{ asset('asset/images/'.$data['company_data']->company_logo) }}" height="50px" alt=""/> -->
                                 </div>
                                 <!--End Info-->
                                 <div class="title">
@@ -66,7 +74,7 @@
                             <div class="row">
                                 <div class="col-md-6" style="text-align: left;">
                                     <h2 style="font-size: 14px;">{{ $data['company_data']->company_name }}</h2>
-                                    @php echo $data['company_address']; @endphp 
+                                    @php echo $data['company_address']; @endphp
                                     <p>{{ $data['company_city'].','. $data['company_state'] }}
                                 </div>
                                 <div class="col-md-6" style="text-align: right;">
@@ -76,7 +84,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12" style="text-align: center;">
-                                    <h4>Proforma Invoice</h4>
+                                    <h4> Invoice</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -143,7 +151,7 @@
                                             @endforeach
                                             <tr class="tabletitle">
                                                 <td class="tableitem"></td>
-                                                <td class="tableitem"></td> 
+                                                <td class="tableitem"></td>
                                                 <td class="tableitem"></td>
                                                 <td class="tableitem">
                                                     <h2>Sub Total</h2>
@@ -216,14 +224,14 @@
                                 <div id="legalcopy">
                                     <p class="legal"><strong><b>Payment Details are as mentioned below :</b></strong></p>
                                     <div class="legal1">
-                                        @php 
+                                        @php
                                             if($data['bank_details']!='')
                                             {
                                                 echo $data['bank_details'];
                                             }
                                             else
                                             {
-                                                echo $data['company_data']->bank_details;   
+                                                echo $data['company_data']->bank_details;
                                             }
                                         @endphp
                                     </div>
@@ -242,21 +250,41 @@
                                     </div>
                                     <!--End Title-->
                                 </div>
+
+
+                                <div style="
+
+                                text-align: center;
+                                font-size: 15px;
+                                border-top: 1px solid #000;
+                                padding-top: 6px;
+                            ">
+
+                                <div>
+                                    Office # 301-09 Riser Business Center, Rigga Business Center Building,
+                                </div>
+                                <div>
+                                    IBIS Hotel, Al Rigga, Deira, Dubai - UAE
+                                </div>
+                                <div>
+                                    Mob: +971 55 556 6410 |
+                                    Email: info@tripmantra.ae |
+                                    Web: www.tripmantra.ae
+                                </div>
                             </div>
+
+                            </div>
+
+
                             <!--End InvoiceBot-->
-                            <!-- <div class="pt-1" style="border-top: 1px solid #000000;">
-                                <div class="text-center">
-                                    <p style="margin-left: 25px;">Option 1: Online Transfer. Option 2: Cheque on the name of {{ $data['company_data']->company_name }}</p>
-                                </div>
-                                <div class="text-center mt-3">
-                                    <h5>SUBJECT TO AHMEDABAD JURISDICTION</h5>
-                                    <p>This is a Computer Generated Invoice</p>
-                                </div>
-                            </div> -->
+
                         </div>
-                        <!--End Invoice-->
+
+
                     </div>
+
                 </div>
+
             </div>
         </div>
         <div id="myModal" class="Modal is-hidden is-visuallyHidden"  tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog">
@@ -274,24 +302,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         var invoice_no= "{{ $data['invoice_no'] }}";
-        
+
         window.onload = function ()
         {
             $("#pdfdownload").click(function()
             {
                 $("#myModal").show(0).delay(5500).hide(0);
                 $("#pdfdownload").text('');
-                printpdf(); 
+                printpdf();
                 $("#pdfdownload").text('Generate PDF');
-            });   
+            });
         }
 
         function printpdf()
         {
             var element = document.getElementById("unix-invoice");
-            
+
             var opt = {
-                margin:       [30, 0, 30, 0],
+                margin:       [0, 0, 0, 0],
                 pagebreak: { mode: ['avoid-all', 'css', 'A4'], after:'.break-page' },
                 filename:     invoice_no+'.pdf',
                 image:        { type: 'jpeg', quality: 1 },

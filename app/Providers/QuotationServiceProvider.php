@@ -15,6 +15,7 @@ use App\Models\company_module_master;
 use App\Models\proforma_invoice;
 use App\Models\proforma_invoice_item;
 use App\Models\company_address_master;
+use App\Models\vendor_master;
 
 class QuotationServiceProvider extends ServiceProvider
 {
@@ -112,6 +113,9 @@ class QuotationServiceProvider extends ServiceProvider
     {
         $data=[];
         $quotation_data=quotation::where('id', $id)->get()->toArray();
+
+        // dd($quotation_data);
+
         $customer=Customer::where('id',$quotation_data[0]['c_id'])->get()->toArray();
         $data['quotation_id']=$id;
         $customer_id=$customer[0]['id'];
@@ -123,9 +127,17 @@ class QuotationServiceProvider extends ServiceProvider
         $data['discount']=$quotation_data[0]['discount'];
         $data['discount_amount']=$quotation_data[0]['discount_amount'];
         $data['gst']=$quotation_data[0]['gst'];
+        $data['vat']=$quotation_data[0]['vat'];
+
+        $data['trn_no']=$quotation_data[0]['trn_no'];
+
+
+
         $data['igst']=$quotation_data[0]['igst'];
         $data['gst_per']=$quotation_data[0]['gst_per'];
         $data['total_amount']=$quotation_data[0]['total_amount'];
+        $data['v_id']=$quotation_data[0]['v_id'];
+
 
         $data['milestone']=$quotation_data[0]['milestone'];
         $data['working_days']=$quotation_data[0]['working_days'] ?? 0;
@@ -141,6 +153,11 @@ class QuotationServiceProvider extends ServiceProvider
 
         $customer=Customer::customer_list();
         $data['customer_data']=$customer;
+
+
+        $vendor=vendor_master::vendor_list();
+        $data['vendor_data']=$vendor;
+
 
         $item=item_master::quotation_item_check($id, $quotation_item_id);
         $data['item_data']=$item;
@@ -172,6 +189,9 @@ class QuotationServiceProvider extends ServiceProvider
             $data=[];
             $customer=Customer::customer_list();
             $data['customer_data']=$customer;
+
+            $vendor=vendor_master::vendor_list();
+            $data['vendor_data']=$vendor;
 
             $item=item_master::item_list();
             $data['item_data']=$item;

@@ -131,6 +131,10 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         // $total_amount=$quotation_data[0]['total_amount'];
         $data['taxable_amount']=$quotation_data->amount;
         $data['gst_per']=$quotation_data->gst_per;
+
+        $data['trn_no']=$quotation_data->trn_no;
+
+
         $data['gst_amount']=$quotation_data->gst_amount;
         $total_amount=$quotation_data->total_amount;
         $data['total_amount']=$quotation_data->total_amount;
@@ -162,6 +166,8 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
 
         $data['item_data']=$item;
 
+        // dd($data);
+
         return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
     }
 
@@ -170,6 +176,9 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $data=[];
         $invoice_data=invoice_master::find($id);
         $quotation_data=proforma_invoice::where('id', $invoice_data->proforma_invoice_id)->get()->toArray();
+
+        // dd($quotation_data);
+
         $customer=Customer::where('id',$quotation_data[0]['c_id'])->get()->toArray();
         $data['quotation_id']=$id;
         $customer_id=$customer[0]['id'];
@@ -189,6 +198,9 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $data['price']=$invoice_data->price;
         $data['discount']=$quotation_data[0]['discount'];
         $data['igst']=$quotation_data[0]['igst'];
+
+        $data['trn_no']=$quotation_data[0]['trn_no'];
+
         // $total_amount=$quotation_data[0]['total_amount'];
         $data['taxable_amount']=$invoice_data->taxable_amount;
         $data['gst_per']=$invoice_data->gst_per;
@@ -237,6 +249,8 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
 
         $data['item_data']=$item;
 
+        // dd($data);
+
         // $company_data=company_module_master::module_data();
         // $data['company_data']=$company_data;
 
@@ -267,7 +281,7 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
             $req['status']=1;
             $data=proforma_invoice::change_status($req);
 
-            return array('status_code' => 200, 'message' => 'proforma invoice successfully approved', 'data' => $data);
+            return array('status_code' => 200, 'message' => 'invoice successfully approved', 'data' => $data);
         }
         catch (\Exception $e)
         {
@@ -285,7 +299,7 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
             $req['status']=2;
             $data=proforma_invoice::change_status($req);
 
-            return array('status_code' => 200, 'message' => 'proforma invoice successfully cancel', 'data' => $data);
+            return array('status_code' => 200, 'message' => 'invoice successfully cancel', 'data' => $data);
         }
         catch (\Exception $e)
         {

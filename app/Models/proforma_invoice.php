@@ -13,7 +13,7 @@ class proforma_invoice extends Model
     protected $table = 'proforma_invoice';
 
     protected $dates = ['deleted_at'];
-    protected $fillable = ['id', 'entrydate', 'title', 'quotation_id', 'c_id', 'max_invoice_no', 'invoice_no', 'item_ids', 'price', 'discount', 'discount_amount', 'paid_amount', 'amount', 'gst_per', 'gst_amount', 'total_amount', 'bank_details', 'status'];
+    protected $fillable = ['id', 'entrydate','trn_no', 'title', 'quotation_id', 'c_id', 'max_invoice_no', 'invoice_no', 'item_ids', 'price', 'discount', 'discount_amount', 'paid_amount', 'amount', 'gst_per', 'gst_amount', 'total_amount', 'bank_details', 'status'];
 
     public static function add($request)
     {
@@ -30,14 +30,15 @@ class proforma_invoice extends Model
         }
         $max_invoice_no=$max_invoice_no+1;
 
-        $invoice_no='PRO-TMI-'.$invoice_date.'/'.str_pad($max_invoice_no,4,"0",STR_PAD_LEFT);
+        $invoice_no='TM-'.$invoice_date.'/'.str_pad($max_invoice_no,4,"0",STR_PAD_LEFT);
 
         $quotation=quotation::find($request->id);
 
     	$data=new proforma_invoice();
-    	
+
     	$data->entrydate=$date;
     	$data->title=$request->title;
+    	$data->trn_no=$request->trn_no ?? null;
     	$data->c_id=$request->c_id;
         $data->currency_id=$request->currency_id;
     	$data->invoice_no=$invoice_no;
@@ -93,12 +94,12 @@ class proforma_invoice extends Model
         $data->save();
 
         return $data;
-    }    
+    }
 
     public static function update_paid_amount($request)
     {
         $data=proforma_invoice::find($request->proforma_invoice_id);
-            
+
         $paid_amount=ROUND($data->paid_amount+$request->total_amount,2);
         $data->paid_amount=$paid_amount;
 
@@ -116,5 +117,5 @@ class proforma_invoice extends Model
         $data=proforma_invoice::where(['quotation_id' => $id])->get();
 
         return $data;
-    }    
+    }
 }

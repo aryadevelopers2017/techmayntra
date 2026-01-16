@@ -8,7 +8,7 @@
                 <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Proforma Invoice Report</h1>
+                            <h1> Invoice Report</h1>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Proforma Invoice Report</li>
+                                <li class="breadcrumb-item active"> Invoice Report</li>
                             </ol>
                         </div>
                     </div>
