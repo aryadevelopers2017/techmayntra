@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-
+    
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ Route::get('/quotation_approve/{id}', [App\Http\Controllers\QuotationController:
 Route::get('/quotation_cancel/{id}', [App\Http\Controllers\QuotationController::class, 'quotation_cancel']);
 
 Route::get('/company_module', [App\Http\Controllers\CompanyModuleController::class, 'index']);
-Route::post('/update_module', [App\Http\Controllers\CompanyModuleController::class, 'update_module']);
+Route::post('/update_module', [App\Http\Controllers\CompanyModuleController::class, 'updinvoiceate_module']);
 
 Route::get('/proforma_invoice', [App\Http\Controllers\ProformaInvoiceController::class, 'index'])->name('proforma_invoice.list');
 

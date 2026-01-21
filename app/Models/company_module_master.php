@@ -12,7 +12,7 @@ class company_module_master extends Model
     protected $table = 'company_module_master';
 
     protected $dates = ['deleted_at'];
-    
+
     protected $fillable = ['milestone', 'terms_conditions', 'payment_terms_conditions', 'bank_details', 'personal_bank_details', 'company_name', 'company_logo', 'address', 'city', 'state','milestone_label','technology_label'];
 
     public static function module_data()
@@ -47,6 +47,10 @@ class company_module_master extends Model
 
         $data->gst_no=$request->gst_no;
 		$data->vat_no=$request->vat_no;
+
+		$data->trn_no=$request->trn_no;
+
+
         $data->pan_no=$request->pan_no;
         $data->personal_bank_details=$request->personal_bank_details;
         $data->technology=$request->technology;
@@ -87,11 +91,12 @@ class company_module_master extends Model
 
         $data->company_name=$request->company_name;
         $data->address=$request->address;
-        $data->city=$request->city; 
+        $data->city=$request->city;
         $data->state=$request->state;
         $data->mobile=$request->company_mobile;
         $data->email=$request->company_email;
         $data->gst_no=$request->gst_no;
+		$data->trn_no=$request->trn_no;
         $data->pan_no=$request->pan_no;
         $data->personal_bank_details=$request->personal_bank_details;
         $data->technology=$request->technology;

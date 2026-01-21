@@ -93,6 +93,13 @@
                                             <label>VAT No </label>
                                             <input type="text" class="form-control" id="vat_no" name="vat_no" placeholder="VAT No" value="{{ isset($module_data[0]->vat_no) ? $module_data[0]->vat_no : '' }}">
                                         </div>
+
+                                        <div class="form-group">
+                                            <label>TRN No</label>
+                                            <input type="text" class="form-control" id="trn_no" name="trn_no" placeholder="TRN No" value="{{ isset($module_data[0]->trn_no) ? $module_data[0]->trn_no : '' }}">
+                                        </div>
+
+
                                         <div class="form-group">
                                             <label class="editable-label" id="lbl_technology" data-field="technology">{{ $module_data[0]->technology_label ?? 'Technology' }}</label>
                                             <label class="edit-icon" data-target="lbl_technology">
@@ -100,7 +107,7 @@
                                             </label>
                                             <textarea class="summernote" id="technology" name="technology">{{ $module_data[0]->technology ?? '' }}</textarea>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label class="editable-label" id="lbl_milestone" data-field="milestone">{{ $module_data[0]->milestone_label ?? 'Mile Stone' }}</label>
                                             <label class="edit-icon" data-target="lbl_milestone">
@@ -110,7 +117,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Term & Condition </label> 
+                                            <label>Term & Condition </label>
                                             <textarea class="summernote" id="terms_conditions" name="terms_conditions">{{ isset($module_data[0]->terms_conditions) ? $module_data[0]->terms_conditions : '' }} </textarea>
                                         </div>
                                         <div class="form-group">
@@ -139,20 +146,20 @@
 <script>
     $( document ).ready(function()
     {
-        $('.summernote').summernote(); 
+        $('.summernote').summernote();
     });
-	
+
 	$(document).on("click", ".edit-icon", function () {
 		let target = $(this).data("target");
 		$("#" + target).trigger("click");
 	});
-	
+
 	$(document).on("click", ".editable-label", function () {
 		let label = $(this);
 		let currentText = label.text().trim();
 		let id = label.attr("id");
 		let field = label.data("field");
-	
+
 		let input = $('<input>', {
 			type: "text",
 			class: "label-editor",
@@ -160,10 +167,10 @@
 			name: field+"_label",
 			value: currentText
 		});
-	
+
 		label.replaceWith(input);
 		input.focus();
 	});
-	
+
 </script>
 @endsection

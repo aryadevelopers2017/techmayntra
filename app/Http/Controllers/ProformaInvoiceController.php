@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Providers\ProformaInvoiceServiceProvider;
 use Illuminate\Http\Request;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Providers\QuotationServiceProvider;
+use Illuminate\Support\Facades\Log;
+
 
 class ProformaInvoiceController extends Controller
 {
@@ -83,11 +85,26 @@ class ProformaInvoiceController extends Controller
         return view('/proforma_invoice_details_list')->with('proforma_invoice_details', $data['data']);
     }
 
-    public static function final_invoice($id)
-    {
-        $data=ProformaInvoiceServiceProvider::final_invoice_data($id);
+    // public static function final_invoice($id)
+    // {
+    //     $data=ProformaInvoiceServiceProvider::final_invoice_data($id);
 
-        return view('final_invoice')->with('data', $data['data']);
+    //     return view('final_invoice')->with('data', $data['data']);
+
+    // }
+
+   public function final_invoice($id)
+    {
+        $data = ProformaInvoiceServiceProvider::final_invoice_data($id);
+
+        ob_end_clean();
+        ob_start();
+
+        $pdf = Pdf::loadView('pdf.proforma-invoice', [
+            'data' => $data['data']
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->stream($data['data']['invoice_no'] . '.pdf');
     }
 
     public static function invoice_list($id)

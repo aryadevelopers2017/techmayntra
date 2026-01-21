@@ -84,8 +84,8 @@
                                     <strong>Pan No : {{ $data['company_data']->pan_no }}</strong> -->
 
 
-                                    @if(!empty($data['trn_no']))
-                                        <strong>Trn No : {{ $data['trn_no'] }}</strong>
+                                    @if(!empty($data['company_data']->trn_no))
+                                        <strong>Trn No : {{ $data['company_data']->trn_no }}</strong>
                                     @endif
 
 
