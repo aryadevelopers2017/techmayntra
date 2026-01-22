@@ -43,13 +43,29 @@ class ProformaInvoiceController extends Controller
         return redirect()->route('proforma_invoice.list');
     }
 
-    public static function proforma_invoice_generate($id)
+    // public static function proforma_invoice_generate($id)
+    // {
+    //     $data=ProformaInvoiceServiceProvider::proforma_invoice_generate($id);
+
+    //     return view('proforma_invoice')->with('data', $data['data']);
+    // }
+
+     public static function proforma_invoice_generate($id)
     {
         $data=ProformaInvoiceServiceProvider::proforma_invoice_generate($id);
 
-        return view('proforma_invoice')->with('data', $data['data']);
-    }
+        // dd($data);
 
+          ob_end_clean();
+        ob_start();
+
+         $pdf = Pdf::loadView('pdf.proforma-invoice', [
+            'data' => $data['data']
+        ])->setPaper('a4', 'portrait');
+
+
+        return $pdf->stream($data['data']['invoice_no'] . '.pdf');
+    }
 
     public static function proforma_invoice_payment($id)
     {
@@ -100,7 +116,7 @@ class ProformaInvoiceController extends Controller
         ob_end_clean();
         ob_start();
 
-        $pdf = Pdf::loadView('pdf.proforma-invoice', [
+        $pdf = Pdf::loadView('pdf.final-invoice', [
             'data' => $data['data']
         ])->setPaper('a4', 'portrait');
 

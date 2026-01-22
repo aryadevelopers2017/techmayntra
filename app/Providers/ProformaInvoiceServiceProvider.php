@@ -8,6 +8,9 @@ use DB;
 use Str;
 use App\Models\Customer;
 use App\Models\Currency;
+
+use App\Models\quotation;
+
 use App\Models\proforma_invoice;
 use App\Models\proforma_invoice_item;
 use App\Models\invoice_master;
@@ -109,6 +112,7 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
     {
         $data=[];
         $quotation_data=proforma_invoice::find($id);
+
         $customer=Customer::find($quotation_data->c_id);
         $data['quotation_id']=$id;
         $customer_id=$customer->id;
@@ -165,6 +169,11 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $item=item_master::proforma_invoice_item($id, $item_id);
 
         $data['item_data']=$item;
+
+
+        // ====
+
+         $data['original_quotation_data']= quotation::find($quotation_data->quotation_id);
 
         // dd($data);
 

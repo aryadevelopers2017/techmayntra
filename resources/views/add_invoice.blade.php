@@ -85,7 +85,7 @@
 
 
 
-                                            <div class="col-lg-6">
+                                            <!-- <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>TRN No</label>
                                                     <input type="text"
@@ -98,7 +98,7 @@
                                                         Please Enter TRN No
                                                     </span>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
 
 

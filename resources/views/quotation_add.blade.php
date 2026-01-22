@@ -292,7 +292,7 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>Technology </label>
+                                                    <label> {{ $details_array['company_data'][0]->technology_label ?? 'Technology' }}  </label>
                                                     <textarea class="summernote" id="technology" name="technology">
                                                         @php
                                                             if(isset($details_array['technology']))
@@ -311,12 +311,13 @@
                                                                 echo $details_array['company_data'][0]->technology;
                                                             }
                                                         @endphp
+
                                                         </textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>Mile Stone </label>
+                                                    <label> {{ $details_array['company_data'][0]->milestone_label ?? 'Mile Stone' }}  </label>
                                                     <textarea class="summernote" id="milestone" name="milestone">
                                                         @php
                                                             if(isset($details_array['milestone']))

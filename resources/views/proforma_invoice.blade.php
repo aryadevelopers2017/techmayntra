@@ -84,7 +84,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12" style="text-align: center;">
-                                    <h4> Invoice</h4>
+                                    <h4> TAX INVOICE</h4>
                                 </div>
                             </div>
                             <div class="row">

@@ -138,6 +138,7 @@ class QuotationServiceProvider extends ServiceProvider
         $data['total_amount']=$quotation_data[0]['total_amount'];
         $data['v_id']=$quotation_data[0]['v_id'];
 
+        $data['technology']=$quotation_data[0]['technology'];
 
         $data['milestone']=$quotation_data[0]['milestone'];
         $data['working_days']=$quotation_data[0]['working_days'] ?? 0;

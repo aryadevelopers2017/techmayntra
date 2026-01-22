@@ -30,8 +30,10 @@ class quotation extends Model
     public static function add($request)
     {
 
+    // dd($request->all());
+
         $items = json_decode($request->services_item, true);
-$itemIds = collect($items)->pluck('item_id')->unique()->toArray();
+        $itemIds = collect($items)->pluck('item_id')->unique()->toArray();
 
 
         $max_invoice_no=0;
