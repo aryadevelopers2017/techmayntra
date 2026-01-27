@@ -79,4 +79,12 @@ class Service extends Model
 
         return $service;
     }
+
+
+    public function category()
+{
+    return $this->belongsTo(ServiceCategory::class, 'category_id');
+}
+
+
 }

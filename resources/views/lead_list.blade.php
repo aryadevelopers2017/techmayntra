@@ -29,7 +29,9 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
+                         @can('lead.add')
                         <a href="{{ url('/lead_add') }}" class="btn btn-primary">Add New Lead</a>
+                          @endcan
                     </div>
                 </div>
             </div>
@@ -57,19 +59,19 @@
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
                                                     <td style="text-align: left;">
-                                                        @php
-                                                            if($leads->status==0)
-                                                            {
-                                                                @endphp
-                                                                    <a href="{{ url('/lead_edit').'/'.$leads->id }}">{{ $leads->name }} </a>
-                                                                @php
-                                                            }
-                                                            else
-                                                            {
-                                                                echo $leads->name;
-                                                            }
-                                                        @endphp
+                                                        @can('lead.edit')
+                                                            @if($leads->status == 0)
+                                                                <a href="{{ url('/lead_edit/'.$leads->id) }}">
+                                                                    {{ $leads->name }}
+                                                                </a>
+                                                            @else
+                                                                {{ $leads->name }}
+                                                            @endif
+                                                        @else
+                                                            {{ $leads->name }}
+                                                        @endcan
                                                     </td>
+
                                                     <td style="text-align: left;">{{ $leads->contact }}</td>
                                                     <td style="text-align: left;">{{ $leads->follow_up_date }}</td>
                                                     <td style="text-align: left;">
@@ -106,16 +108,19 @@
 
                                                             if($leads->status!=0)
                                                             {
-                                                                @endphp   
+                                                                @endphp
                                                                 <label for="name" style="background-color: {{ $bgcolor }}"> {{ $word_status }} </label>
                                                                 @php
                                                             }
                                                             else
                                                             {
                                                                 @endphp
+                                                                  @can('lead.approve')
+
                                                                 <a href="{{ url('/lead_approve/').'/'.$leads->id }}" class="btn btn-success sweetalert btn sweet-success" title=""><i class="fa fa-check"></i></a>
                                                                 &nbsp;&nbsp;&nbsp;
                                                                 <a href="{{ url('/lead_cancel/').'/'.$leads->id }}" class="btn btn-danger btn sweetalert sweet-success-cancel" title=""><i class="fa fa-close"></i></a>
+                                                                @endcan
                                                                 @php
                                                             }
                                                         @endphp

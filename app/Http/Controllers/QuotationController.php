@@ -29,7 +29,8 @@ class QuotationController extends Controller
     {
         $data=QuotationServiceProvider::get_customer_item_list();
 
-        return view('quotation_add')->with('details_array', value: $data['data']);
+
+        return view('quotation_add')->with('details_array',  $data['data']);
     }
 
     public static function add_quotation(Request $request)
@@ -56,7 +57,7 @@ class QuotationController extends Controller
     {
         $data=QuotationServiceProvider::quotation_edit($id);
 
-        // dd($data['data']);
+        // dd($data);
 
         return view('quotation_add')->with('details_array', $data['data']);
     }

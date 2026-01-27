@@ -38,7 +38,7 @@ class LeadServiceProvider extends ServiceProvider
         try
         {
             $data=Lead_master::lead_list();
-            
+
             return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
         }
         catch (\Exception $e)
@@ -57,7 +57,7 @@ class LeadServiceProvider extends ServiceProvider
 			$data['country_data']=Customer::getCountry();
             $data['client_lists']=Customer::customer_list();
             // $data['city_data']=Customer::getCity();
-            
+
             return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
         }
         catch (\Exception $e)
@@ -79,26 +79,27 @@ class LeadServiceProvider extends ServiceProvider
                 $country=Customer::getCountryName($request->country);
                 $request->country=$country[0]->name;
             }
-			
+
             if($request->state>0)
             {
                 $state=Customer::getStateName($request->state);
                 $request->state=$state[0]->name;
             }
-            
+
             if($request->city)
             {
                 $city=Customer::getCityName($request->city);
                 $request->city=$city[0]->name;
             }
 
+
             $data=Lead_master::add_lead_master($request);
 			$request->id=$data->id;
-            
+
             $remarks_data='';
             if($request->remarks!='')
             {
-                $remarks_data=lead_remarks::add_lead_remarks($request);    
+                $remarks_data=lead_remarks::add_lead_remarks($request);
             }
 
             return array('status_code' => 200, 'message' => 'Data Successfully Saved', 'data' => $remarks_data);
@@ -117,7 +118,7 @@ class LeadServiceProvider extends ServiceProvider
             $data=Lead_master::get_lead_dataByID($id);
             $remarks_data=lead_remarks::getlead_remarksByid($id);
             $data['remarks_data']=$remarks_data;
-			
+
 			$country=$data->country;
             $countrydata='';
             if($country!='')
@@ -129,7 +130,7 @@ class LeadServiceProvider extends ServiceProvider
             {
                 $country_id=$countrydata[0]->id;
             }
-			
+
             $state=$data->state;
             $statedata='';
             if($state!='')
@@ -161,7 +162,7 @@ class LeadServiceProvider extends ServiceProvider
         {
 			$country=Customer::getCountryName($request->country);
             $request->country=$country[0]->name;
-			
+
             $city=Customer::getCityName($request->city);
             $request->city=$city[0]->name;
 
@@ -195,7 +196,7 @@ class LeadServiceProvider extends ServiceProvider
                 $statedata=Customer::getStatedata($state);
                 $state_id=$statedata[0]->id;
             }
-			
+
 			$country_id=$data->country;
             if($country_id>0)
             {
@@ -213,7 +214,7 @@ class LeadServiceProvider extends ServiceProvider
         {
             Log::error(['method' => __METHOD__, 'error' => ['file' => $e->getFile(), 'line' => $e->getLine(), 'message' => $e->getMessage()], 'created_at' => date("Y-m-d H:i:s")]);
             return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
-        }   
+        }
     }
 
     public static function lead_delete($id)

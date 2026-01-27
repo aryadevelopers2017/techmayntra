@@ -59,7 +59,13 @@
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
                                                     <!-- <td style="text-align: left;"><a target="_blank" href="{{ url('/final_invoice/').'/'.$item->id }}" title=""><i class="ti-notepad"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/quotation_edit/{{ $item->id }}" title=""><i class="ti-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/quotation_delete/{{ $item->id }}"><i class="ti-trash"></i></a></td> -->
-                                                    <td style="text-align: left;"><a target="_blank" href="{{ url('/final_invoice/').'/'.$item->id }}" title="invoice">{{ $item->invoice_no }}</a></td>
+                                                    <td style="text-align: left;">
+                    @can('payment_receipt.download')
+
+                                                    <a target="_blank" href="{{ url('/final_invoice/').'/'.$item->id }}" title="invoice">{{ $item->invoice_no }}</a>
+                    @endcan
+
+                                                </td>
                                                     <td style="text-align: left;">{{ $item->entrydate }}</td>
                                                     <td style="text-align: left;">{{ $item->title }}</td>
                                                     <td style="text-align: left;">{{ $item->name }}</td>

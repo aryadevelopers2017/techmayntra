@@ -72,10 +72,16 @@
 
                                     {{-- ACTION --}}
                                     <hr>
+
+
+                                                                                                            @can('vendor.delete')
+
                                     <a href="{{ url('/delete_vendor/'.$data->id) }}"
                                        class="btn btn-danger btn-sm sweetalert sweet-success-cancel">
                                         Delete Vendor
                                     </a>
+                                                                                        @endcan
+
 
                                 </div>
                             </div>

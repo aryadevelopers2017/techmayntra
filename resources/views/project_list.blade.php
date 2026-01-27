@@ -29,7 +29,11 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
+                                                                        @can('project.add')
+
                         <a href="{{ url('/project_add') }}" class="btn btn-primary">Add New Project</a>
+                                                                            @endcan
+
                     </div>
                 </div>
             </div>
@@ -84,7 +88,14 @@
                                                     @endphp
                                                     <td>
                                                         @if($status_id==0 || $status_id==1)
+
+                                                                        @can('project.edit')
+
                                                             <a href="{{ url('/project_payment_info').'/'.$item->id }}" title="milestone"> {{$item->quotation_title}}</a>
+                                                            @else
+                                                            {{$item->quotation_title}}
+                                                                            @endcan
+
                                                         @else
                                                             {{$item->quotation_title}}
                                                         @endif
@@ -99,9 +110,13 @@
                                                     <td>{{ $item->quotation_price - $item->vendor_price}}</td>
                                                     <td><span class="badge badge-{{ $status_icon }}"> {{ $status }}</span> </td>
                                                     <td>
+                                                                        @can('project.status')
+
                                                         @if($status_id==0)
                                                             <a class="btn btn-success" onClick="approve_project({{ $item->id }});" title="approve"><i class="fa fa-check"></i></a> &nbsp;&nbsp;&nbsp; <a onClick="cancel_project({{ $item->id }});"  class="btn btn-danger" title="cancel"><i class="fa fa-close"></i></a>
                                                         @endif
+                                                                                                                                    @endcan
+
                                                     </td>
                                                 </tr>
                                             @endforeach

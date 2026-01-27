@@ -29,7 +29,13 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
+
+                                                                        @can('vendor.add')
+
                         <a href="{{ url('/vendor_add') }}" class="btn btn-primary">Add New Vendor</a>
+
+                                                                            @endcan
+
                     </div>
                 </div>
             </div>
@@ -60,8 +66,15 @@
                                             @foreach($data as $item)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                  
-                                                    <td> <a href="{{ url('/vendor_info').'/'.$item->id }}"> {{$item->name}}</a></td>
+
+                                                    <td>
+                                                                        @can('vendor.edit')
+
+                                                        <a href="{{ url('/vendor_info').'/'.$item->id }}"> {{$item->name}}</a>
+                                                        @else
+                                                        {{$item->name}}
+                                                        @endcan
+                                                    </td>
                                                     <td>{{$item->company_name}}</td>
                                                     <td>{{$item->mobile}}</td>
                                                     <td>{{$item->email}}</td>

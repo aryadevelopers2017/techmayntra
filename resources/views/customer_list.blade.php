@@ -29,7 +29,9 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
+                         @can('customer-create')
                         <a href="{{ url('/customer_add') }}" class="btn btn-primary">Add New Customer</a>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -60,7 +62,14 @@
                                             @foreach($customer as $item)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                    <td> <a href="{{ url('/customer_info').'/'.$item->id }}"> {{$item->name}}</a></td>
+                                                    <td style="text-align:left;">
+
+                                                        <a href="{{ url('/customer_info/'.$item->id) }}">
+                                                            {{ $item->name }}
+                                                        </a>
+
+                                                    </td>
+
                                                     <td>{{$item->company_name}}</td>
                                                     <td>{{$item->mobile}}</td>
                                                     <td>{{$item->email}}</td>

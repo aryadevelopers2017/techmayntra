@@ -23,14 +23,19 @@ class Lead_master extends Model
 
     public static function add_lead_master($request)
     {
-		 
+
 		\DB::enableQueryLog();
         $data =new Lead_master();
 
         $data->name=$request->name;
         $data->contact=$request->contact;
         $data->client_id=isset($request->client_id) ? $request->client_id : null;
-       // $data->lead=implode(',', $request->lead);
+
+    //    $data->lead=implode(',', $request->lead);
+
+       $data->lead=$request->lead ?? 'online';
+
+
         $data->follow_up_date=$request->follow_up_date;
         $data->status=0;
         $data->remarks=$request->remarks;
@@ -43,7 +48,7 @@ class Lead_master extends Model
         $data->pincode=$request->pincode;
 
         $data->save();
-		dd(\DB::getQueryLog());
+		// dd(\DB::getQueryLog());
 
         return $data;
     }
@@ -87,7 +92,7 @@ class Lead_master extends Model
     {
         $data =Lead_master::find($id);
         $data->status=$status;
-        
+
         $data->save();
 
         return $data;

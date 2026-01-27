@@ -70,7 +70,7 @@
                             <div class="row">
                                 <div class="col-md-6" style="text-align: left;">
                                     <h2 style="font-size:14px !important;">{{ $data['company_data']->company_name }}</h2>
-                                    @php echo $data['company_address']; @endphp 
+                                    @php echo $data['company_address']; @endphp
                                     <p>{{ $data['company_city'].','. $data['company_state'] }} </p>
                                 </div>
                                 <div class="col-md-6" style="text-align: right;">
@@ -219,9 +219,9 @@
 
 
                                 <div id="legalcopy">
-                                    <p class="legal"><strong><b>Technology</b></strong></p>
+                                    <p class="legal"><strong><b>{{  $data['company_data']->technology_label ?? 'Technology' }}</b></strong></p>
                                     <div class="legal1">
-                                        @php 
+                                        @php
                                             if($data['technology']!='')
                                             {
                                                 echo $data['technology'];
@@ -235,22 +235,22 @@
                                 </div>
 
                                 <div id="legalcopy">
-                                    <p class="legal"><strong><b>Milestones</b></strong></p>
+                                    <p class="legal"><strong><b>{{  $data['company_data']->milestone_label ?? 'Mile Stone' }}</b></strong></p>
                                     <div class="legal1">
-                                        @php 
+                                        @php
                                             if($data['milestone']!='')
                                             {
                                                 echo $data['milestone'];
                                             }
                                             else
                                             {
-                                                echo $data['company_data']->milestone;   
+                                                echo $data['company_data']->milestone;
                                             }
                                         @endphp
                                     </div>
                                 </div>
 
-                                @php 
+                                @php
                                     if($data['working_days']>0)
                                     {
                                         @endphp
@@ -258,18 +258,18 @@
                                             <p class="legal"><strong><b>Total Working Days : </b></strong></p>
                                             <p class="legal1">{{ $data['working_days']}} Working Days</p>
                                         </div>
-                                        @php 
+                                        @php
                                     }
                                 @endphp
 
-                                @php 
+                                @php
                                     if($data['payment_terms_conditions_flag']==1)
                                     {
                                         @endphp
                                         <div id="legalcopy">
                                             <p class="legal"><strong><b>Payment Terms And Conditions :</b></strong></p>
                                             <div class="legal1">
-                                                @php 
+                                                @php
                                                     if($data['payment_terms_conditions']!='')
                                                     {
                                                         echo $data['payment_terms_conditions'];
@@ -281,53 +281,53 @@
                                                 @endphp
                                             </div>
                                         </div>
-                                        @php 
+                                        @php
                                     }
                                 @endphp
 
-                                @php 
+                                @php
                                     if($data['terms_conditions_flag']==1)
                                     {
                                         @endphp
                                         <div id="legalcopy">
                                             <p class="legal"><strong><b>Terms And Conditions :</b></strong></p>
                                             <div class="legal1">
-                                                @php 
+                                                @php
                                                     if($data['terms_conditions']!='')
                                                     {
                                                         echo $data['terms_conditions'];
                                                     }
                                                     else
                                                     {
-                                                        echo $data['company_data']->terms_conditions;   
+                                                        echo $data['company_data']->terms_conditions;
                                                     }
                                                 @endphp
                                             </div>
                                         </div>
-                                        @php 
+                                        @php
                                     }
                                 @endphp
 
-                                @php 
+                                @php
                                     if($data['bank_details_flag']==1)
                                     {
                                         @endphp
                                         <div id="legalcopy">
                                             <p class="legal"><strong><b>Payment Details are as mentioned below :</b></strong></p>
                                             <div class="legal1">
-                                                @php 
+                                                @php
                                                     if($data['bank_details']!='')
                                                     {
                                                         echo $data['bank_details'];
                                                     }
                                                     else
                                                     {
-                                                        echo $data['company_data']->bank_details;   
+                                                        echo $data['company_data']->bank_details;
                                                     }
                                                 @endphp
                                             </div>
                                         </div>
-                                        @php 
+                                        @php
                                     }
                                 @endphp
                             </div>
@@ -354,7 +354,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         var invoice_no= "{{ $data['invoice_no'] }}";
-        
+
         window.onload = function ()
         {
             $("#pdfdownload").click(function()
@@ -363,7 +363,7 @@
                 $("#pdfdownload").text('');
                 printpdf();
                 $("#pdfdownload").text('Generate PDF');
-            });   
+            });
         }
 
         function printpdf()

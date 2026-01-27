@@ -29,7 +29,14 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
-                        <a href="{{ url('/purchase_order_add')}}" class="btn btn-primary">Add New Vendor Receipt</a>
+
+                 @can('vendor_receipt.add')
+
+                        <a href="{{ url('/purchase_order_add')}}" class="btn btn-primary">Add New
+                            Vendor Receipt</a>
+
+                            @endcan
+
                     </div>
                 </div>
             </div>
@@ -60,8 +67,19 @@
                                             @foreach($data as $item)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                    <td style="text-align: left;"><a href="{{ url('purchase_order_generate_invoice').'/'.$item->id }}" title="invoice"><i class="ti-notepad"></i></a></td>
-                                                    <td style="text-align: left;"><a href="{{ url('purchase_order_edit').'/'.$item->id }}" title="edit">{{ $item->order_no }}</a></td>
+                                                    <td style="text-align: left;">
+
+
+                                                        <a href="{{ url('purchase_order_generate_invoice').'/'.$item->id }}" title="invoice"><i class="ti-notepad"></i></a>
+                                                   
+                                                    </td>
+                                                    <td style="text-align: left;">
+
+
+                                                        <a href="{{ url('purchase_order_edit').'/'.$item->id }}" title="edit">{{ $item->order_no }}</a>
+
+
+                                                    </td>
                                                     <td style="text-align: left;">@php echo date('Y-m-d', strtotime($item->purchase_date)); @endphp</td>
                                                     <td style="text-align: left;">{{ $item->company_name }}</td>
                                                     <td style="text-align: left;">

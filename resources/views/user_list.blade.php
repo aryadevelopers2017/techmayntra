@@ -29,7 +29,18 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
-                        <a href="{{ url('/staff_add') }}" class="btn btn-primary">Add New Staff</a>
+                                                                                                @can('staff.add')
+
+                                                                                                 <a href="{{ url('/staff_add') }}" class="btn btn-primary">Add New Staff</a>
+
+                                                                                                    @endcan
+
+                                                                                                                                                                            @can('service.edit')
+
+
+                        <a href="{{ url('/roles') }}" class="btn btn-primary">Manage Roles</a>
+                                                                            @endcan
+
                     </div>
                 </div>
             </div>
@@ -60,16 +71,25 @@
                                                     <td>{{$user->name}}</td>
                                                     <td class="text-left">{{$user->email}}</td>
                                                     <td class="text-left">
+                                                                                                                                @can('staff.assign_customer_list')
+
                                                         <a href="{{ url('assign-customers/'.$user->id) }}"
                                                         class="btn btn-danger btn-sm">
                                                             Assign Customers
                                                         </a>
+                                                                                                                                    @endcan
+
                                                     </td>
                                                     <td class="text-left">
+
+                                                                                                                            @can('staff.view_report')
+
                                                         <a href="{{ url('staff-report/'.$user->id) }}"
                                                         class="btn btn-success btn-sm">
                                                             View Report
                                                         </a>
+                                                                                                                                    @endcan
+
                                                     </td>
                                                 </tr>
                                             @endforeach

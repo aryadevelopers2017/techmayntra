@@ -8,7 +8,9 @@
         transition: all 0.3s linear;
     }
 </style>
+
 @extends('layouts.Admin.app')
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -105,24 +107,6 @@
                                                     </span>
                                                 </div>
                                             </div>
-
-                                            <!-- <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>TRN No</label>
-                                                    <input type="text"
-                                                        class="form-control"
-                                                        id="trn_no"
-                                                        name="trn_no"
-                                                        placeholder="Enter TRN No"
-                                                        value="{{ isset($details_array['trn_no']) ? $details_array['trn_no'] : '' }}">
-                                                    <span id="errtrn" style="display:none;color: #ff0000;">
-                                                        Please Enter TRN No
-                                                    </span>
-                                                </div>
-                                            </div> -->
-
-
-
 
                                         </div>
                                         <div class="form-group" style="display: none;">
@@ -227,13 +211,19 @@
 
                                                             <select class="form-control service-type">
                                                                 <option value="">Select Ticket Type</option>
+                                                                @php
+                                                                $category = collect($details_array['service_types'])
+                                                                    ->firstWhere('id', $item->category_id);
+                                                            @endphp
 
-                                                                @foreach($details_array['service_types'] as $type)
-                                                                    <option value="{{ $type['code'] }}"
-                                                                        {{ $item->service_type == $type['code'] ? 'selected' : '' }}>
-                                                                        {{ $type['name'] }}
+                                                            @if($category)
+                                                                @foreach($category['services'] as $service)
+                                                                    <option value="{{ $service['code'] }}"
+                                                                        {{ $item->service_type == $service['code'] ? 'selected' : '' }}>
+                                                                        {{ $service['name'] }}
                                                                     </option>
                                                                 @endforeach
+                                                            @endif
                                                             </select>
                                                         </div>
                                                     </div>
@@ -562,7 +552,12 @@
                                                                     <select id="item_id" name="item_id" class="form-control select2" required >
                                                                         <option value="">Please Select Item</option>
                                                                         @foreach($details_array['item_data'] as $item)
-                                                                            <option value="{{ $item->id }}" data-id="{{ $item->item_name }}" data-name="{{ strip_tags($item->description) }}">{{ $item->item_name }}</option>
+                                                                            <option value="{{ $item->id }}" data-id="{{ $item->item_name }}"
+
+                                                                             data-category-id="{{ $item->category_id }}"
+
+
+                                                                            data-name="{{ strip_tags($item->description) }}">{{ $item->item_name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -870,6 +865,10 @@ function addItemRow(itemId, rowId) {
     const symbol = "{{ $currency_data->symbol }}";
     const name = $("#item_id option:selected").text();
     const description = $("#item_id option:selected").data("name");
+    const categoryId = $("#item_id option:selected").data("category-id");
+
+
+
 
     const row = `
     <div class="row form-group item-row" data-row-id="${rowId}" data-item-id="${itemId}">
@@ -936,9 +935,7 @@ function addItemRow(itemId, rowId) {
                     <label><b>Ticket Type</b></label>
                     <select class="form-control service-type">
                         <option value="">Select Ticket Type</option>
-                        ${SERVICE_TYPES.map(s =>
-                            `<option value="${s.code}">${s.name}</option>`
-                        ).join('')}
+                       ${getServiceOptionsByCategory(categoryId)}
                     </select>
 
                 </div>
@@ -951,6 +948,21 @@ function addItemRow(itemId, rowId) {
     $("#items").after(row);
     $('.summernote').summernote();
 }
+
+
+function getServiceOptionsByCategory(categoryId) {
+    const category = SERVICE_TYPES.find(c => c.id == categoryId);
+
+    if (!category) {
+        return `<option value="">No Services Available</option>`;
+    }
+
+    return category.services.map(service =>
+        `<option value="${service.code}">${service.name}</option>`
+    ).join('');
+}
+
+
 
 // Remove Item (Event Delegation)
 $(document).on("click", ".remove-item", function() {

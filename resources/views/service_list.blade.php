@@ -34,9 +34,16 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
+
+                                                                        @can('service_type.add')
+
                         <a href="{{ url('/service_add') }}" class="btn btn-primary">
                             Add New Service
                         </a>
+
+                                                                        @endcan
+
+
                     </div>
                 </div>
             </div>
@@ -76,16 +83,26 @@
                                                         @endif
                                                     </td>
                                                     <td>
+                                                                        @can('service_type.edit')
+
                                                         <a href="{{ url('/service_edit/'.$service->id) }}"
                                                         class="btn btn-sm btn-info">
                                                             Edit
                                                         </a>
+
+                                                                                                                                    @endcan
+
+
+                                                                                                                                                                                                            @can('service_type.delete')
 
                                                         <a href="{{ url('/service_delete/'.$service->id) }}"
                                                         class="btn btn-sm btn-danger"
                                                         onclick="return confirm('Are you sure you want to delete this service?')">
                                                             Delete
                                                         </a>
+
+                                                                                                                                    @endcan
+
                                                     </td>
 
                                                 </tr>

@@ -11,6 +11,7 @@ use Auth;
 use App\Models\User;
 use App\Models\invoice_master;
 
+use Spatie\Permission\Models\Role;
 
 use App\Models\Customer;
 use Illuminate\Support\Facades\Log;
@@ -34,7 +35,8 @@ class userController extends Controller
 
     public static function user_add()
     {
-        return view('user_add');
+         $roles = Role::all();
+          return view('user_add', compact('roles'));
     }
 
     public static function changePassword()

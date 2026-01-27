@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-    
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +32,13 @@ Route::post('/user_add_checkemail', [App\Http\Controllers\userController::class,
 
 Route::get('/customer_info/{id}', [App\Http\Controllers\CustomerController::class, 'customer_info']);
 Route::get('/delete_customer/{id}', [App\Http\Controllers\CustomerController::class, 'delete_customer']);
+Route::get('/edit_customer/{id}', [App\Http\Controllers\CustomerController::class, 'edit_customer']);
+
+Route::post('/update_customer', [App\Http\Controllers\CustomerController::class, 'update_customer']);
+
+Route::post('/document/delete', [App\Http\Controllers\CustomerController::class, 'deleteDocument'])
+    ->name('customer.document.delete');
+
 
 Route::post('/add_customer', [App\Http\Controllers\CustomerController::class, 'add_customer']);
 
@@ -63,7 +70,7 @@ Route::get('/quotation_approve/{id}', [App\Http\Controllers\QuotationController:
 Route::get('/quotation_cancel/{id}', [App\Http\Controllers\QuotationController::class, 'quotation_cancel']);
 
 Route::get('/company_module', [App\Http\Controllers\CompanyModuleController::class, 'index']);
-Route::post('/update_module', [App\Http\Controllers\CompanyModuleController::class, 'updinvoiceate_module']);
+Route::post('/update_module', [App\Http\Controllers\CompanyModuleController::class, 'update_module']);
 
 Route::get('/proforma_invoice', [App\Http\Controllers\ProformaInvoiceController::class, 'index'])->name('proforma_invoice.list');
 
@@ -161,8 +168,8 @@ Route::get('staff-report/{id}', [App\Http\Controllers\userController::class, 're
     ->name('staff.report');
 
 
-Route::group(['middleware' => ['admin']], function ()
-{
+// Route::group(['middleware' => ['admin']], function ()
+// {
 	Route::get('/staff_list', [App\Http\Controllers\userController::class, 'index']);
 	Route::get('/staff_add', [App\Http\Controllers\userController::class, 'user_add']);
 	Route::post('/add_user', [App\Http\Controllers\userController::class, 'add_user']);
@@ -177,4 +184,15 @@ Route::group(['middleware' => ['admin']], function ()
     ->name('customer.assign');
 
 
-});
+
+    Route::get('/roles', [App\Http\Controllers\RoleController::class, 'index']);
+    Route::get('/roles/add', [App\Http\Controllers\RoleController::class, 'create']);
+    Route::post('/roles/store', [App\Http\Controllers\RoleController::class, 'store']);
+
+    Route::get('/roles/edit/{id}', [App\Http\Controllers\RoleController::class, 'edit']);
+    Route::post('/roles/update/{id}', [App\Http\Controllers\RoleController::class, 'update']);
+
+    Route::post('/roles/delete', [App\Http\Controllers\RoleController::class, 'delete']);
+
+
+// });

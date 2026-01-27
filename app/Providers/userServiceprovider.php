@@ -58,6 +58,11 @@ class userServiceprovider extends ServiceProvider
                 'sub_admin' => 1
             ]);
 
+            //  Assign role
+        if ($request->role) {
+            $data->assignRole($request->role);
+        }
+
             return array('status_code' => 200, 'message' => 'User Successfully Added', 'data' => $data);
         }
         catch (\Exception $e)

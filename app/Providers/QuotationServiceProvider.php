@@ -16,6 +16,8 @@ use App\Models\proforma_invoice;
 use App\Models\proforma_invoice_item;
 use App\Models\company_address_master;
 use App\Models\vendor_master;
+use App\Models\ServiceCategory;
+
 
 class QuotationServiceProvider extends ServiceProvider
 {
@@ -401,43 +403,7 @@ class QuotationServiceProvider extends ServiceProvider
 
     public static function serviceTypes()
         {
-            return [
-                [
-                    'id' => 1,
-                    'code' => 'AIR_TICKET',
-                    'name' => 'Air Ticket ( One way, Round Trip, Rebooking, Cancellation, Visa change, Ticket Only, Booking Live PNR)',
-                ],
-                [
-                    'id' => 2,
-                    'code' => 'UAE_VISA_CHANGE',
-                    'name' => 'UAE Visa Change ( A2A & B2B)',
-                ],
-                [
-                    'id' => 3,
-                    'code' => 'INSURANCE',
-                    'name' => 'Insurance (Inbound & Outbound)',
-                ],
-                [
-                    'id' => 4,
-                    'code' => 'WORLDWIDE_VISA',
-                    'name' => 'Worldwide Visa Assistance ( All Countries list except UAE)',
-                ],
-                [
-                    'id' => 5,
-                    'code' => 'TOURS',
-                    'name' => 'Tours (Name of Tours will be mentioned in Descriptions) - for all Countries',
-                ],
-                [
-                    'id' => 6,
-                    'code' => 'TRANSFERS',
-                    'name' => 'Transfers (Type of transfer will be mentioned in Descriptions) - for all countries',
-                ],
-                [
-                    'id' => 7,
-                    'code' => 'TOUR_PACKAGE',
-                    'name' => 'Tour Package (Details will be mentioned in Descriptions) - for all Countries',
-                ],
-            ];
+            return ServiceCategory::serviceTypes() ;
         }
 
 }

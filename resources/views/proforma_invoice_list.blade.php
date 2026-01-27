@@ -29,7 +29,14 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
+
+
+                    @can('invoice.add')
+
                         <a href="{{ url('/invoice_add')}}" class="btn btn-primary">Add New Invoice</a>
+
+                    @endcan
+
                     </div>
                 </div>
             </div>
@@ -67,7 +74,15 @@
                                                             if($item->status==0 || $item->status==1)
                                                             {
                                                                 @endphp
+                                                                   @can('invoice.print')
+
                                                                 <a href="{{ url('/proforma_invoice_generate/').'/'.$item->id }}" title="invoice" target="_blank">{{ $item->invoice_no }}</a>
+
+@else
+{{ $item->invoice_no }}
+
+                                                                                    @endcan
+
                                                                 @php
                                                             }
                                                             else
@@ -105,23 +120,35 @@
                                                         <span class="badge badge-{{ $status_icon }}">{{ $status_word }}</span>
                                                     </td>
                                                     <td style="text-align: center;width: 200px;">
+
+
+
                                                         @php
                                                             $total_amount=$item->total_amount;
                                                             $paid_amount=$item->paid_amount;
                                                             if($item->status==0)
                                                             {
                                                                 @endphp
+                                                                   @can('invoice.approve')
                                                                 <a href="{{ url('/proforma_invoice_approve/').'/'. $item->id }}" class="btn btn-success sweetalert btn sweet-success" title="approve"><i class="fa fa-check"></i></a> &nbsp;&nbsp;&nbsp;
                                                                 <a href="{{ url('/proforma_invoice_cancel/').'/'. $item->id }}" class="btn btn-danger btn sweetalert sweet-success-cancel" title="cancel"><i class="fa fa-close"></i></a>
+                                                                    @endcan
+
                                                                 @php
                                                             }
                                                             elseif($item->status==1 && $total_amount>$paid_amount)
                                                             {
                                                                 @endphp
+                                                                   @can('invoice.payment_add')
+
                                                                 <a href="{{ url('/proforma_invoice_payment/').'/'.$item->id }}" class="btn btn-primary" title="payment">Payment</a>
+                                                                                    @endcan
+
                                                                 @php
                                                             }
                                                         @endphp
+
+
                                                     </td>
                                                 </tr>
                                             @endforeach

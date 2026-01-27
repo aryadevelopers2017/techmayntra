@@ -57,6 +57,18 @@
                                                     <span id="empconfirm_pass" style="display:none;color: #ff0000;">Please Enter Confirm Email</span>
                                                     <span id="errconfirm_pass" style="display:none;color: #ff0000;">Password and Confirm Email are not same</span>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label>Assign Role</label>
+                                                    <select name="role" class="form-control" required>
+                                                        <option value="">Select Role</option>
+                                                        @foreach($roles as $role)
+                                                            <option value="{{ $role->name }}">{{ ucfirst($role->name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                         <button type="button" id="finalbtn" class="btn btn-primary">Submit</button>

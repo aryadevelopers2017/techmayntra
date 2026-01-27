@@ -38,9 +38,13 @@
          <!-- Assign New Customer Button -->
 <div class="row mb-3">
     <div class="col-lg-12">
+                                                                                @can('staff.assign_customer')
+
         <button class="btn btn-primary" data-toggle="modal" data-target="#assignCustomerModal">
             Assign New Customer
         </button>
+                                                                                    @endcan
+
     </div>
 </div>
 
@@ -121,8 +125,10 @@
                                                     <td>{{ $item->company_name }}</td>
                                                     <td>{{ $item->mobile }}</td>
                                                     <td>{{ $item->email }}</td>
-                                                   
+
                                                     <td class="text-center">
+                                                                                                               @can('staff.assign_customer')
+
                                                         <form action="{{ route('customer.unassign', $item->id) }}"
                                                               method="POST"
                                                               onsubmit="return confirm('Unassign this customer?');">
@@ -133,6 +139,8 @@
                                                                 <i class="fa fa-times"></i> Unassign
                                                             </button>
                                                         </form>
+                                                                                                                                    @endcan
+
                                                     </td>
                                                 </tr>
                                             @empty

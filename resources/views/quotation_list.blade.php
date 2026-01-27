@@ -29,7 +29,12 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
+
+@can('quotation.add')
                         <a href="{{ url('/quotation_add')}}" class="btn btn-primary">Add New Quotation</a>
+@endcan
+
+
                     </div>
                 </div>
             </div>
@@ -61,14 +66,33 @@
                                             @foreach($quotation_list as $item)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                    <td style="text-align: left;"><a target="_blank" href="{{ url('/invoice/').'/'.$item->id }}" title="Invoice"><i class="ti-notepad"></i> &nbsp;&nbsp;&nbsp;{{ $item->invoice_no }}</a></td>
+                                                    <td style="text-align: left;">
+@can('quotation.print')
+
+                                                    <a target="_blank" href="{{ url('/invoice/').'/'.$item->id }}" title="Invoice"><i class="ti-notepad"></i> &nbsp;&nbsp;&nbsp;{{ $item->invoice_no }}</a>
+                                                    @else
+                                                    &nbsp;&nbsp;&nbsp;{{ $item->invoice_no }}
+
+@endcan
+
+                                                    </td>
+
                                                     <td style="text-align: left;">@php echo date('Y-m-d', strtotime($item->entrydate)); @endphp</td>
                                                     <td style="text-align: left;">
                                                         @php
                                                             if($item->quotation_status==0)
                                                             {
                                                                 @endphp
+@can('quotation.edit')
+
                                                                 <a href="{{ url('/quotation_edit').'/'.$item->id }}" title="edit"><i class="ti-pencil"></i>&nbsp;&nbsp;&nbsp; {{ $item->title }}</a>
+
+@else
+
+{{ $item->title }}
+
+@endcan
+
                                                                 @php
                                                             }
                                                             else
@@ -118,15 +142,7 @@
                                                         <span class="badge badge-{{ $status_icon }}">{{ $status_word }}</span>
                                                     </td>
                                                     <td style="text-align: center;width: 150px;">
-                                                        <!-- <a target="_blank" href="{{ url('/invoice/').'/'.$item->id }}" title=""><i class="ti-notepad"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                                        <!-- @php
-                                                            if($item->quotation_status==0)
-                                                            {
-                                                                @endphp
-                                                                <a href="{{ url('/quotation_edit').'/'.$item->id }}" title=""><i class="ti-pencil"></i></a>&nbsp;&nbsp;&nbsp;<a href="{{ url('/quotation_delete/').'/'.$item->id }}"><i class="ti-trash"></i></a>
-                                                                @php
-                                                            }
-                                                        @endphp -->
+                                                       @can('quotation.approve')
                                                         @php
                                                             if($item->quotation_status==0)
                                                             {
@@ -134,12 +150,13 @@
                                                                 <!-- <button type="button" class="btn btn-success sweetalert btn sweet-success">Approve</button>
 
                                                                 <button type="button" class="btn btn-danger sweetalert btn sweet-success-cancel">Cancel</button> -->
-                                                                
+
                                                                 <a href="{{ url('/quotation_approve/').'/'.$item->id }}" class="btn btn-success sweetalert btn sweet-success" title="approve"><i class="fa fa-check"></i></a> &nbsp;&nbsp;&nbsp;
                                                                 <a href="{{ url('/quotation_cancel/').'/'.$item->id }}" class="btn btn-danger btn sweetalert sweet-success-cancel" title="cancel"><i class="fa fa-close"></i></a>
                                                                 @php
                                                             }
                                                         @endphp
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                             @endforeach

@@ -84,26 +84,139 @@
                         <li>
                             <a href="{{ url('/home') }}"><i class="ti-home"></i>Dashboard </a>
                         </li>
+
+
+
+
+                           {{-- Lead Master --}}
+                        @can('lead.list')
+                        <li>
+                            <a href="{{ url('/lead_list') }}">
+                                <i class="ti-layers"></i>Lead Master
+                            </a>
+                        </li>
+                        @endcan
+
+                        {{-- Customer --}}
+                        @can('customer.list')
+                        <li>
+                            <a href="{{ url('/customer') }}">
+                                <i class="ti-user"></i>Customer Master
+                            </a>
+                        </li>
+                        @endcan
+
+                        {{-- Service --}}
+                        @can('service.list')
+                        <li>
+                            <a href="{{ url('/service') }}">
+                                <i class="ti-layers"></i>Service
+                            </a>
+                        </li>
+                        @endcan
+
+                        {{-- Quotation --}}
+                        @can('quotation.list')
+                        <li>
+                            <a href="{{ url('/quotation/0') }}">
+                                <i class="ti-comment-alt"></i>Quotation
+                            </a>
+                        </li>
+                        @endcan
+
+                        {{-- Invoice --}}
+                        @can('invoice.list')
+                        <li>
+                            <a href="{{ url('/proforma_invoice') }}">
+                                <i class="ti-comment-alt"></i>Invoice
+                            </a>
+                        </li>
+                        @endcan
+
+                        {{-- Receipt --}}
+                        @can('payment_receipt.download')
+                        <li>
+                            <a href="{{ url('/invoice_list/0') }}">
+                                <i class="ti-comment-alt"></i>Receipt
+                            </a>
+                        </li>
+                        @endcan
+
+                        {{-- Service Master (Dropdown) --}}
+                        @canany(['service_category.list','service_type.list'])
+                        <li>
+                            <a class="sidebar-sub-toggle">
+                                <i class="ti-briefcase"></i> Service Master
+                                <span class="sidebar-collapse-icon ti-angle-down"></span>
+                            </a>
+                            <ul>
+                                @can('service_category.list')
+                                <li>
+                                    <a href="{{ url('/service_category_list') }}">
+                                        <i class="ti-notepad"></i> Service Categories
+                                    </a>
+                                </li>
+                                @endcan
+
+                                @can('service_type.list')
+                                <li>
+                                    <a href="{{ url('/service_list') }}">
+                                        <i class="ti-settings"></i> Services Type
+                                    </a>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcanany
+
+                        {{-- Staff --}}
+                        @can('staff.list')
+                        <li>
+                            <a href="{{ url('/staff_list') }}">
+                                <i class="ti-comment-alt"></i>Staff
+                            </a>
+                        </li>
+                        @endcan
+
+                        {{-- Project --}}
+                        @can('project.list')
+                        <li>
+                            <a href="{{ url('/project_list') }}">
+                                <i class="ti-comment-alt"></i>Project
+                            </a>
+                        </li>
+                        @endcan
+
+                        {{-- Vendor Receipt --}}
+                        @can('vendor_receipt.list')
+                        <li>
+                            <a href="{{ url('/purchase_order_list') }}">
+                                <i class="ti-comment-alt"></i>Vendor Receipt
+                            </a>
+                        </li>
+                        @endcan
+
+                        {{-- Vendor --}}
+                        @can('vendor.list')
+                        <li>
+                            <a href="{{ url('/vendor_list') }}">
+                                <i class="ti-comment-alt"></i>Vendor
+                            </a>
+                        </li>
+                        @endcan
+
+
+
+
+
+                         <!-- @can('lead.list')
                         <li>
                             <a href="{{ url('/lead_list') }}"><i class="ti-layers"></i>Lead Master</a>
                         </li>
+                         @endcan
                         <li>
                             <a href="{{ url('/customer') }}"><i class="ti-user"></i>Customer Master</a>
                         </li>
-                        <!-- <li>
-                            <a href="{{ url('/company_module') }}"><i class="ti-notepad"></i>Company Module</a>
-                        </li> -->
-                        <!-- <li>
-                            <a class="sidebar-sub-toggle"><i class="ti-bar-chart-alt"></i> Company Module <span class="sidebar-collapse-icon ti-angle-down"></span></a>
-                            <ul>
-                                <li><a href="{{ url('/company_module') }}"><i class="ti-notepad"></i>Company</a></li>
-                                <li><a href="{{ url('/company_address_list') }}"><i class="ti-notepad"></i>Company Address</a></li>
-                            </ul>
-                        </li> -->
-                        <!-- <li>
-                            <a href="{{ url('/client_list') }}"><i class="ti-user"></i>Client Master</a>
-                        </li> -->
-
                         <li>
                             <a href="{{ url('/service') }}"><i class="ti-layers"></i>Service</a>
                         </li>
@@ -155,7 +268,7 @@
                         </li>
                         <li>
                             <a href="{{ url('/vendor_list') }}"><i class="ti-comment-alt"></i>Vendor</a>
-                        </li>
+                        </li> -->
 
 
 

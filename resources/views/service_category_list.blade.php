@@ -34,9 +34,15 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
+
+                              @can('service_category.add')
+
                         <a href="{{ url('/service_category_add') }}" class="btn btn-primary">
                             Add New Service Category
                         </a>
+                    @endcan
+
+
                     </div>
                 </div>
             </div>
@@ -74,16 +80,27 @@
                                                         @endif
                                                     </td>
                                                     <td>
+                              @can('service_category.edit')
+
                                                         <a href="{{ url('/service_category_edit/'.$category->id) }}"
                                                         class="btn btn-sm btn-info">
                                                             Edit
                                                         </a>
+
+                                                                            @endcan
+
+
+                              @can('service_category.delete')
+
 
                                                         <a href="{{ url('/service_category_delete/'.$category->id) }}"
                                                         class="btn btn-sm btn-danger"
                                                         onclick="return confirm('Are you sure you want to delete this category?')">
                                                             Delete
                                                         </a>
+
+                                                                            @endcan
+
                                                     </td>
 
                                                 </tr>

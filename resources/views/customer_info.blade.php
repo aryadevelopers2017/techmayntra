@@ -221,7 +221,17 @@
                                                 <label>{{ $data->total_proforma }}</label>
                                             </div>
                                         </div>
+
+                         @can('customer-delete')
+
                                         <a href="{{ url('/delete_customer').'/'.$data->id }}" class="btn btn-danger btn-sm sweetalert sweet-success-cancel" title="">Delete</a>
+@endcan
+
+                         @can('customer-edit')
+
+                                        <a href="{{ url('/edit_customer').'/'.$data->id }}" class="btn btn-primary  btn-sm " title="">Edit</a>
+@endcan
+
                                     </form>
                                 </div>
                             </div>

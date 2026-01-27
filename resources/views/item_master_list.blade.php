@@ -29,7 +29,13 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
+                                                      @can('service.add')
+
                         <a href="{{ url('/service_master_add') }}" class="btn btn-primary">Add New Service</a>
+
+                                                                                                    @endcan
+
+
                     </div>
                 </div>
             </div>
@@ -54,9 +60,24 @@
                                             @foreach($item_list as $item)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                    <td style="text-align: left;"><a href="{{ url('/service_master_edit').'/'.$item->id }}">{{ $item->item_name }}</a></td>
+                                                    <td style="text-align: left;">
+                                                      @can('service.edit')
+
+                                                        <a href="{{ url('/service_master_edit').'/'.$item->id }}">{{ $item->item_name }}</a>
+                                                        @else
+                                                        {{ $item->item_name }}
+
+                                                                                                                                    @endcan
+
+                                                    </td>
                                                     <td style="text-align: left;">@php echo strip_tags( $item->description); @endphp</td>
-                                                    <td style="text-align: left;"><a href="{{ url('/item_cancel/').'/'.$item->id }}" class="btn btn-danger btn sweetalert sweet-success-cancel" title=""><i class="fa fa-close"></i></a></td>
+                                                    <td style="text-align: left;">
+                                                      @can('service.delete')
+
+                                                    <a href="{{ url('/item_cancel/').'/'.$item->id }}" class="btn btn-danger btn sweetalert sweet-success-cancel" title=""><i class="fa fa-close"></i></a>
+                                                                                                                                @endcan
+
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

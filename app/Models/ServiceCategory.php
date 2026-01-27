@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class ServiceCategory extends Model
 {
@@ -64,4 +65,34 @@ class ServiceCategory extends Model
 
         return $category;
     }
+
+
+   public static function serviceTypes()
+{
+    return self::with('services')
+        ->where('status', 1)
+        ->get()
+        ->map(function ($category) {
+            return [
+                'id'   => $category->id,
+                'code' => Str::upper(Str::slug($category->name, '_')),
+                'name' => $category->name,
+                'services' => $category->services->map(function ($service) {
+                    return [
+                        'id'   => $service->id,
+                        'code' => Str::upper(Str::slug($service->name, '_')),
+                        'name' => $service->name,
+                    ];
+                })->values(),
+            ];
+        })
+        ->values()
+        ->toArray();
+}
+
+    public function services()
+{
+    return $this->hasMany(Service::class, 'category_id');
+}
+
 }

@@ -63,6 +63,42 @@ class CustomerServiceProvider extends ServiceProvider
             return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
         }
     }
+public static function update_customer($request)
+{
+    try {
+
+        // Convert IDs → Names
+        if ($request->state) {
+            $state = Customer::getStateName($request->state);
+            $request->state = $state[0]->name ?? null;
+        }
+
+        if ($request->city) {
+            $city = Customer::getCityName($request->city);
+            $request->city = $city[0]->name ?? null;
+        }
+
+        if ($request->country) {
+            $country = Customer::getCountryName($request->country);
+            $request->country = $country[0]->name ?? null;
+        }
+
+        $data = Customer::update_customer($request);
+
+        return [
+            'status_code' => 200,
+            'message' => 'Customer Data Successfully Updated',
+            'data' => $data
+        ];
+
+    } catch (\Exception $e) {
+        Log::error($e);
+        return [
+            'status_code' => 500,
+            'message' => $e->getMessage()
+        ];
+    }
+}
 
     public static function customer_list()
     {
@@ -101,6 +137,9 @@ class CustomerServiceProvider extends ServiceProvider
         {
             $data=[];
             $data=Customer::get_CustomerByid($id);
+
+            // dd($data);
+
             $quotation_data= DB::table('quotation')
                 ->select(DB::raw('IFNULL(count(id),0) AS total_quotation'))
                 ->where('quotation_status','=','1')
@@ -182,5 +221,31 @@ class CustomerServiceProvider extends ServiceProvider
         ['id' => 8, 'name' => 'National ID Card', 'slug' => 'national_id_card'],
     ];
 }
+
+
+
+public static function getCustomerDocuments($customer_id)
+{
+    try {
+        $documents = DB::table('customer_documents')
+            ->where('customer_id', $customer_id)
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        return $documents;
+    } catch (\Exception $e) {
+        Log::error([
+            'method' => __METHOD__,
+            'error' => [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'message' => $e->getMessage()
+            ]
+        ]);
+
+        return [];
+    }
+}
+
 
 }

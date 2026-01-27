@@ -31,8 +31,14 @@ class company_module_master extends Model
         $date = date("Y-m-d h:i:s");
         $data=company_module_master::find($request->id);
         $data->milestone=$request->milestone;
-		$data->milestone_label=$request->milestone_label;
-		$data->technology_label=$request->technology_label;
+
+	    if ($request->filled('milestone_label')) {
+        $data->milestone_label = $request->milestone_label;
+    }
+
+    if ($request->filled('technology_label')) {
+        $data->technology_label = $request->technology_label;
+    }
         $data->terms_conditions=$request->terms_conditions;
         $data->payment_terms_conditions=$request->payment_terms_conditions;
         $data->bank_details=$request->bank_details;
