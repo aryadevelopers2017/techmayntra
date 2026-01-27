@@ -26,9 +26,9 @@ class PermissionSeeder extends Seeder
 
             // Customer
             'customer.list',
-            'customer.add',
-            'customer.edit',
-            'customer.delete',
+            'customer-create',
+            'customer-edit',
+            'customer-delete',
 
             // Service Master
             'service.list',
