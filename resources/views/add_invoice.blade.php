@@ -66,9 +66,9 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>Select Customer </label>
+                                                    <label>Select Client </label>
                                                     <select id="c_id" name="c_id" class="form-control select2" required>
-                                                        <option value="">Please Select Customer</option>
+                                                        <option value="">Please Select Client</option>
                                                         @foreach($details_array['customer_data'] as $customer)
                                                             @if(isset($details_array['customer_id']) && $details_array['customer_id'] == $customer->id)
                                                                 <option value="{{ $customer->id }}" selected>{{ $customer->name }} - {{ $customer->company_name }}</option>
@@ -77,7 +77,7 @@
                                                             @endif
                                                         @endforeach
                                                     </select>
-                                                    <span id="errname" style="display:none;color: #ff0000;">Please Select Customer</span>
+                                                    <span id="errname" style="display:none;color: #ff0000;">Please Select Client</span>
                                                 </div>
                                             </div>
 
@@ -206,13 +206,19 @@
 
                                                             <select class="form-control service-type">
                                                                 <option value="">Select Ticket Type</option>
+                                                                @php
+                                                                $category = collect($details_array['service_types'])
+                                                                    ->firstWhere('id', $item->category_id);
+                                                            @endphp
 
-                                                                @foreach($details_array['service_types'] as $type)
-                                                                    <option value="{{ $type['code'] }}"
-                                                                        {{ $item->service_type == $type['code'] ? 'selected' : '' }}>
-                                                                        {{ $type['name'] }}
+                                                            @if($category)
+                                                                @foreach($category['services'] as $service)
+                                                                    <option value="{{ $service['code'] }}"
+                                                                        {{ $item->service_type == $service['code'] ? 'selected' : '' }}>
+                                                                        {{ $service['name'] }}
                                                                     </option>
                                                                 @endforeach
+                                                            @endif
                                                             </select>
                                                         </div>
                                                     </div>
@@ -271,7 +277,7 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>Technology </label>
+                                                    <label> {{ $details_array['company_data'][0]->technology_label ?? 'Technology' }}  </label>
                                                     <textarea class="summernote" id="technology" name="technology">
                                                         @php
                                                             if(isset($details_array['technology']))
@@ -290,12 +296,13 @@
                                                                 echo $details_array['company_data'][0]->technology;
                                                             }
                                                         @endphp
+
                                                         </textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>Mile Stone </label>
+                                                    <label> {{ $details_array['company_data'][0]->milestone_label ?? 'Mile Stone' }}  </label>
                                                     <textarea class="summernote" id="milestone" name="milestone">
                                                         @php
                                                             if(isset($details_array['milestone']))
@@ -540,7 +547,12 @@
                                                                     <select id="item_id" name="item_id" class="form-control select2" required >
                                                                         <option value="">Please Select Item</option>
                                                                         @foreach($details_array['item_data'] as $item)
-                                                                            <option value="{{ $item->id }}" data-id="{{ $item->item_name }}" data-name="{{ strip_tags($item->description) }}">{{ $item->item_name }}</option>
+                                                                            <option value="{{ $item->id }}" data-id="{{ $item->item_name }}"
+
+                                                                             data-category-id="{{ $item->category_id }}"
+
+
+                                                                            data-name="{{ strip_tags($item->description) }}">{{ $item->item_name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -848,6 +860,10 @@ function addItemRow(itemId, rowId) {
     const symbol = "{{ $currency_data->symbol }}";
     const name = $("#item_id option:selected").text();
     const description = $("#item_id option:selected").data("name");
+    const categoryId = $("#item_id option:selected").data("category-id");
+
+
+
 
     const row = `
     <div class="row form-group item-row" data-row-id="${rowId}" data-item-id="${itemId}">
@@ -914,9 +930,7 @@ function addItemRow(itemId, rowId) {
                     <label><b>Ticket Type</b></label>
                     <select class="form-control service-type">
                         <option value="">Select Ticket Type</option>
-                        ${SERVICE_TYPES.map(s =>
-                            `<option value="${s.code}">${s.name}</option>`
-                        ).join('')}
+                       ${getServiceOptionsByCategory(categoryId)}
                     </select>
 
                 </div>
@@ -929,6 +943,21 @@ function addItemRow(itemId, rowId) {
     $("#items").after(row);
     $('.summernote').summernote();
 }
+
+
+function getServiceOptionsByCategory(categoryId) {
+    const category = SERVICE_TYPES.find(c => c.id == categoryId);
+
+    if (!category) {
+        return `<option value="">No Services Available</option>`;
+    }
+
+    return category.services.map(service =>
+        `<option value="${service.code}">${service.name}</option>`
+    ).join('');
+}
+
+
 
 // Remove Item (Event Delegation)
 $(document).on("click", ".remove-item", function() {

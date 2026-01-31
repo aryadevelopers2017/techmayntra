@@ -77,7 +77,7 @@
                                                         @endif
                                                     </select>
                                                  </div>
-                                                
+
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
@@ -88,10 +88,10 @@
                                                     <label>Mobile No</label>
                                                     <input type="text" id="mobile" name="mobile" required minlength="10" maxlength="10" class="form-control number" placeholder="Mobile" value="{{ isset($lead_data->mobile) ? $lead_data->mobile : '' }}">
                                                 </div>
-                                                
+
                                                 <div class="form-group">
-                                                    
-                                                    <label>State</label>                                                    
+
+                                                    <label>State</label>
                                                     <select name="state" id="state" onChange="getcity();" class="form-control select2">
                                                         <option value="" selected>Please Select State</option>
                                                         @foreach($data['state_data'] as $state)
@@ -109,7 +109,7 @@
                                                             <option value="{{ $state->id }}" {{ $selected }}>{{ $state->name }} </option>
                                                         @endforeach
                                                     </select>
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
@@ -169,21 +169,21 @@
                                                             @endforeach
                                                         @endif
                                                     </select>
-                                                    
-                                                    
+
+
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-group">
-                                                    
-                                                    
-                                                    <label>Pincode</label>
-                                                    <input type="text" id="pincode" name="pincode" minlength="6" maxlength="6" required class="form-control number" placeholder="pincode" value="{{ isset($lead_data->pincode) ? $lead_data->pincode : '' }}">
+
+
+                                                    <label>Zipcode</label>
+                                                    <input type="text" id="pincode" name="pincode" minlength="6" maxlength="6" required class="form-control number" placeholder="Zipcode" value="{{ isset($lead_data->pincode) ? $lead_data->pincode : '' }}">
                                                 </div>
 
                                         <div class="form-group" style="display:none">
-                                            <label>Lead</label>                                            
+                                            <label>Lead</label>
                                             <div class="row">
                                                 <div class="col-lg-3">
                                                     <input type="checkbox" id="website_lead" name="lead[]" class="lead_checkbox" value="Web Development"> &nbsp;&nbsp;&nbsp;<label>Web Development</label>
@@ -207,7 +207,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                            
+
                                         <div class="form-group">
                                             <label>Remarks</label>
                                             <input type="text" id="remarks" name="remarks" required class="form-control" value="{{ isset($lead_data->id) ? $lead_data->remarks : '' }}">
@@ -232,7 +232,7 @@
                                                             <th>Date</th>
                                                             <th style="text-align: left;">Remarks</th>
                                                         </thead>
-                                                        <tbody>    
+                                                        <tbody>
                                                             @foreach($lead_data['remarks_data'] as $remarksdata)
                                                                 <tr>
                                                                     <td>@php echo date('Y-m-d', strtotime( $remarksdata->created_at)); @endphp</td>
@@ -290,9 +290,9 @@
             $("#name").focus();
             return false;
         }
-        
+
         var contact=$("#contact").val();
-        
+
         if(contact=='')
         {
             $("#errcontact").show(0).delay(3500).hide(0);
@@ -313,7 +313,7 @@
     function getclientlist()
     {
         var contact=$("#contact").val();
-        
+
         if(contact=='Reffence')
         {
             $("#client_id").prop('disabled', false);
@@ -376,8 +376,8 @@
             }
         });
     }
-	
-	
+
+
 
 </script>
 @if(isset($lead_data->id))
@@ -396,7 +396,7 @@
             });
 
             var status="{{ $lead_data->status }}";
-            
+
             $("#status option").each(function()
             {
                 var op_status=$(this).val();
@@ -427,7 +427,7 @@
             });
 
             var contact="{{ $lead_data->contact }}";
-            
+
             $("#contact option").each(function()
             {
                 var op_status=$(this).val();

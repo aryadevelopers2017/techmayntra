@@ -97,11 +97,11 @@
                         </li>
                         @endcan
 
-                        {{-- Customer --}}
-                        @can('customer.list')
+                        {{-- Client --}}
+                        @can('client.list')
                         <li>
                             <a href="{{ url('/customer') }}">
-                                <i class="ti-user"></i>Customer Master
+                                <i class="ti-user"></i>Client Master
                             </a>
                         </li>
                         @endcan

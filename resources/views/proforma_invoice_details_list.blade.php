@@ -46,7 +46,7 @@
                                             <th style="text-align: left;">Invoice No</th>
                                             <th style="text-align: left;">Date</th>
                                             <th style="text-align: left;">Title</th>
-                                            <th style="text-align: left;">Customer Name</th>
+                                            <th style="text-align: left;">Client Name</th>
                                             <th style="text-align: left;">Company Name</th>
                                             <th style="text-align: left;">Total Amount</th>
                                         </thead>

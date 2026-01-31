@@ -8,7 +8,7 @@
                 <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Customer Information </h1>
+                            <h1>Client Information </h1>
                         </div>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Customer</li>
+                                <li class="breadcrumb-item active">Client</li>
                             </ol>
                         </div>
                     </div>
@@ -222,12 +222,12 @@
                                             </div>
                                         </div>
 
-                         @can('customer-delete')
+                         @can('client-delete')
 
                                         <a href="{{ url('/delete_customer').'/'.$data->id }}" class="btn btn-danger btn-sm sweetalert sweet-success-cancel" title="">Delete</a>
 @endcan
 
-                         @can('customer-edit')
+                         @can('client-edit')
 
                                         <a href="{{ url('/edit_customer').'/'.$data->id }}" class="btn btn-primary  btn-sm " title="">Edit</a>
 @endcan

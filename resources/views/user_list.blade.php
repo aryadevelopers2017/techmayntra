@@ -57,7 +57,7 @@
                                                 <th>Sr No</th>
                                                 <th>Name</th>
                                                 <th class="text-left">Email-ID</th>
-                                                <th class="text-left">Assigned Customers</th>
+                                                <th class="text-left">Assigned Clients</th>
                                                 <th class="text-left">Report</th>
                                             </tr>
                                         </thead>
@@ -75,7 +75,7 @@
 
                                                         <a href="{{ url('assign-customers/'.$user->id) }}"
                                                         class="btn btn-danger btn-sm">
-                                                            Assign Customers
+                                                            Assign Clients
                                                         </a>
                                                                                                                                     @endcan
 

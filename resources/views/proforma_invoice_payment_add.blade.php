@@ -43,8 +43,8 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label>Custmer </label>
-                                                        <input type="text" class="form-control" id="c_id" name="c_id" placeholder="Customer" value="{{ $data[0]->name .'-'.$data[0]->company_name }}" disabled>
+                                                    <label>Client </label>
+                                                        <input type="text" class="form-control" id="c_id" name="c_id" placeholder="Client" value="{{ $data[0]->name .'-'.$data[0]->company_name }}" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">

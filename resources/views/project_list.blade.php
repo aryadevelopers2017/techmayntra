@@ -49,7 +49,7 @@
                                             <tr>
                                                 <th>Sr.No</th>
                                                 <th>Title</th>
-                                                <th>Customer_Name</th>
+                                                <th>Client_Name</th>
                                                 <th>Quotation_Price</th>
                                                 <th>Vendor_Name</th>
                                                 <th>Vendor_Price</th>

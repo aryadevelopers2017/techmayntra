@@ -11,7 +11,7 @@
                     <div class="page-header">
                         <div class="page-title">
                             <h1>
-                                Assigned Customers - {{ $user->name }}
+                                Assigned Clients - {{ $user->name }}
                             </h1>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                                     <a href="{{ url('/home') }}">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    Assigned Customers
+                                    Assigned Clients
                                 </li>
                             </ol>
                         </div>
@@ -35,13 +35,13 @@
 
             @include('layouts.Admin.messages')
 
-         <!-- Assign New Customer Button -->
+         <!-- Assign New Client  Button -->
 <div class="row mb-3">
     <div class="col-lg-12">
                                                                                 @can('staff.assign_customer')
 
         <button class="btn btn-primary" data-toggle="modal" data-target="#assignCustomerModal">
-            Assign New Customer
+            Assign New Client
         </button>
                                                                                     @endcan
 
@@ -49,7 +49,7 @@
 </div>
 
 
-<!-- Assign Customer Modal -->
+<!-- Assign Client  Modal -->
 <div class="modal fade" id="assignCustomerModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <form action="{{ route('customer.assign') }}" method="POST">
@@ -59,7 +59,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        Assign Customer to {{ $user->name }}
+                        Assign Client to {{ $user->name }}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
@@ -68,9 +68,9 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Select Customer</label>
+                        <label>Select Client</label>
                         <select name="customer_id" class="form-control" required>
-                            <option value="">-- Select Customer --</option>
+                            <option value="">-- Select Client --</option>
                             @foreach($allCustomers as $customer)
                                 <option value="{{ $customer->id }}">
                                     {{ $customer->name }} ({{ $customer->company_name }})
@@ -131,7 +131,7 @@
 
                                                         <form action="{{ route('customer.unassign', $item->id) }}"
                                                               method="POST"
-                                                              onsubmit="return confirm('Unassign this customer?');">
+                                                              onsubmit="return confirm('Unassign this Client?');">
                                                             @csrf
                                                             @method('PUT')
                                                             <button type="submit"
@@ -146,7 +146,7 @@
                                             @empty
                                                 <tr>
                                                     <td colspan="8" class="text-center text-danger">
-                                                        No customers assigned
+                                                        No Clients assigned
                                                     </td>
                                                 </tr>
                                             @endforelse

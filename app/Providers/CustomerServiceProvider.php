@@ -55,7 +55,7 @@ class CustomerServiceProvider extends ServiceProvider
             $data=Customer::add_customer($request);
 
 
-            return array('status_code' => 200, 'message' => 'Customer Data Successfully Saved', 'data' => $data);
+            return array('status_code' => 200, 'message' => 'Client Data Successfully Saved', 'data' => $data);
         }
         catch (\Exception $e)
         {
@@ -87,7 +87,7 @@ public static function update_customer($request)
 
         return [
             'status_code' => 200,
-            'message' => 'Customer Data Successfully Updated',
+            'message' => 'Client Data Successfully Updated',
             'data' => $data
         ];
 
@@ -169,7 +169,7 @@ public static function update_customer($request)
         {
             $data=Customer::remove_customer($id);
 
-            return array('status_code' => 200, 'message' => 'Customer Deleted Successfully', 'data' => $data);
+            return array('status_code' => 200, 'message' => 'Client Deleted Successfully', 'data' => $data);
         }
         catch (\Exception $e)
         {

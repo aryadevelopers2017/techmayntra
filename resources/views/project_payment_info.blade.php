@@ -42,7 +42,7 @@
                                             <div class="col-lg-6">
                                                 <input type="hidden" name="project_id" id="project_id" value="{{ $data->id }}">
                                                 <fieldset style="border: 1px solid #000000;">
-                                                    <legend style="width:18% !important;font-size: 16px;">&nbsp;Customer</legend>
+                                                    <legend style="width:18% !important;font-size: 16px;">&nbsp;Client</legend>
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <label>Name</label>

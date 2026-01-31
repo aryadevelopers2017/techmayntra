@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class PermissionSeeder extends Seeder
 {
@@ -14,6 +15,16 @@ class PermissionSeeder extends Seeder
     {
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+
+         // Remove all existing role-user assignments
+       // Remove all existing role-user assignments
+        DB::table('model_has_roles')->delete();
+        DB::table('model_has_permissions')->delete();
+        DB::table('role_has_permissions')->delete();
+        DB::table('permissions')->delete();
+        DB::table('roles')->delete();
+
 
         $permissions = [
 
@@ -24,11 +35,11 @@ class PermissionSeeder extends Seeder
             'lead.delete',
             'lead.approve',
 
-            // Customer
-            'customer.list',
-            'customer-create',
-            'customer-edit',
-            'customer-delete',
+            // Client
+            'client.list',
+            'client-create',
+            'client-edit',
+            'client-delete',
 
             // Service Master
             'service.list',

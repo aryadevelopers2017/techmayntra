@@ -169,9 +169,9 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Pincode </label>
-                                                    <input type="text" class="form-control number" id="pincode" name="pincode" placeholder="Enter Pincode" value="{{ isset($data->pincode) ? $data->pincode : '' }}" required>
-                                                    <span id="errstate" style="display:none;color: #ff0000;">Please Enter Pincode</span>
+                                                    <label>Zipcode </label>
+                                                    <input type="text" class="form-control number" id="pincode" name="pincode" placeholder="Enter Zipcode" value="{{ isset($data->pincode) ? $data->pincode : '' }}" required>
+                                                    <span id="errstate" style="display:none;color: #ff0000;">Please Enter Zipcode</span>
                                                 </div>
                                             </div>
                                         </div>

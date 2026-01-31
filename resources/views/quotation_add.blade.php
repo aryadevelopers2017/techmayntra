@@ -68,9 +68,9 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label>Select Customer </label>
+                                                    <label>Select Client </label>
                                                     <select id="c_id" name="c_id" class="form-control select2" required>
-                                                        <option value="">Please Select Customer</option>
+                                                        <option value="">Please Select Client</option>
                                                         @foreach($details_array['customer_data'] as $customer)
                                                             @if(isset($details_array['customer_id']) && $details_array['customer_id'] == $customer->id)
                                                                 <option value="{{ $customer->id }}" selected>{{ $customer->name }} - {{ $customer->company_name }}</option>
@@ -79,7 +79,7 @@
                                                             @endif
                                                         @endforeach
                                                     </select>
-                                                    <span id="errname" style="display:none;color: #ff0000;">Please Select Customer</span>
+                                                    <span id="errname" style="display:none;color: #ff0000;">Please Select Client</span>
                                                 </div>
                                             </div>
 

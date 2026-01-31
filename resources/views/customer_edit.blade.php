@@ -8,7 +8,7 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                <div class="page-header">
                   <div class="page-title">
-                     <h1>Edit New Customer </h1>
+                     <h1>Edit New Client </h1>
                   </div>
                </div>
             </div>
@@ -17,7 +17,7 @@
                   <div class="page-title">
                      <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Customer</li>
+                        <li class="breadcrumb-item active">Client </li>
                      </ol>
                   </div>
                </div>
@@ -231,13 +231,13 @@
                                     <div class="col-lg-6">
                                         <!-- Departure Date -->
                                         <div class="form-group">
-                                            <label>Departure Date :- <small> The date the customer is leaving.</small></label>
+                                            <label>Departure Date :- <small> The date the Client  is leaving.</small></label>
                                             <input type="date" id="departure_date" name="departure_date" value="{{ isset($data['customer_info']->departure_date) ? $data['customer_info']->departure_date : '' }}" class="form-control">
                                         </div>
 
                                         <!-- Return Date -->
                                         <div class="form-group">
-                                            <label>Return Date :- <small>The date the customer returns.</small></label>
+                                            <label>Return Date :- <small>The date the Client  returns.</small></label>
                                             <input type="date" id="return_date" name="return_date" value="{{ isset($data['customer_info']->return_date) ? $data['customer_info']->return_date : '' }}" class="form-control">
                                         </div>
                                     </div>

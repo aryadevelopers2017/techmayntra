@@ -34,7 +34,7 @@
                                         <i class="ti-user"></i>
                                     </div>
                                     <div class="stat-content widget">
-                                        <div class="stat-text">Customer</div>
+                                        <div class="stat-text">Client</div>
                                         <div class="stat-digit">{{ $data['customer_data'] }}</div>
                                     </div>
                                 </div>
