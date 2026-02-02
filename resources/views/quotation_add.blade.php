@@ -85,7 +85,7 @@
 
 
 
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6 hidden">
                                                 <div class="form-group">
                                                     <label>Select Vendor</label>
                                                     <select id="v_id" name="v_id" class="form-control select2" required>

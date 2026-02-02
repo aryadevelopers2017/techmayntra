@@ -84,6 +84,7 @@ class QuotationController extends Controller
     {
         $data=QuotationServiceProvider::invoice($id);
 
+        // dd($data);
         return view('invoice')->with('data', $data['data']);
     }
 

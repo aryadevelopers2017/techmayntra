@@ -45,7 +45,7 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-inr"></i>
+                                    <i class="fa fa-dir font-weight-bold" > {{ $data['currency_data']->symbol }} </i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Approved Amount</div>
@@ -59,7 +59,8 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-inr"></i>
+                                    <i class="fa fa-dir font-weight-bold"> {{ $data['currency_data']->symbol }} </i>
+                                     <!-- Đ -->
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Non GST Amount</div>
@@ -72,7 +73,7 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-inr"></i>
+                                    <i class="fa fa-dir font-weight-bold"> {{ $data['currency_data']->symbol }} </i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Received Amount</div>
@@ -88,7 +89,7 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-inr"></i>
+                                    <i class="fa fa-dir font-weight-bold"> {{ $data['currency_data']->symbol }} </i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Actual Amount</div>
@@ -106,6 +107,19 @@
                                 <div class="stat-content widget">
                                     <div class="stat-text">GST Amount</div>
                                     <div class="stat-digit">{{ $data['gst_amt'] }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card p-0">
+                            <div class="stat-widget-three home-widget-three">
+                                <div class="stat-icon bg-youtube">
+                                    <i class="fa fa-percent"></i>
+                                </div>
+                                <div class="stat-content widget">
+                                    <div class="stat-text">VAT Amount</div>
+                                    <div class="stat-digit">{{ $data['vat_amt'] }}</div>
                                 </div>
                             </div>
                         </div>

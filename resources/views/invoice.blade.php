@@ -126,13 +126,13 @@
                                                         </div>
                                                     </td>
                                                     <td class="tableitem">
-                                                        <p class="itemtext">₹ {{ $item->rate }} </p>
+                                                        <p class="itemtext">{{ $data['currency_data']->symbol }} {{ $item->rate }} </p>
                                                     </td>
                                                     <td class="tableitem">
                                                         <p class="itemtext">{{ $item->qty }} {{ $item->qty_name }}</p>
                                                     </td>
                                                     <td class="tableitem">
-                                                        <p class="itemtext" style="margin-right: 10px;">₹ {{ $item->price }}</p>
+                                                        <p class="itemtext" style="margin-right: 10px;">{{ $data['currency_data']->symbol }} {{ $item->price }}</p>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -145,7 +145,7 @@
                                                 <td class="tableitem">
                                                     <p class="itemtext"></p>
                                                 </td>
-                                                <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['price']}}</h6></td>
+                                                <td class="tableitem"><h6 style="margin-right: 10px;">{{ $data['currency_data']->symbol }} {{ $data['price']}}</h6></td>
                                             </tr>
                                             @if($data['discount']>0)
                                                 <tr class="service1">
@@ -157,7 +157,7 @@
                                                     <td class="tableitem">
                                                         <p class="itemtext"></p>
                                                     </td>
-                                                    <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['discount_amount']}}</h6></td>
+                                                    <td class="tableitem"><h6 style="margin-right: 10px;">{{ $data['currency_data']->symbol }} {{ $data['discount_amount']}}</h6></td>
                                                 </tr>
                                             @endif
                                             @if($data['gst_per']>0)
@@ -171,7 +171,7 @@
                                                         <td class="tableitem">
                                                             <p class="itemtext"></p>
                                                         </td>
-                                                        <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['gst_amount']}}</h6></td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}}</h6></td>
                                                     </tr>
                                                 @else
                                                     <tr class="service1">
@@ -183,7 +183,7 @@
                                                         <td class="tableitem">
                                                             <p class="itemtext"></p>
                                                         </td>
-                                                        <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['gst_amount']/2}}</h6></td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']/2}}</h6></td>
                                                     </tr>
                                                     <tr class="service1">
                                                         <td class="tableitem"></td>
@@ -194,7 +194,7 @@
                                                         <td class="tableitem">
                                                             <p class="itemtext"></p>
                                                         </td>
-                                                        <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['gst_amount']/2}}</h6></td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']/2}}</h6></td>
                                                     </tr>
                                                 @endif
                                             @endif
@@ -207,7 +207,7 @@
                                                 <td class="tableitem">
                                                     <p class="itemtext"></p>
                                                 </td>
-                                                <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['total_amount'] }}</h6></td>
+                                                <td class="tableitem"><h6 style="margin-right: 10px;">{{ $data['currency_data']->symbol }} {{ $data['total_amount'] }}</h6></td>
                                             </tr>
                                             <tr>
                                                 <td class="tableitem" style="text-align: left;" colspan="5"><b>Amount In words : {{ $data['amount_word'] }} </b></td>
