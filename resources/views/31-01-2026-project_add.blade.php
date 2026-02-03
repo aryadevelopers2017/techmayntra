@@ -5,14 +5,14 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8 col-md-6 p-r-0 title-margin-right">
+                <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
                             <h1>Add New Project </h1>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 p-l-0 title-margin-left">
+                <div class="col-lg-4 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
@@ -57,11 +57,11 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label>Select Client</label>
+                                                    <label>Select Customer</label>
                                                     <select class="select2 form-control" id="customer_id" name="customer_id" required>
-                                                        <option value="" selected disabled>Please select Client</option>
+                                                        <option value="" selected disabled>Please select customer</option>
                                                     </select>
-                                                    <span id="errcustomer_id" style="display:none;color: #ff0000;">Please Select Client</span>
+                                                    <span id="errcustomer_id" style="display:none;color: #ff0000;">Please Select Customer</span>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Start Date</label>
@@ -159,7 +159,7 @@
         {
             $("#errvendor_price_less").show(0).delay(2500).hide(0);
             $("#vendor_price").focus();
-            return false;
+            return false;   
         }
 
         if(start_date>due_date)
@@ -308,7 +308,7 @@
         var end_date = new Date(new_date);
 
         var due_date=end_date.getFullYear() + '-' + ("0" + (end_date.getMonth() + 1)).slice(-2) + '-' + ("0" + end_date.getDate()).slice(-2);
-
+        
         $("#due_date").val(due_date);
     }*/
 
@@ -341,7 +341,7 @@
 
     $(document).ready(function ()
     {
-        //
+        // 
     });
 </script>
 @endsection

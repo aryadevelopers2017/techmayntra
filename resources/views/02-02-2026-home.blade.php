@@ -45,7 +45,7 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-dir font-weight-bold" > {{ $data['currency_data']->symbol }} </i>
+                                    <i class="fa fa-inr"></i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Approved Amount</div>
@@ -59,8 +59,7 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-dir font-weight-bold"> {{ $data['currency_data']->symbol }} </i>
-                                     <!-- Đ -->
+                                    <i class="fa fa-inr"></i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Non GST Amount</div>
@@ -69,11 +68,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3  col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-dir font-weight-bold"> {{ $data['currency_data']->symbol }} </i>
+                                    <i class="fa fa-inr"></i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Received Amount</div>
@@ -89,7 +88,7 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-dir font-weight-bold"> {{ $data['currency_data']->symbol }} </i>
+                                    <i class="fa fa-inr"></i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Actual Amount</div>
@@ -98,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3  col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-youtube">
@@ -111,24 +110,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3  col-md-6">
-                        <div class="card p-0">
-                            <div class="stat-widget-three home-widget-three">
-                                <div class="stat-icon bg-youtube">
-                                    <i class="fa fa-percent"></i>
-                                </div>
-                                <div class="stat-content widget">
-                                    <div class="stat-text">VAT Amount</div>
-                                    <div class="stat-digit">{{ $data['vat_amt'] }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
 
-                    <div class="col-lg-3  col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <a href="{{ url('/quotation/0') }}">
                             <div class="card p-0">
                                 <div class="stat-widget-three home-widget-three">

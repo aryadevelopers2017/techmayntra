@@ -5,7 +5,7 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8 p-r-0 title-margin-right">
+                <div class="col-lg-8 col-md-6 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
                             <h1>Quotation Report</h1>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <!-- /# column -->
-                <div class="col-lg-4 p-l-0 title-margin-left">
+                <div class="col-lg-4 col-md-6 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
@@ -141,7 +141,7 @@
                                                         @endphp
                                                         <span class="badge badge-{{ $status_icon }}">{{ $status_word }}</span>
                                                     </td>
-                                                    <td style="text-align: center;width: 150px;">
+                                                    <td>
                                                        @can('quotation.approve')
                                                         @php
                                                             if($item->quotation_status==0)
@@ -151,7 +151,7 @@
 
                                                                 <button type="button" class="btn btn-danger sweetalert btn sweet-success-cancel">Cancel</button> -->
 
-                                                                <a href="{{ url('/quotation_approve/').'/'.$item->id }}" class="btn btn-success sweetalert btn sweet-success" title="approve"><i class="fa fa-check"></i></a> &nbsp;&nbsp;&nbsp;
+                                                                <a href="{{ url('/quotation_approve/').'/'.$item->id }}" class="btn btn-success sweetalert btn sweet-success" title="approve"><i class="fa fa-check"></i></a>
                                                                 <a href="{{ url('/quotation_cancel/').'/'.$item->id }}" class="btn btn-danger btn sweetalert sweet-success-cancel" title="cancel"><i class="fa fa-close"></i></a>
                                                                 @php
                                                             }

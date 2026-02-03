@@ -5,33 +5,30 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8 col-md-6 p-r-0 title-margin-right">
+                <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Customer </h1>
+                            <h1> Invoice Report</h1>
                         </div>
                     </div>
                 </div>
                 <!-- /# column -->
-                <div class="col-lg-4 col-md-6 p-l-0 title-margin-left">
+                <div class="col-lg-4 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Customer</li>
+                                <li class="breadcrumb-item active"> Invoice Report</li>
                             </ol>
                         </div>
                     </div>
                 </div>
                 <!-- /# column -->
             </div>
-            @include('layouts.Admin.messages')
+
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
-                         @can('customer-create')
-                        <a href="{{ url('/customer_add') }}" class="btn btn-primary">Add New Customer</a>
-                        @endcan
                     </div>
                 </div>
             </div>
@@ -44,38 +41,29 @@
                                 <div class="table-responsive">
                                     <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
                                         <thead>
-                                            <tr>
-                                                <th>Sr No</th>
-                                                <th>Name</th>
-                                                <th>Company Name</th>
-                                                <th>Mobile</th>
-                                                <th>Email-ID</th>
-                                                <th>Address</th>
-                                                <th>City</th>
-                                                <th>State</th>
-                                            </tr>
+                                            <th>Sr No</th>
+                                            <th style="text-align: left;">Invoice Action</th>
+                                            <th style="text-align: left;">Invoice No</th>
+                                            <th style="text-align: left;">Date</th>
+                                            <th style="text-align: left;">Title</th>
+                                            <th style="text-align: left;">Customer Name</th>
+                                            <th style="text-align: left;">Company Name</th>
+                                            <th style="text-align: left;">Total Amount</th>
                                         </thead>
                                         <tbody>
                                             @php
                                                 $i=1;
                                             @endphp
-                                            @foreach($customer as $item)
+                                            @foreach($proforma_invoice_details as $item)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                    <td style="text-align:left;">
-
-                                                        <a href="{{ url('/customer_info/'.$item->id) }}">
-                                                            {{ $item->name }}
-                                                        </a>
-
-                                                    </td>
-
-                                                    <td>{{$item->company_name}}</td>
-                                                    <td>{{$item->mobile}}</td>
-                                                    <td>{{$item->email}}</td>
-                                                    <td>{{ strip_tags($item->address)}}</td>
-                                                    <td>{{$item->city}}</td>
-                                                    <td>{{$item->state}}</td>
+                                                    <td style="text-align: left;"><a target="_blank" href="{{ url('/final_invoice/').'/'.$item->id }}" title=""><i class="ti-notepad"></i></a><!-- &nbsp;&nbsp;&nbsp;&nbsp;<a href="/quotation_edit/{{ $item->id }}" title=""><i class="ti-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/quotation_delete/{{ $item->id }}"><i class="ti-trash"></i></a> --></td>
+                                                    <td style="text-align: left;">{{ $item->invoice_no }}</td>
+                                                    <td style="text-align: left;">{{ $item->entrydate }}</td>
+                                                    <td style="text-align: left;">{{ $item->title }}</td>
+                                                    <td style="text-align: left;">{{ $item->name }}</td>
+                                                    <td style="text-align: left;">{{ $item->company_name }}</td>
+                                                    <td style="text-align: left;">{{ $item->total_amount }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -83,11 +71,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /# card -->
                     </div>
-                    <!-- /# column -->
                 </div>
-                <!-- /# row -->
             </section>
         </div>
     </div>

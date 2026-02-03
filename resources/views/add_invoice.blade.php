@@ -18,14 +18,14 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-7 p-r-0 title-margin-right">
+                <div class="col-lg-7 col-md-6  p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
                             <h1>Add New Invoice </h1>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 p-l-0 title-margin-left">
+                <div class="col-lg-5 col-md-6 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
@@ -124,11 +124,19 @@
                                             </select>
                                             <span id="errname" style="display:none;color: #ff0000;">Please Select Company</span>
                                         </div>
-                                        <div class="row form-group">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Service</button>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Service</button>
+                                            </div>
                                         </div>
-                                        <label>Service</label>
-                                            <div class="form-group" id="items"></div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label>Service</label>
+                                                 <div class="form-group" id="items"></div>
+                                            </div>
+                                        </div>
+                                        
+                                           
 
                                             @if(isset($details_array['quotation_id']))
                                             @php $rowCounter = 0; @endphp
@@ -144,7 +152,7 @@
 
                                                 <!-- LEFT PART -->
                                                 <div class="col-md-6">
-                                                    <h4><b>{{ $item->item_name }}</b></h4>
+                                                    <h4><label>{{ $item->item_name }}</label></h4>
 
                                                     <textarea class="item-desc summernote"
                                                             placeholder="{{ $item->item_name }} Description"
@@ -233,7 +241,7 @@
                                         <span id="erritem" style="display: none; color: #ff0000;">Please Select item</span>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <div class="form-group row mt-4">
+                                                <div class="form-group row ">
                                                     <div class="col-md-3">
                                                         <input type="checkbox" id="gst"  name="gst" value="1">&nbsp;&nbsp;&nbsp;<label>GST</label>
                                                     </div>
@@ -244,9 +252,9 @@
                                                     </div>
                                                 </div>
 
-                                                <div id="gst_div" style="display: none;margin-left: -7px !important;">
-                                                    <div class="form-group">
-                                                        <div class="col-md-3 mt-5">
+                                                <div id="gst_div" style="display: none;">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-3">
                                                             <input type="checkbox" id="igst" name="igst" value="1">&nbsp;&nbsp;&nbsp;<label>IGST</label>
                                                         </div>
                                                     </div>
@@ -535,9 +543,9 @@
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
-                                                <div class="modal-header" style="background: #868e96;">
+                                                <div class="modal-header">
                                                     <h6 class="modal-title">Select Item</h6>
-                                                    <button type="button" class="btn btn-danger close" data-dismiss="modal" style="background-color:red;">&times;</button>
+                                                    <button type="button" class="btn btn-danger close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form>
@@ -560,12 +568,12 @@
                                                         </div>
                                                     </form>
                                                     <div class="col-md-12">
-                                                        <div class="form-group">
+                                                        <div class="form-group float-right">
                                                             <div class="row">
-                                                                <div class="col-md-2">
+                                                                <div class="mr-3">
                                                                     <button type="button" id="add_item" name="add_item" class="btn btn-primary" data-dismiss="modal">Add</button>
                                                                 </div>
-                                                                <div class="col-md-2">
+                                                                <div class="">
                                                                     <a href="{{ url('/item_master_add')}}" class="btn btn-primary">Add New Item</a>
                                                                 </div>
                                                                 </div>
@@ -870,7 +878,7 @@ function addItemRow(itemId, rowId) {
 
         <!-- LEFT PART -->
         <div class="col-md-6">
-            <h4><b>${name}</b></h4>
+            <b>${name}</b>
             <textarea
                 class="item-desc summernote"
                 placeholder="${name} Description"
@@ -1045,6 +1053,7 @@ $(document).ready(function () {
         });
 
         $('.select2-container').css('display', 'inline-table');
+        $('.select2-container').css('width', '100%');
         $('.modal-footer').css('padding', '5px');
 
         $('.tox-notifications-container').css('display', 'none !important');

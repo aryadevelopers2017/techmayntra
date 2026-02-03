@@ -5,7 +5,7 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8 p-r-0 title-margin-right">
+                <div class="col-lg-8 col-md-6 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
                             <h1>Lead Master</h1>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <!-- /# column -->
-                <div class="col-lg-4 p-l-0 title-margin-left">
+                <div class="col-lg-4 col-md-6 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
@@ -109,7 +109,7 @@
                                                             if($leads->status!=0)
                                                             {
                                                                 @endphp
-                                                                <label for="name" style="background-color: {{ $bgcolor }}"> {{ $word_status }} </label>
+                                                                <label for="name" class="aceept-text" style="color: {{ $bgcolor }}"> {{ $word_status }} </label>
                                                                 @php
                                                             }
                                                             else

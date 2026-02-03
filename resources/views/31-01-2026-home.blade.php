@@ -5,14 +5,14 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8 col-md-6 p-r-0 title-margin-right">
+                <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
                             <h1>Hello, <span>{{ Auth::user()->name }} </span></h1>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 p-l-0 title-margin-left">
+                <div class="col-lg-4 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
@@ -26,7 +26,7 @@
             <section id="main-content">
                 <div class="row">
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3">
                         <a href="{{ url('/customer') }}">
                             <div class="card p-0">
                                 <div class="stat-widget-three home-widget-three">
@@ -34,18 +34,18 @@
                                         <i class="ti-user"></i>
                                     </div>
                                     <div class="stat-content widget">
-                                        <div class="stat-text">Client</div>
+                                        <div class="stat-text">Customer</div>
                                         <div class="stat-digit">{{ $data['customer_data'] }}</div>
                                     </div>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3">
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-dir font-weight-bold" > {{ $data['currency_data']->symbol }} </i>
+                                    <i class="fa fa-inr"></i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Approved Amount</div>
@@ -55,12 +55,11 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3">
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-dir font-weight-bold"> {{ $data['currency_data']->symbol }} </i>
-                                     <!-- Đ -->
+                                    <i class="fa fa-inr"></i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Non GST Amount</div>
@@ -69,11 +68,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3  col-md-6">
+                    <div class="col-lg-3">
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-dir font-weight-bold"> {{ $data['currency_data']->symbol }} </i>
+                                    <i class="fa fa-inr"></i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Received Amount</div>
@@ -85,11 +84,11 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3">
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="fa fa-dir font-weight-bold"> {{ $data['currency_data']->symbol }} </i>
+                                    <i class="fa fa-inr"></i>
                                 </div>
                                 <div class="stat-content widget">
                                     <div class="stat-text">Actual Amount</div>
@@ -98,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3  col-md-6">
+                    <div class="col-lg-3">
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-youtube">
@@ -111,24 +110,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3  col-md-6">
-                        <div class="card p-0">
-                            <div class="stat-widget-three home-widget-three">
-                                <div class="stat-icon bg-youtube">
-                                    <i class="fa fa-percent"></i>
-                                </div>
-                                <div class="stat-content widget">
-                                    <div class="stat-text">VAT Amount</div>
-                                    <div class="stat-digit">{{ $data['vat_amt'] }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
 
-                    <div class="col-lg-3  col-md-6">
+                    <div class="col-lg-3">
                         <a href="{{ url('/quotation/0') }}">
                             <div class="card p-0">
                                 <div class="stat-widget-three home-widget-three">
@@ -143,7 +129,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3">
                         <a href="{{ url('/proforma_invoice') }}">
                             <div class="card p-0">
                                 <div class="stat-widget-three home-widget-three">
@@ -159,7 +145,7 @@
                         </a>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3">
                         <a href="{{ url('/invoice_list/0') }}">
                             <div class="card p-0">
                                 <div class="stat-widget-three home-widget-three">

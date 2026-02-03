@@ -87,7 +87,7 @@
                             <a href="{{ url('/lead_list') }}"><i class="ti-layers"></i>Lead Master</a>
                         </li>
                         <li>
-                            <a href="{{ url('/customer') }}"><i class="ti-user"></i>Client Master</a>
+                            <a href="{{ url('/customer') }}"><i class="ti-user"></i>Customer Master</a>
                         </li>
                         <!-- <li>
                             <a href="{{ url('/company_module') }}"><i class="ti-notepad"></i>Company Module</a>

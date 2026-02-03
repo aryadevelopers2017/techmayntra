@@ -5,14 +5,14 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-7 col-md-6 p-r-0 title-margin-right">
+                <div class="col-lg-7 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
                             <h1>Add New Vendor Receipt </h1>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5  col-md-6 p-l-0 title-margin-left">
+                <div class="col-lg-5 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
@@ -169,9 +169,9 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Zipcode </label>
-                                                    <input type="text" class="form-control number" id="pincode" name="pincode" placeholder="Enter Zipcode" value="{{ isset($data->pincode) ? $data->pincode : '' }}" required>
-                                                    <span id="errstate" style="display:none;color: #ff0000;">Please Enter Zipcode</span>
+                                                    <label>Pincode </label>
+                                                    <input type="text" class="form-control number" id="pincode" name="pincode" placeholder="Enter Pincode" value="{{ isset($data->pincode) ? $data->pincode : '' }}" required>
+                                                    <span id="errstate" style="display:none;color: #ff0000;">Please Enter Pincode</span>
                                                 </div>
                                             </div>
                                         </div>

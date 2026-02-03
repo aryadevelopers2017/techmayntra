@@ -81,7 +81,7 @@
 
                                                     <td class="text-left">
                                                         <a href="{{ url('roles/edit/'.$role->id) }}"
-                                                           class="btn btn-warning btn-sm">
+                                                           class="btn btn-info btn-sm">
                                                             Edit
                                                         </a>
 

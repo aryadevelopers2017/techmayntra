@@ -5,7 +5,7 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8 col-md-6  p-r-0 title-margin-right">
+                <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
                             <h1>Project </h1>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <!-- /# column -->
-                <div class="col-lg-4 col-md-6  p-l-0 title-margin-left">
+                <div class="col-lg-4 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
@@ -49,7 +49,7 @@
                                             <tr>
                                                 <th>Sr.No</th>
                                                 <th>Title</th>
-                                                <th>Client_Name</th>
+                                                <th>Customer_Name</th>
                                                 <th>Quotation_Price</th>
                                                 <th>Vendor_Name</th>
                                                 <th>Vendor_Price</th>
@@ -113,7 +113,7 @@
                                                                         @can('project.status')
 
                                                         @if($status_id==0)
-                                                            <a class="btn btn-success" onClick="approve_project({{ $item->id }});" title="approve"><i class="fa fa-check"></i></a><a onClick="cancel_project({{ $item->id }});"  class="btn btn-danger" title="cancel"><i class="fa fa-close"></i></a>
+                                                            <a class="btn btn-success" onClick="approve_project({{ $item->id }});" title="approve"><i class="fa fa-check"></i></a> &nbsp;&nbsp;&nbsp; <a onClick="cancel_project({{ $item->id }});"  class="btn btn-danger" title="cancel"><i class="fa fa-close"></i></a>
                                                         @endif
                                                                                                                                     @endcan
 

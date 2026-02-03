@@ -5,7 +5,7 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8 col-md-6 p-r-0 title-margin-right">
+                <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
                             <h1>User</h1>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <!-- /# column -->
-                <div class="col-lg-4 col-md-6 p-l-0 title-margin-left">
+                <div class="col-lg-4 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
@@ -57,7 +57,7 @@
                                                 <th>Sr No</th>
                                                 <th>Name</th>
                                                 <th class="text-left">Email-ID</th>
-                                                <th class="text-left">Assigned Clients</th>
+                                                <th class="text-left">Assigned Customers</th>
                                                 <th class="text-left">Report</th>
                                             </tr>
                                         </thead>
@@ -75,7 +75,7 @@
 
                                                         <a href="{{ url('assign-customers/'.$user->id) }}"
                                                         class="btn btn-danger btn-sm">
-                                                            Assign Clients
+                                                            Assign Customers
                                                         </a>
                                                                                                                                     @endcan
 

@@ -97,11 +97,11 @@
                         </li>
                         @endcan
 
-                        {{-- Client --}}
-                        @can('client.list')
+                        {{-- Customer --}}
+                        @can('customer.list')
                         <li>
                             <a href="{{ url('/customer') }}">
-                                <i class="ti-user"></i>Client Master
+                                <i class="ti-user"></i>Customer Master
                             </a>
                         </li>
                         @endcan
@@ -110,7 +110,7 @@
                         @can('service.list')
                         <li>
                             <a href="{{ url('/service') }}">
-                                <i class="fa fa-cogs" aria-hidden="true"></i>Service
+                                <i class="ti-layers"></i>Service
                             </a>
                         </li>
                         @endcan
@@ -119,7 +119,7 @@
                         @can('quotation.list')
                         <li>
                             <a href="{{ url('/quotation/0') }}">
-                                <i class="fa fa-money" aria-hidden="true"></i>Quotation
+                                <i class="ti-comment-alt"></i>Quotation
                             </a>
                         </li>
                         @endcan
@@ -128,7 +128,7 @@
                         @can('invoice.list')
                         <li>
                             <a href="{{ url('/proforma_invoice') }}">
-                                <i class="fa fa-file-text-o" aria-hidden="true"></i>Invoice
+                                <i class="ti-comment-alt"></i>Invoice
                             </a>
                         </li>
                         @endcan
@@ -137,7 +137,7 @@
                         @can('payment_receipt.download')
                         <li>
                             <a href="{{ url('/invoice_list/0') }}">
-                               <i class="fa fa-sticky-note-o" aria-hidden="true"></i>Receipt
+                                <i class="ti-comment-alt"></i>Receipt
                             </a>
                         </li>
                         @endcan
@@ -173,7 +173,7 @@
                         @can('staff.list')
                         <li>
                             <a href="{{ url('/staff_list') }}">
-                                <i class="fa fa-users" aria-hidden="true"></i>Staff
+                                <i class="ti-comment-alt"></i>Staff
                             </a>
                         </li>
                         @endcan
@@ -182,7 +182,7 @@
                         @can('project.list')
                         <li>
                             <a href="{{ url('/project_list') }}">
-                                <i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>Project
+                                <i class="ti-comment-alt"></i>Project
                             </a>
                         </li>
                         @endcan
@@ -191,7 +191,7 @@
                         @can('vendor_receipt.list')
                         <li>
                             <a href="{{ url('/purchase_order_list') }}">
-                                <i class="fa fa-file-text" aria-hidden="true"></i>Vendor Receipt
+                                <i class="ti-comment-alt"></i>Vendor Receipt
                             </a>
                         </li>
                         @endcan
@@ -200,7 +200,7 @@
                         @can('vendor.list')
                         <li>
                             <a href="{{ url('/vendor_list') }}">
-                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>Vendor
+                                <i class="ti-comment-alt"></i>Vendor
                             </a>
                         </li>
                         @endcan

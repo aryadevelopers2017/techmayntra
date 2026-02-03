@@ -11,7 +11,7 @@
                     <div class="page-header">
                         <div class="page-title">
                             <h1>
-                                Assigned Clients - {{ $user->name }}
+                                Assigned Customers - {{ $user->name }}
                             </h1>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                                     <a href="{{ url('/home') }}">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    Assigned Clients
+                                    Assigned Customers
                                 </li>
                             </ol>
                         </div>
@@ -35,13 +35,13 @@
 
             @include('layouts.Admin.messages')
 
-         <!-- Assign New Client  Button -->
+         <!-- Assign New Customer Button -->
 <div class="row mb-3">
     <div class="col-lg-12">
                                                                                 @can('staff.assign_customer')
 
         <button class="btn btn-primary" data-toggle="modal" data-target="#assignCustomerModal">
-            Assign New Client
+            Assign New Customer
         </button>
                                                                                     @endcan
 
@@ -49,7 +49,7 @@
 </div>
 
 
-<!-- Assign Client  Modal -->
+<!-- Assign Customer Modal -->
 <div class="modal fade" id="assignCustomerModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <form action="{{ route('customer.assign') }}" method="POST">
@@ -59,7 +59,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        Assign Client to {{ $user->name }}
+                        Assign Customer to {{ $user->name }}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
@@ -68,9 +68,9 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Select Client</label>
+                        <label>Select Customer</label>
                         <select name="customer_id" class="form-control" required>
-                            <option value="">-- Select Client --</option>
+                            <option value="">-- Select Customer --</option>
                             @foreach($allCustomers as $customer)
                                 <option value="{{ $customer->id }}">
                                     {{ $customer->name }} ({{ $customer->company_name }})
@@ -84,7 +84,7 @@
                     <button type="submit" class="btn btn-primary">
                         Assign
                     </button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Cancel
                     </button>
                 </div>
@@ -131,7 +131,7 @@
 
                                                         <form action="{{ route('customer.unassign', $item->id) }}"
                                                               method="POST"
-                                                              onsubmit="return confirm('Unassign this Client?');">
+                                                              onsubmit="return confirm('Unassign this customer?');">
                                                             @csrf
                                                             @method('PUT')
                                                             <button type="submit"
@@ -146,7 +146,7 @@
                                             @empty
                                                 <tr>
                                                     <td colspan="8" class="text-center text-danger">
-                                                        No Clients assigned
+                                                        No customers assigned
                                                     </td>
                                                 </tr>
                                             @endforelse

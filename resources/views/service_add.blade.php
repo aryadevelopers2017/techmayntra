@@ -5,9 +5,18 @@
 <div class="main">
 <div class="container-fluid">
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-lg-8">
         <h1>Add Service</h1>
+    </div>
+</div> -->
+<div class="row">
+    <div class="col-lg-8 col-md-6  p-r-0 title-margin-right">
+        <div class="page-header">
+            <div class="page-title">
+                <h1>Add Service</h1>
+            </div>
+        </div>
     </div>
 </div>
 
