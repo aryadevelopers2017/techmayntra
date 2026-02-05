@@ -8,7 +8,7 @@
                 <div class="col-lg-8 col-md-6 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
-                            <h1>Customer </h1>
+                            <h1>Client   </h1>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Customer</li>
+                                <li class="breadcrumb-item active">Client </li>
                             </ol>
                         </div>
                     </div>
@@ -29,8 +29,8 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
-                         @can('customer-create')
-                        <a href="{{ url('/customer_add') }}" class="btn btn-primary">Add New Customer</a>
+                         @can('client-create')
+                        <a href="{{ url('/customer_add') }}" class="btn btn-primary">Add New Client</a>
                         @endcan
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                                                     </td>
 
                                                     <td>{{$item->company_name}}</td>
-                                                    <td>{{$item->mobile}}</td>
+                                                    <td>{{$item->country_code}} {{$item->mobile}}</td>
                                                     <td>{{$item->email}}</td>
                                                     <td>{{ strip_tags($item->address)}}</td>
                                                     <td>{{$item->city}}</td>

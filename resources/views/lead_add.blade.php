@@ -6,14 +6,14 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8 col-md-6 p-r-0 title-margin-right">
+                <div class="col-lg-8 p-r-0 title-margin-right">
                     <div class="page-header">
                         <div class="page-title">
                             <h1>Add New Lead </h1>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 p-l-0 title-margin-left">
+                <div class="col-lg-4 p-l-0 title-margin-left">
                     <div class="page-header">
                         <div class="page-title">
                             <ol class="breadcrumb">
@@ -57,7 +57,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                 	<label>Country</label>
-                                                    <select id="country" name="country" class="form-control select2" onChange="getstate();">
+                                                    <select id="country" name="count</div>ry" class="form-control select2" onChange="getstate();">
                                                         <option value="{{ isset($lead_data->country) ? $lead_data->country : '' }}" selected>{{ isset($lead_data->country) ? $lead_data->country : 'Please Select Country' }}</option>
                                                         @if(isset($data['country_data']))
                                                             @foreach($data['country_data'] as $country)
@@ -84,10 +84,36 @@
                                                     <label>Addreess</label>
                                                     <input type="text" id="address" name="address" value="{{ isset($lead_data->address) ? $lead_data->address : '' }}" required class="form-control" placeholder="Address">
                                                 </div>
-                                                <div class="form-group">
+                                                <!-- <div class="form-group">
                                                     <label>Mobile No</label>
                                                     <input type="text" id="mobile" name="mobile" required minlength="10" maxlength="10" class="form-control number" placeholder="Mobile" value="{{ isset($lead_data->mobile) ? $lead_data->mobile : '' }}">
+                                                </div> -->
+
+
+                                                <div class="form-group">
+                                                    <label>Mobile No</label>
+
+                                                    <div class="row">
+                                                        <div class="col-md-4 p-0">
+                                                            <select name="country_code" id="country_code"
+                                                                    class="form-control select2" required>
+                                                                <option value="">Code</option>
+
+                                                                @foreach($data['country_phone_code'] as $code)
+                                                                    <option value="{{ $code->phone_code }}"
+                                                                        {{ (isset($lead_data->country_code) && $lead_data->country_code == $code->phone_code) ? 'selected' : '' }}>
+                                                                        {{ $code->phone_code }} ({{ $code->iso_code }})
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-8 p-0">
+                                                            <input type="text" id="mobile" name="mobile" required minlength="10" maxlength="10" class="form-control number" placeholder="Mobile" value="{{ isset($lead_data->mobile) ? $lead_data->mobile : '' }}">
+                                                        </div>
+                                                    </div>
                                                 </div>
+
 
                                                 <div class="form-group">
 
@@ -264,7 +290,6 @@
         });
 
         $('.select2-container').css('display', 'inline-table');
-        $('.select2-container').css('width', '100%');
         $('.modal-footer').css('padding', '5px');
 
         $('.tox-notifications-container').css('display', 'none !important');
@@ -273,6 +298,8 @@
 
         $('.summernote').summernote();
     });
+
+
 
     $(".number").on('keypress keyup focusout', function()
     {

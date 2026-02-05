@@ -17,7 +17,7 @@ class Customer extends Model
 
     public static function customer_list()
     {
-    	$data=Customer::select('id', 'name', 'company_name', 'address', 'city', 'state', 'email', 'mobile')->where('status', 0)->orderBy('id', 'DESC')->get();
+    	$data=Customer::select('id', 'name', 'company_name', 'address', 'city', 'state', 'email', 'mobile','country_code')->where('status', 0)->orderBy('id', 'DESC')->get();
     	return $data;
     }
 
@@ -97,6 +97,9 @@ class Customer extends Model
 
          $customer->country = $request->country ?? null;
 
+        $customer->country_code=$request->country_code;
+
+
          // Assigned staff
     $customer->assigned_staff = $request->assigned_staff ?? null;
 
@@ -150,6 +153,9 @@ class Customer extends Model
     $customer->country = $request->country ?? '';
     $customer->gst_no = $request->gst_no ?? null;
 
+
+        $customer->country_code=$request->country_code;
+
     // Assigned staff
     $customer->assigned_staff = $request->assigned_staff ?? null;
 
@@ -178,7 +184,7 @@ class Customer extends Model
     }
 
     return $customer;
-}
+    }
 
 
 	public static function getCountry()

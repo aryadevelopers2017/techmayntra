@@ -46,7 +46,13 @@
                                     {!! row('Name', $data->name) !!}
                                     {!! row('Company Name', $data->company_name) !!}
                                     {!! row('Email Address', $data->email) !!}
-                                    {!! row('Mobile No', $data->mobile) !!}
+                                    {!! row(
+                                        'Mobile No',
+                                        ($data->mobile)
+                                            ? trim(($data->country_code ?? '') . ' ' . $data->mobile)
+                                            : '-'
+                                    ) !!}
+
                                     {!! row('Address', $data->address) !!}
                                     {!! row('Country', $data->country) !!}
                                     {!! row('State', $data->state) !!}

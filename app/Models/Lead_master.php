@@ -44,6 +44,7 @@ class Lead_master extends Model
         $data->address=$request->address;
         $data->city=$request->city;
         $data->state=$request->state;
+		$data->country_code=$request->country_code;
 		$data->country=$request->country;
         $data->pincode=$request->pincode;
 
@@ -73,6 +74,9 @@ class Lead_master extends Model
         $data->client_id=isset($request->client_id) ? $request->client_id : '';
        // $data->lead=implode(',', $request->lead);
         $data->follow_up_date=$request->follow_up_date;
+
+        $data->country_code=$request->country_code;
+
         $data->remarks=$request->remarks;
         $data->status=0;
         $data->mobile=$request->mobile;

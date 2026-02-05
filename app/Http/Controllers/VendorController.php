@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\VendorServiceprovider;
 use App\Models\Customer;
 use App\Models\item_master;
+use App\Models\CountryPhoneCode;
 use App\Models\vendor_master;
 
 
@@ -35,7 +36,10 @@ class VendorController extends Controller
         $data=[];
            $data['country_data'] = Customer::getCountry();
 
-           $data['services'] =  item_master::item_list();;
+           $data['services'] =  item_master::item_list();
+
+              $data['country_phone_code']=CountryPhoneCode::get();
+
 
         $data['state_data']=Customer::getState();
         return view('vendor_add')->with('data', $data);

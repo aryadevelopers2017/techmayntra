@@ -19,18 +19,20 @@ class LeadController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public static function index()
     {
     	$data=LeadServiceProvider::lead_list();
-        
+
         return view('lead_list')->with('lead_lists', $data['data']);
     }
 
     public static function lead_add()
     {
     	$data=LeadServiceProvider::lead_add();
-		
+
+        // dd($data);
+
 		return view('lead_add')->with('data', $data['data']);
     }
 
@@ -40,11 +42,13 @@ class LeadController extends Controller
 
         return redirect('/lead_list');
     }
-    
+
     public static function lead_edit($id)
     {
         $lead=LeadServiceProvider::get_lead_data($id);
-        
+
+        // dd( $lead);
+
         return view('lead_add')->with('data', $lead['data']);
     }
 
@@ -57,6 +61,9 @@ class LeadController extends Controller
 
     public static function update_lead(Request $request)
     {
+
+
+
         $data=LeadServiceProvider::update_lead($request);
 
         return redirect('/lead_list');
@@ -66,10 +73,10 @@ class LeadController extends Controller
     {
         $status=2;
         $data=LeadServiceProvider::update_lead_status($id, $status);
-        
+
         return redirect('/lead_list');
     }
-    
+
     public static function lead_approve($id)
     {
         $status=1;

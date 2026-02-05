@@ -9,6 +9,7 @@ use DB;
 use App\Models\Lead_master;
 use App\Models\Customer;
 use App\Models\quotation;
+use App\Models\CountryPhoneCode;
 use App\Models\lead_remarks;
 
 class LeadServiceProvider extends ServiceProvider
@@ -56,6 +57,10 @@ class LeadServiceProvider extends ServiceProvider
             $data['state_data']=Customer::getState();
 			$data['country_data']=Customer::getCountry();
             $data['client_lists']=Customer::customer_list();
+
+            $data['country_phone_code']=CountryPhoneCode::get();
+
+
             // $data['city_data']=Customer::getCity();
 
             return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
@@ -116,8 +121,14 @@ class LeadServiceProvider extends ServiceProvider
         try
         {
             $data=Lead_master::get_lead_dataByID($id);
+
+            // dd($data);
+
             $remarks_data=lead_remarks::getlead_remarksByid($id);
             $data['remarks_data']=$remarks_data;
+
+              $data['country_phone_code']=CountryPhoneCode::get();
+
 
 			$country=$data->country;
             $countrydata='';
@@ -143,9 +154,10 @@ class LeadServiceProvider extends ServiceProvider
                 $state_id=$statedata[0]->id;
             }
 
-            return $data['state_data']=Customer::getState();
+             $data['state_data']=Customer::getState();
             $data['client_lists']=Customer::customer_list();
             $data['city_data']=Customer::getCityBystateId($state_id);
+
 
             return array('status_code' => 200, 'message' => 'Data Successfully Saved', 'data' => $data);
         }
@@ -157,33 +169,57 @@ class LeadServiceProvider extends ServiceProvider
     }
 
     public static function update_lead($request)
-    {
-        try
-        {
-			$country=Customer::getCountryName($request->country);
-            $request->country=$country[0]->name;
+{
+    try {
 
-            $city=Customer::getCityName($request->city);
-            $request->city=$city[0]->name;
-
-            $state=Customer::getStateName($request->state);
-            $request->state=$state[0]->name;
-
-            $data=Lead_master::update_lead_master($request);
-
-            if($request->remarks!='')
-            {
-                $remarks_data=lead_remarks::add_lead_remarks($request);
-            }
-
-            return array('status_code' => 200, 'message' => 'Data Successfully Saved', 'data' => $data);
+        // COUNTRY
+        if (!empty($request->country)) {
+            $country = Customer::getCountryName($request->country);
+            $request->country = $country->isNotEmpty() ? $country->first()->name : '';
         }
-        catch (\Exception $e)
-        {
-            Log::error(['method' => __METHOD__, 'error' => ['file' => $e->getFile(), 'line' => $e->getLine(), 'message' => $e->getMessage()], 'created_at' => date("Y-m-d H:i:s")]);
-            return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
+
+        // STATE
+        if (!empty($request->state)) {
+            $state = Customer::getStateName($request->state);
+            $request->state = $state->isNotEmpty() ? $state->first()->name : '';
         }
+
+        // CITY
+        if (!empty($request->city)) {
+            $city = Customer::getCityName($request->city);
+            $request->city = $city->isNotEmpty() ? $city->first()->name : '';
+        }
+
+        $data = Lead_master::update_lead_master($request);
+
+        if (!empty($request->remarks)) {
+            lead_remarks::add_lead_remarks($request);
+        }
+
+        return [
+            'status_code' => 200,
+            'message' => 'Data Successfully Saved',
+            'data' => $data
+        ];
     }
+    catch (\Exception $e) {
+        Log::error([
+            'method' => __METHOD__,
+            'error' => [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'message' => $e->getMessage()
+            ],
+            'created_at' => now()
+        ]);
+
+        return [
+            'status_code' => 500,
+            'message' => $e->getMessage()
+        ];
+    }
+}
+
 
     public static function update_lead_status($id, $status)
     {

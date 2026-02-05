@@ -56,12 +56,41 @@
                                        <span id="erralreadyemail" style="display:none;color: #ff0000;">Email Already Exists</span>
                                        <span id="errvalidemail" style="display:none;color: #ff0000;">Please Enter Valid Email</span>
                                     </div>
+
                                     <div class="form-group">
+                                       <label>Mobile No</label>
+                                        <div class="row">
+                                                        <div class="col-md-4 p-0"> <select name="country_code" id="country_code"
+                                                                    class="form-control select2" required>
+                                                                <option value="">Code</option>
+
+                                                                @foreach($data['country_phone_code'] as $code)
+                                                                    <option value="{{ $code->phone_code }}"
+                                                                        {{ (isset($data['customer_info']->country_code) && $data['customer_info']->country_code == $code->phone_code) ? 'selected' : '' }}>
+                                                                        {{ $code->phone_code }} ({{ $code->iso_code }})
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-8 p-0">
+                                       <input type="text" id="mobile" name="mobile" required minlength="10" maxlength="10" class="form-control number" value="{{ isset($data['customer_info']->mobile) ? $data['customer_info']->mobile : '' }}"  placeholder="Mobile">
+                                       <span id="erremobile" style="display:none;color: #ff0000;">Please Enter Mobile No</span>
+                                       <span id="errevalidmobile" style="display:none;color: #ff0000;">Enter Valid Mobile No</span>
+
+                                       </div>
+                                                    </div>
+                                    </div>
+
+
+
+
+                                    <!-- <div class="form-group">
                                        <label>Mobile No</label>
                                        <input type="text" id="mobile" name="mobile" required minlength="10" maxlength="10" class="form-control number" value="{{ isset($data['customer_info']->mobile) ? $data['customer_info']->mobile : '' }}"  placeholder="Mobile">
                                        <span id="erremobile" style="display:none;color: #ff0000;">Please Enter Mobile No</span>
                                        <span id="errevalidmobile" style="display:none;color: #ff0000;">Enter Valid Mobile No</span>
-                                    </div>
+                                    </div> -->
                                     <!-- NEW DROPDOWN: Assign Staff -->
                                     <div class="form-group">
                                        <label>Assign Staff</label>

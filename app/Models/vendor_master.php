@@ -22,6 +22,7 @@ class vendor_master extends Model
     'address',
     'email',
     'mobile',
+    'country_code',
     'city',
     'state',
     'country',
@@ -64,6 +65,8 @@ class vendor_master extends Model
         $customer->city=isset($request->city) ? $request->city : '';
         $customer->state=isset($request->state) ? $request->state : '';
         $customer->gst_no=isset($request->gst_no) ? $request->gst_no : '';
+
+        $customer->country_code=isset($request->country_code) ? $request->country_code : '';
 
           // Service & Rate
         $customer->service_id = $request->service_id ?? null;

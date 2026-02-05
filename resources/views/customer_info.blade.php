@@ -66,7 +66,7 @@
                                             </div>
                                             <div class="col-md-2"> : </div>
                                             <div class="col-md-6">
-                                                <label>{{ $data->mobile }}</label>
+                                                <label>{{ $data->country_code }} {{ $data->mobile }} </label>
                                             </div>
                                         </div>
 

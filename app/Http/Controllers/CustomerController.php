@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\CustomerServiceProvider;
 use App\Models\Customer;
 use App\Models\User;
+use App\Models\CountryPhoneCode;
+
+
 use DB;
 
 use Illuminate\Http\Request;
@@ -39,6 +42,9 @@ class CustomerController extends Controller
 
           // Document types from service provider
     $data['document_types'] = CustomerServiceProvider::getDocumentTypes();
+
+              $data['country_phone_code']=CountryPhoneCode::get();
+
 
     	return view('customer_add')->with('data', $data);
     }
@@ -121,6 +127,10 @@ public static function update_customer(Request $request)
          $data['customer_info'] = $customer_info['data'] ;
 
          $data['uploaded_documents'] = CustomerServiceProvider::getCustomerDocuments($id);
+
+
+              $data['country_phone_code']=CountryPhoneCode::get();
+
 
         //  dd($data['uploaded_documents']);
 

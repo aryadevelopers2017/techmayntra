@@ -76,7 +76,7 @@
                                                         @endcan
                                                     </td>
                                                     <td>{{$item->company_name}}</td>
-                                                    <td>{{$item->mobile}}</td>
+                                                    <td>{{$item->country_code}} {{$item->mobile}}</td>
                                                     <td>{{$item->email}}</td>
                                                     <td>{{ strip_tags($item->address)}}</td>
                                                     <td>{{$item->city}}</td>
