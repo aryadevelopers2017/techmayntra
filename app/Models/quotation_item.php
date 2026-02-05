@@ -51,6 +51,8 @@ class quotation_item extends Model
         $result->net_price     = round($price - $discount_price_amount, 2);
         $result->net_rate      = round($rate - $discount_rate_amount, 2);
 
+           $result->original_price = $item['original_price'] ?? null;
+
         $result->passenger_type = $item['passenger_type'] ?? null;
         $result->service_type   = $item['service_type'] ?? null;
 

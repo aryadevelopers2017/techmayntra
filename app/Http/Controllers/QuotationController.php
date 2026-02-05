@@ -57,7 +57,7 @@ class QuotationController extends Controller
     {
         $data=QuotationServiceProvider::quotation_edit($id);
 
-        // dd($data);
+        // dd($data['data']);
 
         return view('quotation_add')->with('details_array', $data['data']);
     }

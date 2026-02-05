@@ -87,7 +87,7 @@ class item_master extends Model
 
     public static function quotation_item_check($id, $item_id)
     {
-        $data=item_master::select('item_master.id', 'item_master.category_id' ,'item_master.item_name', DB::raw('(CASE WHEN quotation_item.item_id IS NULL THEN item_master.description ELSE quotation_item.description END) as description'), 'item_master.description', 'quotation_item.item_id AS item_id', 'quotation_item.description  AS desc', 'quotation_item.price', 'quotation_item.rate', 'quotation_item.qty', 'quotation_item.qty_id','quotation_item.passenger_type','quotation_item.service_type',)
+        $data=item_master::select('item_master.id', 'item_master.category_id' ,'item_master.admin_cost' ,'item_master.item_name', DB::raw('(CASE WHEN quotation_item.item_id IS NULL THEN item_master.description ELSE quotation_item.description END) as description'), 'item_master.description', 'quotation_item.item_id AS item_id', 'quotation_item.description  AS desc', 'quotation_item.price', 'quotation_item.rate', 'quotation_item.qty', 'quotation_item.qty_id','quotation_item.passenger_type','quotation_item.service_type','quotation_item.original_price',)
             ->orderBy('item_master.id', 'DESC')
             ->leftJoin("quotation_item", function($join)use($id,$item_id){
                 $join->on('item_master.id', '=', 'quotation_item.item_id')

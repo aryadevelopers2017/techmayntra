@@ -85,7 +85,7 @@
 
 
 
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6 hidden">
                                                 <div class="form-group">
                                                     <label>Select Vendor</label>
                                                     <select id="v_id" name="v_id" class="form-control select2" required>
@@ -161,25 +161,55 @@
 
                                                     <!-- CHILD ROW 1 -->
                                                     <div class="row mb-2">
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-6">
+                                                            <label><b>Qty</b></label>
                                                             <input type="number"
                                                                 class="form-control item-qty"
                                                                 value="{{ $item->qty }}"
-                                                                min="1">
+                                                                min="1"
+                                                                required>
                                                         </div>
 
-                                                        <div class="col-md-4">
-                                                            <input type="text"
-                                                                class="form-control item-price"
-                                                                value="{{ $item->price }}">
-                                                        </div>
-
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-6">
+                                                            <label><b>Action</b></label>
                                                             <button type="button"
-                                                                    class="btn btn-danger remove-item w-100">
+                                                                class="btn btn-danger remove-item w-100">
                                                                 Remove
                                                             </button>
                                                         </div>
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label><b>Enter Price</b></label>
+                                                            <input type="number"
+                                                                class="form-control item-orignal-price"
+                                                                value="{{ $item->original_price ?? '' }}"
+                                                                placeholder="Price ({{ $currency_data->symbol }})"
+                                                                required>
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label><b>Admin Cost</b></label>
+                                                            <input type="text"
+                                                                class="form-control item-admin-cost-price"
+                                                                value="{{ $item->admin_cost ?? '' }}"
+                                                                placeholder="Admin Cost"
+                                                                readonly
+                                                                required>
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label><b>Final Price</b></label>
+                                                            <input type="text"
+                                                                class="form-control item-price"
+                                                                value="{{ $item->price }}"
+                                                                placeholder="Final Price ({{ $currency_data->symbol }})"
+                                                                readonly
+                                                                required>
+                                                        </div>
+
+                                                    </div>
+
+
                                                     </div>
 
                                                     <!-- CHILD ROW 2 -->
@@ -556,6 +586,7 @@
 
                                                                              data-category-id="{{ $item->category_id }}"
 
+                                                                             data-admin-cost="{{ $item->admin_cost }}"
 
                                                                             data-name="{{ strip_tags($item->description) }}">{{ $item->item_name }}</option>
                                                                         @endforeach
@@ -595,6 +626,18 @@
 
     const SERVICE_TYPES = @json($details_array['service_types']);
 
+    $(document).on("input", ".item-orignal-price", function () {
+
+    let row = $(this).closest(".item-row");
+
+    let originalPrice = parseFloat(row.find(".item-orignal-price").val()) || 0;
+    let adminCost = parseFloat(row.find(".item-admin-cost-price").val()) || 0;
+
+    let totalPrice = originalPrice + adminCost;
+
+    row.find(".item-price").val(totalPrice.toFixed(2));
+});
+
 
 
     $('.item').click(function()
@@ -630,7 +673,7 @@
 
 
     // Whenever quantity or price changes
-    $(document).on("input", ".item-qty, .item-price", calculate_amount);
+    $(document).on("input", ".item-qty, .item-price, .item-orignal-price", calculate_amount);
 
     // Whenever discount or GST changes
     $("#discount, #gst_per").on("input", calculate_amount);
@@ -684,6 +727,8 @@
         const qty = parseFloat($(this).find(".item-qty").val()) || 0;
         const price = parseFloat($(this).find(".item-price").val()) || 0;
 
+        const original_Price = parseFloat($(this).find(".item-orignal-price").val()) || 0;
+
         const passengerType = $(this).find("input[type=radio]:checked").val();
         const serviceType = $(this).find(".service-type").val();
 
@@ -694,7 +739,8 @@
                 qty: qty,
                 price: price ,
                 passenger_type: passengerType,
-                service_type: serviceType
+                service_type: serviceType,
+                original_price: original_Price
             });
         }
     });
@@ -867,6 +913,7 @@ function addItemRow(itemId, rowId) {
     const description = $("#item_id option:selected").data("name");
     const categoryId = $("#item_id option:selected").data("category-id");
 
+    const add_item_admin_cost = $("#item_id option:selected").data("admin-cost");
 
 
 
@@ -889,7 +936,7 @@ function addItemRow(itemId, rowId) {
 
             <!-- CHILD ROW 1 -->
             <div class="row mb-2">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <input
                         type="number"
                         class="form-control item-qty"
@@ -900,20 +947,48 @@ function addItemRow(itemId, rowId) {
                     >
                 </div>
 
-                <div class="col-md-4">
+
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-danger remove-item w-100">
+                        Remove
+                    </button>
+                </div>
+
+                  <div class="col-md-4">
+                    <label><b>Enter Price</b></label>
                     <input
-                        type="text"
-                        class="form-control item-price"
+                        type="number"
+                        class="form-control item-orignal-price"
                         placeholder="Price (${symbol})"
                         required
                     >
                 </div>
 
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-danger remove-item w-100">
-                        Remove
-                    </button>
+                    <label><b>Admin Cost</b></label>
+                    <input
+                        type="text"
+                        class="form-control item-admin-cost-price"
+                        placeholder="Admin Cost"
+                        value="${add_item_admin_cost}"
+                        required
+                        readonly
+                    >
                 </div>
+
+                <div class="col-md-4">
+                    <label><b>Final Price</b></label>
+                    <input
+                        type="text"
+                        class="form-control item-price"
+                        placeholder="Final Price (${symbol})"
+                        required
+                        readonly
+                    >
+                </div>
+
+
+
             </div>
 
             <!-- CHILD ROW 2 -->
@@ -967,6 +1042,8 @@ function getServiceOptionsByCategory(categoryId) {
 // Remove Item (Event Delegation)
 $(document).on("click", ".remove-item", function() {
     $(this).closest(".item-row").remove();
+
+    calculate_amount();
 });
 </script>
 
