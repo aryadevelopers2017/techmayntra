@@ -34,6 +34,11 @@
         100% { -webkit-transform: rotate(360deg); }
     }
 
+        #invoice-logo{
+            height: auto;
+            max-width: 100%;
+        }
+
     @keyframes spin
     {
         0% { transform: rotate(0deg); }
@@ -173,7 +178,19 @@
                                                         </td>
                                                         <td class="tableitem"><h6 style="margin-right: 10px;">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}}</h6></td>
                                                     </tr>
-                                                @else
+                                                    @elseif($data['vat']==1)
+                                                    <tr class="service1">
+                                                        <td class="tableitem"></td>
+                                                        <td class="tableitem"></td>
+                                                        <td class="tableitem">
+                                                            <h2>Vat {{ $data['gst_per'] }}(%)</h2>
+                                                        </td>
+                                                        <td class="tableitem">
+                                                            <p class="itemtext"></p>
+                                                        </td>
+                                                        <td class="tableitem"><h6 style="margin-right: 10px;">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}}</h6></td>
+                                                    </tr>
+                                                   @else
                                                     <tr class="service1">
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem"></td>

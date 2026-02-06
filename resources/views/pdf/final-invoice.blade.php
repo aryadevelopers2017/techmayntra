@@ -173,19 +173,37 @@
                 <td colspan="5" class="text-right"><strong>Sub Total</strong></td>
                 <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['taxable_amount'] }}</td>
             </tr>
+
             @if($data['gst_per'] > 0)
-            <tr>
-                <td colspan="5" class="text-right">
-                    <strong>CGST ({{ $data['gst_per']/2 }}(%))</strong>
-                </td>
-                <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']/2}}</td>
-            </tr>
-            <tr>
-                <td colspan="5" class="text-right">
-                    <strong>SGST ({{ $data['gst_per']/2 }}(%))</strong>
-                </td>
-                <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']/2}}</td>
-            </tr>
+                @if ($data['original_quotation_data']->vat == 1)
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <strong>VAT {{ $data['gst_per'] }}(%)</strong>
+                    </td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}} </td>
+                </tr>
+                @elseif($data['igst'] == 1)
+                <tr>
+                     <td colspan="5" class="text-right">
+                        <strong>IGST {{ $data['gst_per'] }}(%)</strong>
+                    </td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}} </td>
+                </tr>
+                @else
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <strong>CGST ({{ $data['gst_per']/2 }}(%))</strong>
+                    </td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']/2}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <strong>SGST ({{ $data['gst_per']/2 }}(%))</strong>
+                    </td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']/2}}</td>
+                </tr>
+
+                @endif
             @endif
             <tr>
                 <td colspan="5" class="text-right"><strong>Total</strong></td>

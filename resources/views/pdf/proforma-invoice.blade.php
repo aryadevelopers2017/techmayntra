@@ -183,6 +183,14 @@
                         </td>
                         <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}} </td>
                     </tr>
+
+                @elseif($data['original_quotation_data']->vat==1)
+                    <tr>
+                        <td colspan="5" class="text-right">
+                            <strong>VAT {{ $data['gst_per'] }}(%)</strong>
+                        </td>
+                        <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}} </td>
+                    </tr>
                 @else
                     <tr>
                         <td colspan="5" class="text-right">

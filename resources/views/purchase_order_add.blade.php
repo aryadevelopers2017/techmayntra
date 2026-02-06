@@ -200,7 +200,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div>
-                                                        <input type="checkbox" id="gst" name="gst" value="1">&nbsp;&nbsp;GST
+                                                        <input type="checkbox" id="gst" name="gst" value="1">&nbsp;&nbsp;VAT
                                                     </div>
                                                 </div>
                                             </div>
@@ -219,8 +219,8 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>GST Percentage(%)</label>
-                                                        <input type="text" class="form-control number1" id="gst_per" min="0" max="100" name="gst_per" placeholder="Enter GST Percentage" placeholder="0" value="{{ isset($data->gst_per) ? $data->gst_per : '' }}">
+                                                        <label>VAT Percentage(%)</label>
+                                                        <input type="text" class="form-control number1" id="gst_per" min="0" max="100" name="gst_per" placeholder="Enter VAT Percentage" placeholder="0" value="{{ isset($data->gst_per) ? $data->gst_per : '' }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -236,14 +236,38 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Payment Mode </label>
                                                     <div style="margin-left: 10px;">
-                                                        <input type="radio" id="cash" name="payment_mode" class="payment_mode" value="cash" >&nbsp;&nbsp;Cash &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <!-- <input type="radio" id="cash" name="payment_mode" class="payment_mode" value="cash" >&nbsp;&nbsp;Cash &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <input type="radio" id="net_banking" name="payment_mode" class="payment_mode" value="Net Banking">&nbsp;&nbsp;&nbsp;Net Banking &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <input type="radio" class="payment_mode" id="mobile_app" name="payment_mode" value="Mobile Application">&nbsp;&nbsp;&nbsp;Mobile Application&nbsp;&nbsp;&nbsp;
-                                                        <input type="radio" class="payment_mode" id="upi" name="payment_mode" value="UPI">&nbsp;&nbsp;&nbsp;UPI
+                                                        <input type="radio" class="payment_mode" id="tabby" name="payment_mode" value="Tabby">&nbsp;&nbsp;&nbsp;Tabby&nbsp;&nbsp;&nbsp;
+                                                        <input type="radio" class="payment_mode" id="tamara" name="payment_mode" value="UPI">&nbsp;&nbsp;&nbsp;Tamara&nbsp;&nbsp;&nbsp; -->
+
+
+    <label>
+        <input type="radio" name="payment_mode" class="payment_mode" value="cash">&nbsp;&nbsp;&nbsp; Cash &nbsp;&nbsp;&nbsp;
+    </label>
+
+    <label>
+        <input type="radio" name="payment_mode" class="payment_mode" value="Net Banking">&nbsp;&nbsp;&nbsp; Bank Transfer &nbsp;&nbsp;&nbsp;
+    </label>
+
+    <label>
+        <input type="radio" name="payment_mode" class="payment_mode" value="Mobile Application">&nbsp;&nbsp;&nbsp; Credit Card Payment &nbsp;&nbsp;&nbsp;
+    </label>
+
+    <label>
+        <input type="radio" name="payment_mode" class="payment_mode" value="Tabby">&nbsp;&nbsp;&nbsp; Tabby &nbsp;&nbsp;&nbsp;
+    </label>
+
+    <label>
+        <input type="radio" name="payment_mode" class="payment_mode" value="UPI"> &nbsp;&nbsp;&nbsp; Tamara &nbsp;&nbsp;&nbsp;
+    </label>
+</div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -428,6 +452,7 @@
         });
     </script>
 @endif
+
 
 @if(isset($data->vender_id))
     <script>

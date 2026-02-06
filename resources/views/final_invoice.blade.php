@@ -181,6 +181,9 @@
                                                 </td>
                                                 <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['taxable_amount']}}</h6></td>
                                             </tr>
+
+
+
                                             @if($data['gst_per']>0)
                                                 @if($data['igst']==1)
                                                     <tr class="service1">
@@ -195,6 +198,14 @@
                                                         </td>
                                                         <td class="tableitem"><h6 style="margin-right: 10px;">₹ {{ $data['gst_amount']}}</h6></td>
                                                     </tr>
+                                                @elseif($data['original_quotation_data']->vat==1)
+                                                            <tr>
+                                                                <td colspan="5" class="text-right">
+                                                                    <strong>VAT {{ $data['gst_per'] }}(%)</strong>
+                                                                </td>
+                                                                <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}} </td>
+                                                            </tr>
+
                                                 @else
                                                     <tr class="service1">
                                                         <td class="tableitem"></td>

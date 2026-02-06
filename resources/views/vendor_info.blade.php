@@ -73,7 +73,7 @@
                                     {!! row('Bank Name', $data->bank_name) !!}
                                     {!! row('Account Holder Name', $data->account_holder_name) !!}
                                     {!! row('Account Number', $data->account_number) !!}
-                                    {!! row('IFSC Code', $data->ifsc_code) !!}
+                                    {!! row('IBAN Code', $data->ifsc_code) !!}
                                     {!! row('Branch Name', $data->branch_name) !!}
 
                                     {{-- ACTION --}}

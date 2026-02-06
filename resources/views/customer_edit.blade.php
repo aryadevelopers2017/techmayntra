@@ -161,10 +161,40 @@
                                           @endif
                                        </select>
                                     </div>
-                                    <div class="form-group">
-                                       <label>GST No</label>
-                                       <input type="text" id="gst_no" name="gst_no" value="{{ isset($data['customer_info']->gst_no) ? $data['customer_info']->gst_no : '' }}"  class="form-control" placeholder="GST No">
-                                    </div>
+                                    @php
+    $taxType = isset($data['customer_info']->tax_type) ? $data['customer_info']->tax_type : 'GST';
+@endphp
+
+<div class="form-group">
+    <label>Tax Type</label><br>
+
+    <label>
+        <input type="radio" name="tax_type" value="GST"
+            {{ $taxType == 'GST' ? 'checked' : '' }}
+            onclick="changeTaxType('GST')">
+        GST
+    </label>
+
+    &nbsp;&nbsp;
+
+    <label>
+        <input type="radio" name="tax_type" value="VAT"
+            {{ $taxType == 'VAT' ? 'checked' : '' }}
+            onclick="changeTaxType('VAT')">
+        VAT
+    </label>
+</div>
+
+<div class="form-group">
+    <label id="tax_label">{{ $taxType }} No</label>
+    <input type="text"
+        id="gst_no"
+        name="gst_no"
+        value="{{ isset($data['customer_info']->gst_no) ? $data['customer_info']->gst_no : '' }}"
+        class="form-control"
+        placeholder="{{ $taxType }} No">
+</div>
+
                                  </div>
                               </div>
                            </div>
@@ -603,7 +633,17 @@ $(document).on('click', '.btn-delete-doc', function () {
 </script>
 
 
-
+<script>
+function changeTaxType(type) {
+    if(type == "GST") {
+        document.getElementById("tax_label").innerText = "GST No";
+        document.getElementById("gst_no").placeholder = "GST No";
+    } else if(type == "VAT") {
+        document.getElementById("tax_label").innerText = "VAT No";
+        document.getElementById("gst_no").placeholder = "VAT No";
+    }
+}
+</script>
 
 
 

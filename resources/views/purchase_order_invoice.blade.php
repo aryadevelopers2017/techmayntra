@@ -1,6 +1,15 @@
 @extends('layouts.Admin.invoice_app')
 
 @section('content')
+
+<style>
+
+    #invoice-logo{
+        height: auto;
+        max-width: 100%;
+    }
+</style>
+
     <div class="row">
         <div class="col-md-6" style="text-align: right;">
             <button id="pdfdownload" class="btn btn-primary">Generate PDF</button>
@@ -117,7 +126,7 @@
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem">
-                                                            <h2>IGST {{ $data['gst_per'] }}(%)</h2>
+                                                            <h2>Vat {{ $data['gst_per'] }}(%)</h2>
                                                         </td>
                                                         <td class="tableitem">
                                                             <p class="itemtext"></p>
@@ -130,25 +139,14 @@
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem"></td>
                                                         <td class="tableitem">
-                                                            <h2>CGST {{ $data['gst_per']/2 }}(%)</h2>
+                                                            <h2>Vat  {{ $data['gst_per'] }}(%)</h2>
                                                         </td>
                                                         <td class="tableitem">
                                                             <p class="itemtext"></p>
                                                         </td>
-                                                        <td class="tableitem"><h6>₹ {{ $data['gst_amount']/2}}</h6></td>
+                                                        <td class="tableitem"><h6>₹ {{ $data['gst_amount']}}</h6></td>
                                                     </tr>
-                                                    <tr class="service1">
-                                                        <td class="tableitem"></td>
-                                                        <td class="tableitem"></td>
-                                                        <td class="tableitem"></td>
-                                                        <td class="tableitem">
-                                                            <h2>SGST {{ $data['gst_per']/2 }}(%)</h2>
-                                                        </td>
-                                                        <td class="tableitem">
-                                                            <p class="itemtext"></p>
-                                                        </td>
-                                                        <td class="tableitem"><h6>₹ {{ $data['gst_amount']/2}}</h6></td>
-                                                    </tr>
+
                                                 @endif
                                             @endif
                                             <tr class="tabletitle">

@@ -101,20 +101,14 @@ class ProformaInvoiceController extends Controller
         return view('/proforma_invoice_details_list')->with('proforma_invoice_details', $data['data']);
     }
 
-    // public static function final_invoice($id)
-    // {
-    //     $data=ProformaInvoiceServiceProvider::final_invoice_data($id);
-
-    //     return view('final_invoice')->with('data', $data['data']);
-
-    // }
-
    public function final_invoice($id)
     {
         $data = ProformaInvoiceServiceProvider::final_invoice_data($id);
 
         ob_end_clean();
         ob_start();
+
+        // dd($data['data']['original_quotation_data']->vat);
 
         $pdf = Pdf::loadView('pdf.final-invoice', [
             'data' => $data['data']

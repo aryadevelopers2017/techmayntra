@@ -203,8 +203,8 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label>IFSC Code</label>
-                                                        <input type="text" name="ifsc_code" class="form-control" placeholder="IFSC Code">
+                                                        <label>IBAN Code</label>
+                                                        <input type="text" name="ifsc_code" class="form-control" placeholder="IBAN Code">
                                                     </div>
 
                                                     <div class="form-group">

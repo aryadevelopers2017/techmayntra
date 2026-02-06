@@ -93,6 +93,9 @@ class Customer extends Model
         $customer->address=isset($request->address) ? $request->address : '';
         $customer->city=isset($request->city) ? $request->city : '';
         $customer->state=isset($request->state) ? $request->state : '';
+
+          $customer->tax_type=isset($request->tax_type) ? $request->tax_type : '';
+
         $customer->gst_no=isset($request->gst_no) ? $request->gst_no : '';
 
          $customer->country = $request->country ?? null;
@@ -152,6 +155,8 @@ class Customer extends Model
     $customer->state = $request->state ?? '';
     $customer->country = $request->country ?? '';
     $customer->gst_no = $request->gst_no ?? null;
+
+          $customer->tax_type=isset($request->tax_type) ? $request->tax_type : '';
 
 
         $customer->country_code=$request->country_code;

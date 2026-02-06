@@ -132,6 +132,8 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $data['price']=$quotation_data->price;
         $data['discount']=$quotation_data->discount;
         $data['igst']=$quotation_data->igst;
+
+
         // $total_amount=$quotation_data[0]['total_amount'];
         $data['taxable_amount']=$quotation_data->amount;
         $data['gst_per']=$quotation_data->gst_per;
@@ -239,15 +241,6 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $currency_data=Currency::getByID($currency_id);
         $data['currency_data']=$currency_data;
 
-        // $data['working_days']=$quotation_data[0]['working_days'];
-
-        // $data['milestone']=$quotation_data[0]['milestone'];
-        // $data['terms_conditions_flag']=$quotation_data[0]['terms_conditions_flag'];
-        // $data['terms_conditions']=$quotation_data[0]['terms_conditions'];
-        // $data['payment_terms_conditions_flag']=$quotation_data[0]['payment_terms_conditions_flag'];
-        // $data['payment_terms_conditions']=$quotation_data[0]['payment_terms_conditions'];
-        // $data['bank_details_flag']=$quotation_data[0]['bank_details_flag'];
-        // $data['bank_details']=$quotation_data[0]['bank_details'];
 
         $f = new \NumberFormatter( locale_get_default(), \NumberFormatter::SPELLOUT );
         $data['amount_word'] = $f->format($total_amount).' '.$currency_data->name.' Only';
@@ -258,10 +251,10 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
 
         $data['item_data']=$item;
 
-        // dd($data);
+           $data['original_quotation_data']= quotation::find($quotation_data[0]['quotation_id']);
 
-        // $company_data=company_module_master::module_data();
-        // $data['company_data']=$company_data;
+
+        // dd($data);
 
         return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
     }

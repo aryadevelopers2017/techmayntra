@@ -297,6 +297,7 @@ class QuotationServiceProvider extends ServiceProvider
         $data['price']=$quotation_data[0]['price'];
         $data['discount']=$quotation_data[0]['discount'];
         $data['igst']=$quotation_data[0]['igst'];
+         $data['vat']=$quotation_data[0]['vat'];
         $data['gst_per']=$quotation_data[0]['gst_per'];
         $data['gst_amount']=$quotation_data[0]['gst_amount'];
         $total_amount=$quotation_data[0]['total_amount'];

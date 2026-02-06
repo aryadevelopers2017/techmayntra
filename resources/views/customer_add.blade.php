@@ -159,10 +159,33 @@
                                           @endif
                                        </select>
                                     </div>
+
                                     <div class="form-group">
+    <label>Tax Type</label><br>
+
+    <label>
+        <input type="radio" name="tax_type" value="GST" checked onclick="changeTaxType('GST')">
+        GST
+    </label>
+
+    &nbsp;&nbsp;
+
+    <label>
+        <input type="radio" name="tax_type" value="VAT" onclick="changeTaxType('VAT')">
+        VAT
+    </label>
+</div>
+
+<div class="form-group">
+    <label id="tax_label">GST No</label>
+    <input type="text" id="gst_no" name="gst_no" class="form-control" placeholder="GST No">
+</div>
+
+
+                                    <!-- <div class="form-group">
                                        <label>GST No</label>
                                        <input type="text" id="gst_no" name="gst_no"  class="form-control" placeholder="GST No">
-                                    </div>
+                                    </div> -->
                                  </div>
                               </div>
                            </div>
@@ -490,5 +513,18 @@ function getTravelCityByState() {
 
 
 </script>
+
+<script>
+function changeTaxType(type) {
+    if(type == "GST") {
+        document.getElementById("tax_label").innerText = "GST No";
+        document.getElementById("gst_no").placeholder = "GST No";
+    } else if(type == "VAT") {
+        document.getElementById("tax_label").innerText = "VAT No";
+        document.getElementById("gst_no").placeholder = "VAT No";
+    }
+}
+</script>
+
 
 @endsection
