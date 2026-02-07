@@ -63,7 +63,7 @@
                                     <hr>
                                     <h5>Service Details</h5>
 
-                                    {!! row('Service', $data->service->name ?? '-') !!}
+                                    {!! row('Service', $data->service->item_name ?? '-') !!}
                                     {!! row('Rate Option', $data->rate_option) !!}
 
                                     {{-- BANK DETAILS --}}
@@ -86,7 +86,13 @@
                                        class="btn btn-danger btn-sm sweetalert sweet-success-cancel">
                                         Delete Vendor
                                     </a>
+
                                                                                         @endcan
+
+                                @can('vendor.edit')
+
+                                        <a href="{{ url('/edit_vendor').'/'.$data->id }}" class="btn btn-primary  btn-sm " title="">Edit</a>
+                                @endcan
 
 
                                 </div>

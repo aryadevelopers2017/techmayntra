@@ -70,7 +70,40 @@ class VendorController extends Controller
     {
         $data=VendorServiceprovider::get_vendor_info($id);
 
+// dd($data);
         return view('vendor_info')->with('data', $data['data']);
+    }
+
+    public static function vendor_edit($id) {
+          $data=[];
+
+          $vendor_data = VendorServiceprovider::get_vendor_info($id);
+            $data['vendor_data'] = $vendor_data['data'];
+
+                $data['country_data'] = Customer::getCountry();
+                $data['state_data']=Customer::getState();
+                $data['services'] =  item_master::item_list();
+                $data['country_phone_code']=CountryPhoneCode::get();
+
+                // dd($data);
+
+            return view('vendor_edit')->with('data', $data);
+    }
+
+        public static function update_vendor(Request $request, $id)
+    {
+        $data=VendorServiceprovider::update_vendor($request, $id);
+        if($data['status_code']==200)
+        {
+            $status='success';
+        }
+        else
+        {
+            $status='fail';
+        }
+        $message=$data['message'];
+          	return redirect('/vendor_list')->with($status, $message);
+
     }
 
 

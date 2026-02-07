@@ -47,7 +47,26 @@ class vendor_master extends Model
 
     public static function get_vendorById($id)
     {
-        $data=vendor_master::find($id);
+           $data = vendor_master::with('service')->find($id);
+
+        //  Convert country name → ID
+        $country = DB::table('country')
+            ->where('name', $data->country)
+            ->first();
+
+        $state = DB::table('states')
+            ->where('name', $data->state)
+            ->first();
+
+        $city = DB::table('city')
+            ->where('name', $data->city)
+            ->first();
+
+        $data->country_id = $country->id ?? null;
+        $data->state_id   = $state->id ?? null;
+        $data->city_id    = $city->id ?? null;
+
+
 
         return $data;
     }
@@ -84,10 +103,47 @@ class vendor_master extends Model
 
         return $customer;
     }
+    public static function update_vendor($request, $id)
+{
+    $vendor = vendor_master::find($id);
+
+    if(!$vendor){
+        return false; // vendor not found
+    }
+
+    $vendor->name = $request->name;
+    $vendor->company_name = $request->company_name;
+    $vendor->email = $request->email;
+    $vendor->mobile = $request->mobile;
+
+    $vendor->address = $request->address ?? '';
+    $vendor->country = $request->country ?? '';
+    $vendor->state = $request->state ?? '';
+    $vendor->city = $request->city ?? '';
+
+    $vendor->gst_no = $request->gst_no ?? '';
+    $vendor->country_code = $request->country_code ?? '';
+
+    // Service & Rate
+    $vendor->service_id = $request->service_id ?? null;
+    $vendor->rate_option = $request->rate_option ?? null;
+
+    // Bank Details
+    $vendor->bank_name = $request->bank_name ?? null;
+    $vendor->account_holder_name = $request->account_holder_name ?? null;
+    $vendor->account_number = $request->account_number ?? null;
+    $vendor->ifsc_code = $request->ifsc_code ?? null;
+    $vendor->branch_name = $request->branch_name ?? null;
+
+    $vendor->save();
+
+    return $vendor;
+}
+
 
     public function service()
 {
-    return $this->belongsTo(Service::class, 'service_id');
+    return $this->belongsTo(item_master::class, 'service_id');
 }
 
 }
