@@ -280,7 +280,7 @@
                                                 </div>
 
                                                 <div id="gst_div" style="display: none;margin-left: -7px !important;">
-                                                    <div class="form-group">
+                                                    <div class="form-group" id="igst_div">
                                                         <div class="col-md-3 mt-5">
                                                             <input type="checkbox" id="igst" name="igst" value="1">&nbsp;&nbsp;&nbsp;<label>IGST</label>
                                                         </div>
@@ -805,6 +805,7 @@ $("#vat").on('change', vat_fun);
 
         $("#gst_div").show();
         $("#tax_label").text('GST (%)');
+              $("#igst_div").show();
     }
     else
     {
@@ -832,6 +833,8 @@ $("#vat").on('change', vat_fun);
 
         $("#gst_div").show();
         $("#tax_label").text('VAT (%)');
+
+          $("#igst_div").hide();
     }
     else
     {

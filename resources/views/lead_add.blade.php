@@ -142,10 +142,10 @@
                                                 <div class="form-group">
                                                     <label>Source </label>
                                                     <select name="contact" id="contact" onchange="getclientlist();" class="form-control" required>
-                                                        <option value="By Company">By Company</option>
-                                                        <option value="OffLine">offline</option>
-                                                        <option value="OnLine">Online</option>
-                                                        <option value="Reffence">Reffence</option>
+                                                        <option value="Walk-In Client"> Walk-In Client</option>
+                                                        <option value="Meta">Meta</option>
+                                                        <option value="Offline Agent">Offline Agent</option>
+                                                        <option value="Referral Client">Referral Client</option>
                                                     </select>
                                                     <span id="errcontact" style="display:none;color: #ff0000;">Please Select Contact</span>
                                                 </div>

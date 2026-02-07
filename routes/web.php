@@ -86,7 +86,7 @@ Route::post('/save_invoice', [App\Http\Controllers\ProformaInvoiceController::cl
 Route::get('/proforma_invoice_payment/{id}', [App\Http\Controllers\ProformaInvoiceController::class, 'proforma_invoice_payment']);
 Route::post('/add_proforma_invoice_payment', [App\Http\Controllers\ProformaInvoiceController::class, 'add_proforma_invoice_payment']);
 
-Route::get('/proforma_invoice_generate/{id}', [App\Http\Controllers\ProformaInvoiceController::class, 'proforma_invoice_generate']);
+Route::get('/proforma_invoice_generate', [App\Http\Controllers\ProformaInvoiceController::class, 'proforma_invoice_generate']);
 
 
 Route::get('/proforma_invoice_approve/{id}', [App\Http\Controllers\ProformaInvoiceController::class, 'proforma_invoice_approve']);

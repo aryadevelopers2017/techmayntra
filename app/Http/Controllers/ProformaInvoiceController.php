@@ -8,6 +8,7 @@ use App\Providers\ProformaInvoiceServiceProvider;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Providers\QuotationServiceProvider;
+use App\Models\proforma_invoice;
 use Illuminate\Support\Facades\Log;
 
 
@@ -50,9 +51,16 @@ class ProformaInvoiceController extends Controller
     //     return view('proforma_invoice')->with('data', $data['data']);
     // }
 
-     public static function proforma_invoice_generate($id)
+     public static function proforma_invoice_generate(Request $request)
     {
-        $data=ProformaInvoiceServiceProvider::proforma_invoice_generate($id);
+        $id = $request->invoice_no;
+        // dd($id);
+
+    $invoice_number = proforma_invoice::where('invoice_no', $id)->first();
+
+
+
+        $data=ProformaInvoiceServiceProvider::proforma_invoice_generate($invoice_number->id);
 
         // dd($data);
 

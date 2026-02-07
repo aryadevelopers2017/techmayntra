@@ -32,7 +32,8 @@
                                 <div class="basic-form">
                                     <form action="{{ route('update_vendor', $data['vendor_data']->id) }}" id="formsubmit" method="POST">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                        <div class="row">
+                                        <div class="row">                                        git checkout -b feature/your-descriptive-name
+                                        git push -u origin feature/your-descriptive-name
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Name</label>

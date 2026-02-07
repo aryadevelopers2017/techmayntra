@@ -51,7 +51,7 @@
                                         <thead>
                                             <th>Sr.No</th>
                                             <!-- <th style="text-align: left;">Proforma Action</th> -->
-                                            <th style="text-align: left;">Proforma No</th>
+                                            <th style="text-align: left;">Invoice No</th>
                                             <th style="text-align: left;">Date</th>
                                             <th style="text-align: left;">Title</th>
                                             <th style="text-align: left;">Name</th>
@@ -76,7 +76,7 @@
                                                                 @endphp
                                                                    @can('invoice.print')
 
-                                                                <a href="{{ url('/proforma_invoice_generate/').'/'.$item->id }}" title="invoice" target="_blank">{{ $item->invoice_no }}</a>
+                                                                <a href="{{ url('/proforma_invoice_generate/').'?invoice_no='.$item->invoice_no }}" title="invoice" target="_blank">{{ $item->invoice_no }}</a>
 
 @else
 {{ $item->invoice_no }}
