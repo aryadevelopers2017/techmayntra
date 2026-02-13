@@ -20,6 +20,10 @@ class item_master extends Model
     'admin_cost',
     'category_id',
     'subcategory_id',
+
+    'tax_type',
+    'tax_value',
+
     'status'
 ];
 
@@ -45,6 +49,9 @@ class item_master extends Model
 
         $item_master->vendor_id = $request->vendor_id ?? null;
         $item_master->admin_cost = $request->admin_cost ?? 0;
+
+        $item_master->tax_type = $request->tax_type ?? null;
+        $item_master->tax_value = $request->tax_value ?? null;
 
         $item_master->category_id = $request->category_id ?? null;
         $item_master->subcategory_id = $request->subcategory_id ?? null;
@@ -76,6 +83,9 @@ class item_master extends Model
     $item_master->vendor_id = $request->vendor_id;
     $item_master->admin_cost = $request->admin_cost;
 
+     $item_master->tax_type = $request->tax_type ?? null;
+        $item_master->tax_value = $request->tax_value ?? null;
+
     $item_master->category_id = $request->category_id;
     $item_master->subcategory_id = $request->subcategory_id;
 
@@ -87,7 +97,7 @@ class item_master extends Model
 
     public static function quotation_item_check($id, $item_id)
     {
-        $data=item_master::select('item_master.id', 'item_master.category_id' ,'item_master.admin_cost' ,'item_master.item_name', DB::raw('(CASE WHEN quotation_item.item_id IS NULL THEN item_master.description ELSE quotation_item.description END) as description'), 'item_master.description', 'quotation_item.item_id AS item_id', 'quotation_item.description  AS desc', 'quotation_item.price', 'quotation_item.rate', 'quotation_item.qty', 'quotation_item.qty_id','quotation_item.passenger_type','quotation_item.service_type','quotation_item.original_price',)
+        $data=item_master::select('item_master.id', 'item_master.category_id','item_master.tax_value','item_master.tax_type' ,'item_master.admin_cost' ,'item_master.item_name', DB::raw('(CASE WHEN quotation_item.item_id IS NULL THEN item_master.description ELSE quotation_item.description END) as description'), 'item_master.description', 'quotation_item.item_id AS item_id', 'quotation_item.description  AS desc', 'quotation_item.price', 'quotation_item.rate', 'quotation_item.qty', 'quotation_item.qty_id','quotation_item.passenger_type','quotation_item.service_type','quotation_item.original_price','quotation_item.taxtype','quotation_item.taxvalue' )
             ->orderBy('item_master.id', 'DESC')
             ->leftJoin("quotation_item", function($join)use($id,$item_id){
                 $join->on('item_master.id', '=', 'quotation_item.item_id')

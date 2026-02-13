@@ -203,6 +203,11 @@ class Customer extends Model
         $state = DB::table('states')->where(['country_id' => 101])->get();
         return $state;
     }
+     public static function getAllState()
+    {
+        $state = DB::table('states')->get();
+        return $state;
+    }
 
     public static function getCity()
     {
@@ -227,9 +232,20 @@ class Customer extends Model
         return $state;
     }
 
+     public static function getStateUsingName($name)
+    {
+        $state = DB::table('states')->where(['name' => $name])->get();
+        return $state;
+    }
+
     public static function getCountryName($id)
     {
         $country = DB::table('country')->where(['id' => $id])->get();
+        return $country;
+    }
+        public static function getCountryData($name)
+    {
+        $country = DB::table('country')->where(['name' => $name])->get();
         return $country;
     }
 

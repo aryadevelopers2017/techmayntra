@@ -64,8 +64,10 @@ class ProformaInvoiceController extends Controller
 
         // dd($data);
 
-          ob_end_clean();
-        ob_start();
+         if (ob_get_level() > 0) {
+        ob_end_clean();
+    }
+    ob_start();
 
          $pdf = Pdf::loadView('pdf.proforma-invoice', [
             'data' => $data['data']
@@ -113,8 +115,10 @@ class ProformaInvoiceController extends Controller
     {
         $data = ProformaInvoiceServiceProvider::final_invoice_data($id);
 
+    if (ob_get_level() > 0) {
         ob_end_clean();
-        ob_start();
+    }
+    ob_start();
 
         // dd($data['data']['original_quotation_data']->vat);
 

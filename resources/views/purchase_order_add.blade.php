@@ -29,6 +29,10 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
+
+
+
+
                                 <div class="basic-form">
                                     @if(isset($data->id))
                                         <form action="{{ url('/update_purchase_order') }}" id="purchaseorderform" method="POST">
@@ -50,14 +54,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Company Name </label>
-                                                    <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Enter Company Name" value="{{ isset($data->company_name) ? $data->company_name : '' }}" required>
-                                                    <span id="errcompany_name" style="display:none;color: #ff0000;">Please Enter Company Name</span>
-                                                </div>
-
-                                                <div class="form-group">
                                                     <label>Vendor Name </label>
-                                                    <select name="vender_id" id="vender_id" class="form-control select2" required onchange="get_project_list();">
+                                                    <select name="vender_id" id="vender_id" class="form-control select2" required onchange="get_project_list(); get_vendor_details();">
                                                         <option value="" selected disabled>Please Select vendor</option>
                                                         @foreach($data['vendor_list'] as $vendordata)
                                                             @if(isset($data->vender_id) && $data->vender_id == $vendordata->id)
@@ -78,6 +76,14 @@
                                                     </select>
                                                     <span id="errvendor_name" style="display:none;color: #ff0000;">Please Enter Vendor Name</span>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label>Company Name </label>
+                                                    <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Enter Company Name" value="{{ isset($data->company_name) ? $data->company_name : '' }}" required>
+                                                    <span id="errcompany_name" style="display:none;color: #ff0000;">Please Enter Company Name</span>
+                                                </div>
+
+
 
                                                 <div class="form-group" id="div_project">
                                                     <label>Select Project </label>
@@ -121,6 +127,34 @@
                                                     </textarea>
                                                     <span id="erraddress" style="display:none;color: #ff0000;">Please Enter Address</span>
                                                 </div>
+
+                                                  <div class="form-group">
+                                                <label>Country</label>
+
+                                                <select name="country" id="country" class="form-control select2" onchange="getStateByCountry();">
+                                                    <option value="" selected>Please Select Country</option>
+
+                                                    @foreach($data['country_data'] as $country)
+
+
+                                                     @php
+                                                                $selected='';
+
+                                                                if(isset($data['select_country']))
+                                                                {
+                                                                    if(strtolower($data['select_country']->name) == strtolower($country->name))
+                                                                    {
+                                                                        $selected='selected';
+                                                                    }
+                                                                }
+                                                            @endphp
+
+
+                                                    <option value="{{ $country->id }}" {{ $selected }} >{{ $country->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                </div>
+
 
                                                 <div class="form-group">
                                                     <label>State </label>
@@ -318,6 +352,69 @@
             }
         });
     }
+
+    function getStateByCountry()
+    {
+        var country_id=$("#country").val();
+        $("#state").html('');
+
+        $.ajax({
+            type : 'POST',
+            url : "{{ url('/getStateBycountryId') }}",
+            data : {'country_id': country_id, "_token": "{{ csrf_token() }}"},
+            success:function(data)
+            {
+                if(data.state.status_code == 200)
+                {
+                    var option='<option value="" selected disabled>Please Select State</option>';
+
+                    $.each(data.state.data, function(index,value)
+                    {
+                        option+='<option value="'+value.id+'">'+value.name+'</option>';
+                    });
+
+                    $("#state").html(option);
+                }
+            }
+        });
+    }
+
+
+    function get_vendor_details() {
+
+    let vendor_id = $("#vender_id").val();
+
+    if(vendor_id == "" || vendor_id == null){
+        return;
+    }
+
+    $.ajax({
+            url: "{{ route('get.vendor.details') }}",
+        type: "GET",
+        data: { vendor_id: vendor_id },
+        success: function(response){
+
+        console.log(response);
+
+            $("#company_name").val(response.company_name);
+            $("#address").val(response.address);
+            $("#country").val(response.country_id).trigger("change");
+
+
+             setTimeout(function(){
+                 $("#state").val(response.state_id).trigger("change");
+            }, 1000);
+
+
+            setTimeout(function(){
+                $("#city").val(response.city_id).trigger("change");
+            },1200);
+
+        }
+    });
+
+}
+
 
     function get_project_list()
     {

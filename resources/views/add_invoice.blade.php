@@ -110,7 +110,7 @@
                                             </select>
                                             <span id="errname" style="display:none;color: #ff0000;">Please Select Company</span>
                                         </div>
-                                        <div class="row">
+                                          <div class="row form-group">
                                             <div class="form-group col-lg-12">
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Service</button>
                                             </div>
@@ -138,7 +138,7 @@
 
                                                 <!-- LEFT PART -->
                                                 <div class="col-md-6">
-                                                    <h4><label>{{ $item->item_name }}</label></h4>
+                                                    <h4><b>{{ $item->item_name }}</b></h4>
 
                                                     <textarea class="item-desc summernote"
                                                             placeholder="{{ $item->item_name }} Description"
@@ -148,10 +148,10 @@
                                                 <!-- RIGHT PART -->
                                                 <div class="col-md-6">
 
-                                                     <!-- CHILD ROW 1 -->
+                                                    <!-- CHILD ROW 1 -->
                                                     <div class="row mb-2">
-                                                        <div class="col-md-6">
-                                                            <label><b>Qty</b></label>
+                                                        <div class="col-md-6 d-flex align-items-center">
+                                                            <label><b>Qty</b></label> &nbsp;&nbsp;
                                                             <input type="number"
                                                                 class="form-control item-qty"
                                                                 value="{{ $item->qty }}"
@@ -162,12 +162,12 @@
                                                         <div class="col-md-6">
                                                             <label><b>Action</b></label>
                                                             <button type="button"
-                                                                class="btn btn-danger remove-item w-100">
+                                                                class="btn btn-primary remove-item w-100">
                                                                 Remove
                                                             </button>
                                                         </div>
 
-                                                        <div class="col-md-4 mt-2">
+                                                        <div class="col-md-3">
                                                             <label><b>Enter Price</b></label>
                                                             <input type="number"
                                                                 class="form-control item-orignal-price"
@@ -176,7 +176,7 @@
                                                                 required>
                                                         </div>
 
-                                                        <div class="col-md-4 mt-2">
+                                                        <div class="col-md-3">
                                                             <label><b>Admin Cost</b></label>
                                                             <input type="text"
                                                                 class="form-control item-admin-cost-price"
@@ -185,8 +185,20 @@
                                                                 readonly
                                                                 required>
                                                         </div>
+                                                        <div class="col-md-3">
+                                                            <label><b>Tax ({{ $item->taxtype ? $item->taxtype : 'GST'}})</b></label>
+                                                            <input type="hidden" value="{{ $item->taxtype ? $item->taxtype : 'GST'}}" class="item-tax-type">
+                                                            <input
+                                                                type="number"
+                                                                class="form-control item-tax-percent"
+                                                                placeholder="Tax %"
+                                                                value="{{ $item->taxvalue }}"
+                                                                min="0"
+                                                                max="100"
+                                                            >
+                                                        </div>
 
-                                                        <div class="col-md-4 mt-2">
+                                                        <div class="col-md-3">
                                                             <label><b>Final Price</b></label>
                                                             <input type="text"
                                                                 class="form-control item-price"
@@ -197,7 +209,6 @@
                                                         </div>
 
                                                     </div>
-
                                                     <!-- CHILD ROW 2 -->
                                                     <div class="row">
                                                         <div class="col-md-6">
@@ -222,7 +233,7 @@
                                                             </label>
                                                         </div>
 
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-6 " style="display: none;" >
                                                             <label><b>Ticket Type</b></label>
 
                                                             <select class="form-control service-type">
@@ -252,9 +263,9 @@
                                             @endif
 
                                         <span id="erritem" style="display: none; color: #ff0000;">Please Select item</span>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group row ">
+
+                                         <div class="col-lg-6" style="display: none;">
+                                                <div class="form-group row mt-4">
                                                     <div class="col-md-3">
                                                         <input type="checkbox" id="gst"  name="gst" value="1">&nbsp;&nbsp;&nbsp;<label>GST</label>
                                                     </div>
@@ -265,9 +276,9 @@
                                                     </div>
                                                 </div>
 
-                                                <div id="gst_div" style="display: none;">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-3">
+                                                <div id="gst_div" style="display: none;margin-left: -7px !important;">
+                                                    <div class="form-group" id="igst_div">
+                                                        <div class="col-md-3 mt-5">
                                                             <input type="checkbox" id="igst" name="igst" value="1">&nbsp;&nbsp;&nbsp;<label>IGST</label>
                                                         </div>
                                                     </div>
@@ -277,20 +288,22 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
+                                        </div>
+                                             <div class="row col-12">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Discount (%)</label>
                                                     <input type="text" class="form-control number" id="discount" value="{{ isset($details_array['discount']) ? $details_array['discount'] : '' }}" min="0" max="100" name="discount" placeholder="0" required>
                                                 </div>
+                                            </div>
+                                            <div class="col-lg-6">
+
                                                 <div class="form-group">
                                                     <label>Total Amount ({{ $currency_data->symbol }})</label>
                                                     <input type="text" class="form-control number" id="total_amount" name="total_amount" readonly disabled value="{{ isset($details_array['total_amount']) ? $details_array['total_amount'] : '0'}}" required>
                                                 </div>
-                                                <!-- <div class="form-group ">
-                                                    <label>Total Working Days </label>
-                                                    <input type="text" class="form-control number" id="working_days" name="working_days" value="{{ isset($details_array['working_days']) ? $details_array['working_days'] : '0'}}" required>
-                                                </div> -->
+
+                                            </div>
                                             </div>
                                         </div>
 
@@ -571,7 +584,14 @@
                                                                             <option value="{{ $item->id }}" data-id="{{ $item->item_name }}"
 
                                                                              data-category-id="{{ $item->category_id }}"
-    data-admin-cost="{{ $item->admin_cost }}"
+
+                                                                             data-admin-cost="{{ $item->admin_cost }}"
+
+
+                                                                             data-tax-type="{{ $item->tax_type }}"
+
+
+                                                                             data-tax-value="{{ $item->tax_value }}"
 
                                                                             data-name="{{ strip_tags($item->description) }}">{{ $item->item_name }}</option>
                                                                         @endforeach
@@ -581,12 +601,12 @@
                                                         </div>
                                                     </form>
                                                     <div class="col-md-12">
-                                                        <div class="form-group float-right">
+                                                        <div class="form-group">
                                                             <div class="row">
-                                                                <div class="mr-3">
+                                                                <div class="col-md-2">
                                                                     <button type="button" id="add_item" name="add_item" class="btn btn-primary" data-dismiss="modal">Add</button>
                                                                 </div>
-                                                                <div class="">
+                                                                <div class="col-md-2">
                                                                     <a href="{{ url('/item_master_add')}}" class="btn btn-primary">Add New Item</a>
                                                                 </div>
                                                                 </div>
@@ -611,18 +631,37 @@
 
     const SERVICE_TYPES = @json($details_array['service_types']);
 
-
-    $(document).on("input", ".item-orignal-price", function () {
+$(document).on("input", ".item-orignal-price, .item-tax-percent, .item-qty", function () {
 
     let row = $(this).closest(".item-row");
 
     let originalPrice = parseFloat(row.find(".item-orignal-price").val()) || 0;
     let adminCost = parseFloat(row.find(".item-admin-cost-price").val()) || 0;
+    let taxPercent = parseFloat(row.find(".item-tax-percent").val()) || 0;
+    let qty = parseFloat(row.find(".item-qty").val()) || 1;
 
-    let totalPrice = originalPrice + adminCost;
+    if (taxPercent < 0) taxPercent = 0;
+    if (taxPercent > 100) taxPercent = 100;
 
-    row.find(".item-price").val(totalPrice.toFixed(2));
+    if (qty < 1) qty = 1;
+
+    let basePrice = originalPrice + adminCost;
+
+    let taxAmount = (basePrice * taxPercent) / 100;
+
+    let subTotal = basePrice + taxAmount;     // without qty
+    let finalPrice = subTotal * qty;          // with qty
+
+    // set subtotal
+    row.find(".item-sub-total").val(subTotal.toFixed(2));
+
+    // set final price
+    row.find(".item-price").val(finalPrice.toFixed(2));
+
 });
+
+
+
 
 
     $('.item').click(function()
@@ -658,8 +697,7 @@
 
 
     // Whenever quantity or price changes
-    // $(document).on("input", ".item-qty, .item-price", calculate_amount);
-        $(document).on("input", ".item-qty, .item-price, .item-orignal-price", calculate_amount);
+     $(document).on("input", ".item-qty, .item-orignal-price, .item-tax-percent", calculate_amount);
 
 
     // Whenever discount or GST changes
@@ -672,9 +710,9 @@
 
         // Loop through all items
         $(".item-row").each(function() {
-            const qty = parseFloat($(this).find(".item-qty").val()) || 0;
+            // const qty = parseFloat($(this).find(".item-qty").val()) || 0;
             const price = parseFloat($(this).find(".item-price").val()) || 0;
-            total += qty * price;
+            total += price;
         });
 
         // Validate discount
@@ -688,15 +726,14 @@
         const amountAfterDiscount = total - discountAmount;
 
         // Validate GST
-        if (gst_per < 0) gst_per = 0;
-        if (gst_per > 100) gst_per = 100;
-        $("#gst_per").val(gst_per);
+        // if (gst_per <
+        // (gst_per);
 
         // Apply GST
-        const gstAmount = amountAfterDiscount * gst_per / 100;
+        // const gstAmount = amountAfterDiscount * gst_per / 100;
 
         // Final total
-        const totalAmount = amountAfterDiscount + gstAmount;
+        const totalAmount = amountAfterDiscount ;
 
         $("#total_amount").val(totalAmount.toFixed(2));
     }
@@ -714,12 +751,16 @@
         const qty = parseFloat($(this).find(".item-qty").val()) || 0;
         const price = parseFloat($(this).find(".item-price").val()) || 0;
 
-
         const original_Price = parseFloat($(this).find(".item-orignal-price").val()) || 0;
-
 
         const passengerType = $(this).find("input[type=radio]:checked").val();
         const serviceType = $(this).find(".service-type").val();
+
+
+        const taxtype = parseFloat($(this).find(".item-tax-type").val()) || 'GST';
+        const taxvalue = parseFloat($(this).find(".item-tax-percent").val()) || 0;
+
+
 
         if (qty > 0 && price > 0) {
             itemsData.push({
@@ -729,7 +770,9 @@
                 price: price ,
                 passenger_type: passengerType,
                 service_type: serviceType,
-                original_price: original_Price
+                original_price: original_Price,
+                taxtype: taxtype,
+                taxvalue: taxvalue
             });
         }
     });
@@ -770,14 +813,6 @@
         calculate_amount();
     }
 
-    // $("#gst").click(function()
-    // {
-    //     gst_fun();
-    // });
-
-    // $("#vat").click(function () {
-    //     vat_fun();
-    // });
 
     $("#gst").on('change', gst_fun);
 $("#vat").on('change', vat_fun);
@@ -902,8 +937,10 @@ function addItemRow(itemId, rowId) {
     const description = $("#item_id option:selected").data("name");
     const categoryId = $("#item_id option:selected").data("category-id");
 
-
     const add_item_admin_cost = $("#item_id option:selected").data("admin-cost");
+
+    const add_item_tax_type = $("#item_id option:selected").data("tax-type");
+    const add_item_tax_value = $("#item_id option:selected").data("tax-value");
 
 
 
@@ -912,7 +949,7 @@ function addItemRow(itemId, rowId) {
 
         <!-- LEFT PART -->
         <div class="col-md-6">
-            <b>${name}</b>
+            <h4><b>${name}</b></h4>
             <textarea
                 class="item-desc summernote"
                 placeholder="${name} Description"
@@ -926,25 +963,30 @@ function addItemRow(itemId, rowId) {
 
             <!-- CHILD ROW 1 -->
             <div class="row mb-2">
+
+
                 <div class="col-md-6">
-                    <input
-                        type="number"
-                        class="form-control item-qty"
-                        value="1"
-                        min="1"
-                        placeholder="Qty"
-                        required
-                    >
+                    <label><b>Passenger Type</b></label><br>
+                    <label>
+                        <input type="radio" name="passenger_${rowId}" value="adult" checked>
+                        Adult
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>
+                        <input type="radio" name="passenger_${rowId}" value="child">
+                        Child
+                    </label>
                 </div>
 
 
-                <div class="col-md-6">
-                    <button type="button" class="btn btn-danger remove-item w-100">
+                <div class="col-md-6 ">
+
+                    <button type="button" class="btn btn-primary remove-item w-100">
                         Remove
                     </button>
                 </div>
 
-                  <div class="col-md-4">
+                <div class="col-md-4">
                     <label><b>Enter Price</b></label>
                     <input
                         type="number"
@@ -967,6 +1009,42 @@ function addItemRow(itemId, rowId) {
                 </div>
 
                 <div class="col-md-4">
+                    <label><b>Tax (${add_item_tax_type ? add_item_tax_type : 'GST'})</b></label>
+                    <input type="hidden" value="${add_item_tax_type ? add_item_tax_type : 'GST'}" class="item-tax-type">
+                    <input
+                        type="number"
+                        class="form-control item-tax-percent"
+                        placeholder="Tax %"
+                        value="${add_item_tax_value ? add_item_tax_value : 0}"
+                        min="0"
+                        max="100"
+                    >
+                </div>
+              <div class="col-md-4">
+                 <label><b>Qty</b></label> &nbsp;&nbsp;
+                    <input
+                        type="number"
+                        class="form-control item-qty"
+                        value="1"
+                        min="1"
+                        placeholder="Qty"
+                        required
+                    >
+                </div>
+
+
+                <div class="col-md-4">
+                    <label><b>Sub Total</b></label>
+                    <input
+                        type="text"
+                        class="form-control item-sub-total"
+                        placeholder="Sub Total (${symbol})"
+                        required
+                        readonly
+                    >
+                </div>
+
+                <div class="col-md-4">
                     <label><b>Final Price</b></label>
                     <input
                         type="text"
@@ -983,20 +1061,9 @@ function addItemRow(itemId, rowId) {
 
             <!-- CHILD ROW 2 -->
             <div class="row">
-                <div class="col-md-6">
-                    <label><b>Passenger Type</b></label><br>
-                    <label>
-                        <input type="radio" name="passenger_${rowId}" value="adult" checked>
-                        Adult
-                    </label>
-                    &nbsp;&nbsp;
-                    <label>
-                        <input type="radio" name="passenger_${rowId}" value="child">
-                        Child
-                    </label>
-                </div>
 
-                <div class="col-md-6">
+
+                <div class="col-md-6" style="display: none;">
                     <label><b>Ticket Type</b></label>
                     <select class="form-control service-type">
                         <option value="">Select Ticket Type</option>
@@ -1032,6 +1099,8 @@ function getServiceOptionsByCategory(categoryId) {
 // Remove Item (Event Delegation)
 $(document).on("click", ".remove-item", function() {
     $(this).closest(".item-row").remove();
+
+    calculate_amount();
 });
 </script>
 

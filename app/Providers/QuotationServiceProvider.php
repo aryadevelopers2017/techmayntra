@@ -61,7 +61,7 @@ class QuotationServiceProvider extends ServiceProvider
             // Total price
             $total = 0;
             foreach ($items as $item) {
-                $total += ((float)$item['qty'] * (float)$item['price']);
+                $total += (float)$item['price'];
             }
             $request->price = $total;
 
@@ -239,7 +239,7 @@ class QuotationServiceProvider extends ServiceProvider
         // total price
         $total = 0;
         foreach ($items as $item) {
-            $total += ((float)$item['qty'] * (float)$item['price']);
+            $total += (float)$item['price'];
         }
         $request->price = $total;
 
@@ -408,3 +408,4 @@ class QuotationServiceProvider extends ServiceProvider
         }
 
 }
+    

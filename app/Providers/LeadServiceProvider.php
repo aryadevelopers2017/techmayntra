@@ -10,6 +10,7 @@ use App\Models\Lead_master;
 use App\Models\Customer;
 use App\Models\quotation;
 use App\Models\CountryPhoneCode;
+use App\Models\User;
 use App\Models\lead_remarks;
 
 class LeadServiceProvider extends ServiceProvider
@@ -76,9 +77,12 @@ class LeadServiceProvider extends ServiceProvider
     {
         try
         {
-            $request->state='';
-            $request->city='';
-			$request->country='';
+
+        // dd( $request->all());
+
+            // $request->state='';
+            // $request->city='';
+			// $request->country='';
 			if($request->country>0)
             {
                 $country=Customer::getCountryName($request->country);
@@ -122,21 +126,26 @@ class LeadServiceProvider extends ServiceProvider
         {
             $data=Lead_master::get_lead_dataByID($id);
 
-            // dd($data);
+
 
             $remarks_data=lead_remarks::getlead_remarksByid($id);
             $data['remarks_data']=$remarks_data;
 
-              $data['country_phone_code']=CountryPhoneCode::get();
+               $data['state_data']=Customer::getState();
+			$data['country_data']=Customer::getCountry();
+            $data['client_lists']=Customer::customer_list();
 
+            $data['country_phone_code']=CountryPhoneCode::get();
 
 			$country=$data->country;
             $countrydata='';
             if($country!='')
             {
-                $countrydata=Customer::getStatedata($country);
+                $countrydata=Customer::getCountryData($country);
             }
+
             $country_id=0;
+
             if(!empty($countrydata))
             {
                 $country_id=$countrydata[0]->id;
@@ -153,6 +162,8 @@ class LeadServiceProvider extends ServiceProvider
             {
                 $state_id=$statedata[0]->id;
             }
+
+
 
              $data['state_data']=Customer::getState();
             $data['client_lists']=Customer::customer_list();
@@ -226,23 +237,40 @@ class LeadServiceProvider extends ServiceProvider
         try
         {
             $data=Lead_master::update_lead_status($id, $status);
+
+
+
             $state_id=$data->state;
             if($state_id>0)
             {
-                $statedata=Customer::getStatedata($state);
+
+                $statedata=Customer::getStateUsingName($state_id);
+
                 $state_id=$statedata[0]->id;
             }
-
+// dd($statedata);
 			$country_id=$data->country;
             if($country_id>0)
             {
-                $countrydata=Customer::getCounrydata($country);
+                $countrydata=Customer::getCountryName($country_id);
                 $country_id=$statedata[0]->id;
             }
-			$data['state_data']=Customer::getStateBycountryId();
+			$data['state_data']=Customer::getStateBycountryId($state_id);
 
             //$data['state_data']=Customer::getState();
             $data['city_data']=Customer::getCityBystateId($state_id);
+
+             $data['country_data'] = Customer::getCountry();
+             $data['state_data']=Customer::getState();
+
+             $data['staff_data'] = User::all(); // or any query to get active staff
+
+          // Document types from service provider
+             $data['document_types'] = CustomerServiceProvider::getDocumentTypes();
+
+              $data['country_phone_code']=CountryPhoneCode::get();
+
+            //   dd($data);
 
             return array('status_code' => 200, 'message' => 'Record Delete Successfully', 'data' => $data);
         }

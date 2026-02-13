@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\item_master;
 use App\Models\CountryPhoneCode;
 use App\Models\vendor_master;
+use DB ;
 
 
 use Illuminate\Http\Request;
@@ -131,5 +132,28 @@ class VendorController extends Controller
         return redirect('/vendor_list')->with('fail', 'Something went wrong');
     }
 }
+
+public function getVendorDetails(Request $request)
+{
+    $vendor = vendor_master::where('id', $request->vendor_id)->first();
+
+    $country = DB::table('country')->where('name', $vendor->country)->first();
+    $state   = DB::table('states')->where('name', $vendor->state)->first();
+    $city    = DB::table('city')->where('name', $vendor->city)->first();
+
+    return response()->json([
+        'company_name' => $vendor->company_name,
+        'address'      => $vendor->address,
+
+        'country'      => $vendor->country,
+        'state'        => $vendor->state,
+        'city'         => $vendor->city,
+
+        'country_id'   => $country ? $country->id : '',
+        'state_id'     => $state ? $state->id : '',
+        'city_id'      => $city ? $city->id : '',
+    ]);
+}
+
 
 }

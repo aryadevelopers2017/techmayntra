@@ -146,6 +146,8 @@ Route::get('/service_delete/{id}', [App\Http\Controllers\ServiceController::clas
 Route::get('/vendor_list', [App\Http\Controllers\VendorController::class, 'index']);
 
 Route::get('/vendor_info/{id}', [App\Http\Controllers\VendorController::class, 'vendor_info']);
+Route::get('/get-vendor-details', [App\Http\Controllers\VendorController::class, 'getVendorDetails'])->name('get.vendor.details');
+
 Route::get('/edit_vendor/{id}', [App\Http\Controllers\VendorController::class, 'vendor_edit']);
 Route::post('/update_vendor/{id}', [App\Http\Controllers\VendorController::class, 'update_vendor'])->name('update_vendor');
 Route::get('/delete_vendor/{id}', [App\Http\Controllers\VendorController::class, 'vendor_delete']);

@@ -57,7 +57,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                 	<label>Country</label>
-                                                    <select id="country" name="count</div>ry" class="form-control select2" onChange="getstate();">
+                                                    <select id="country" name="country" class="form-control select2" onChange="getstate();">
                                                         <option value="{{ isset($lead_data->country) ? $lead_data->country : '' }}" selected>{{ isset($lead_data->country) ? $lead_data->country : 'Please Select Country' }}</option>
                                                         @if(isset($data['country_data']))
                                                             @foreach($data['country_data'] as $country)

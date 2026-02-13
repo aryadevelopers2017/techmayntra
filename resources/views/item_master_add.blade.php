@@ -70,8 +70,40 @@
                                                 placeholder="Enter Admin Cost">
                                         </div>
 
+                                        <div class="form-group">
+                                            <label>Tax Type</label><br>
+
+                                            <label>
+                                                <input type="radio" name="tax_type" value="GST"
+                                                    {{ (isset($data->tax_type) && $data->tax_type == 'GST') ? 'checked' : (!isset($data->tax_type) ? 'checked' : '') }}
+                                                    onclick="changeTaxType('GST')">
+                                                GST
+                                            </label>
+
+                                            &nbsp;&nbsp;
+
+                                            <label>
+                                                <input type="radio" name="tax_type" value="VAT"
+                                                    {{ (isset($data->tax_type) && $data->tax_type == 'VAT') ? 'checked' : '' }}
+                                                    onclick="changeTaxType('VAT')">
+                                                VAT
+                                            </label>
+                                        </div>
 
                                         <div class="form-group">
+                                            <label id="tax_label">{{ isset($data->tax_type) && $data->tax_type == 'VAT' ? 'VAT %' : 'GST %' }}</label>
+
+                                            <input type="number" max="100" min="0" id="tax_value" name="tax_value"
+                                                class="form-control"
+                                                placeholder="{{ isset($data->tax_type) && $data->tax_type == 'VAT' ? 'VAT %' : 'GST %' }}"
+                                                value="{{ $data->tax_value ?? '' }}">
+
+                                            <span id="errtaxvalue" style="display:none;color:#ff0000;">
+                                                Tax percentage cannot be greater than 100
+                                            </span>
+                                        </div>
+
+                                            <div class="form-group">
                                                 <label>Category</label>
                                                 <select name="category_id" id="category_id" class="form-control select2" required>
                                                     <option value="">Select Category</option>
@@ -97,7 +129,6 @@
                                                 </select>
                                             </div>
 
-
                                         <div class="form-group">
                                             <label>Description</label>
                                             <div id="term">
@@ -122,6 +153,7 @@
     {
         var item_name=$("#item_name").val();
         var description=$("#description").val().trim();
+    var tax_value = $("#tax_value").val();
 
         $("#item_name").parent().removeClass("has-error");
 
@@ -140,6 +172,15 @@
             $("#description").focus();
             return false;
         }
+
+
+    if (tax_value != '' && parseFloat(tax_value) > 100) {
+        $("#errtaxvalue").show(0).delay(3500).hide(0);
+        $("#tax_value").parent().addClass("has-error");
+        $("#tax_value").focus();
+        return false;
+    }
+
 
         $("#itemformsubmit").submit();
     });
@@ -198,5 +239,23 @@ $(document).ready(function () {
 </script>
 
 
+
+<script>
+
+$(document).ready(function () {
+    var taxType = $("input[name='tax_type']:checked").val();
+    changeTaxType(taxType);
+});
+
+function changeTaxType(type) {
+    if(type == "GST") {
+        document.getElementById("tax_label").innerText = "GST %";
+        document.getElementById("tax_value").placeholder = "GST %";
+    } else if(type == "VAT") {
+        document.getElementById("tax_label").innerText = "VAT %";
+        document.getElementById("tax_value").placeholder = "VAT %";
+    }
+}
+</script>
 
 @endsection

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\company_address_master;
-
+use DB;
 
 class purchase_order extends Model
 {
@@ -14,7 +14,7 @@ class purchase_order extends Model
     protected $table = 'purchase_order';
 
     protected $dates = ['deleted_at'];
-    
+
     protected $fillable = ['id', 'purchase_date', 'order_no', 'max_invoice_no', 'company_name', 'company_id', 'vender_id', 'project_id', 'subject', 'product_name', 'description', 'address', 'city', 'state', 'pincode', 'gst', 'igst', 'gst_per', 'taxable_amount', 'gst_amount', 'total_amount', 'payment_mode', 'due_date', 'status', 'created_at'];
 
     public static function get_list()
@@ -90,7 +90,7 @@ class purchase_order extends Model
         $data->amount=$request->amount;
         $data->company_name=$request->company_name;
         $data->company_id=$company_id;
-        
+
         $data->product_name=$request->product_name;
         $data->description=$request->description;
         $data->address=$request->address;
@@ -105,25 +105,35 @@ class purchase_order extends Model
         $data->igst=isset($request->gst) ? isset($request->igst) : '0';
         $data->gst_per=isset($request->gst) ? $request->gst_per : '0';
         $gst_amount=ROUND(($amount*$request->gst_per)/100,2);
-        
+
         $data->gst_amount=$gst_amount;
-        
+
         $total_amount=$amount + $gst_amount;
-        
+
         $data->total_amount=$total_amount;
         $data->payment_mode=$request->payment_mode;
 
         $data->status=isset($request->status) ? $request->status : 0;
-        
+
         $data->save();
-        
+
         return $data;
     }
 
     public static function get_find_DataById($id)
     {
         $data=purchase_order::find($id);
-                
+
+    //        if($data){
+
+    //        $state   = DB::table('states')->where('name', $vendor->state)->first();
+
+    //     $data->country_id = $state ? $state->country_id : null;
+
+    //  $data->country = DB::table('country')->where('name', $data->country_id)->first();
+
+    // }
+
         return $data;
     }
 
@@ -135,7 +145,7 @@ class purchase_order extends Model
         $data=purchase_order::find($request->id);
 
         $data->purchase_date=$request->purchase_date;
-        
+
         $vender_id=$request->vender_id;
         $data->vender_id=$vender_id;
 
@@ -158,25 +168,25 @@ class purchase_order extends Model
         $data->igst=isset($request->gst) ? isset($request->igst) : '0';
         $data->gst_per=isset($request->gst) ? $request->gst_per : '0';
         $gst_amount=ROUND(($amount*$request->gst_per)/100,2);
-        
+
         $data->gst_amount=$gst_amount;
-        
+
         $total_amount=$amount + $gst_amount;
-        
+
         $data->total_amount=$total_amount;
 
         $data->status=isset($request->status) ? $request->status : 0;
         $data->payment_mode=$request->payment_mode;
-        
+
         $data->update();
-        
+
         return $data;
     }
 
     public static function get_purchaseByProject_id($id)
     {
         $data=purchase_order::where(['project_id' => $id])->get();
-                
+
         return $data;
     }
 

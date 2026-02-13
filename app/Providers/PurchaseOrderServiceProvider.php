@@ -21,7 +21,7 @@ class PurchaseOrderServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // 
+        //
     }
 
     /**
@@ -42,7 +42,7 @@ class PurchaseOrderServiceProvider extends ServiceProvider
             $vendor_data=vendor_master::vendor_list();
             $data['vendor_list']=$vendor_data;
             $data['state_data']=Customer::getState();
-
+       $data['country_data'] = Customer::getCountry();
             return array('status_code' => 200, 'message' => 'get data successfully', 'data' => $data);
         }
         catch (\Exception $e)
@@ -51,7 +51,7 @@ class PurchaseOrderServiceProvider extends ServiceProvider
             return array('status_code' => 500, 'message' => trans('api.messages.general.error') . $e->getMessage() . $e->getFile());
         }
     }
-    
+
     public static function get_data()
     {
         try
@@ -109,10 +109,21 @@ class PurchaseOrderServiceProvider extends ServiceProvider
         {
             $data=purchase_order::get_find_DataById($id);
             $state=$data->state;
+
             $statedata=Customer::getStatedata($state);
             $state_id=$statedata[0]->id;
 
-            $data['state_data']=Customer::getState();
+
+               $statefulldata   = DB::table('states')->where('id', $state_id)->first();
+
+        $country_id = $statefulldata ? $statefulldata->country_id : null;
+
+     $country = DB::table('country')->where('id', $country_id)->first();
+
+     $data['select_country'] = $country  ;
+
+            $data['state_data']=Customer::getStateBycountryId($country_id);
+             $data['country_data'] = Customer::getCountry();
             $data['city_data']=Customer::getCityBystateId($state_id);
 
             $vendor_data=vendor_master::vendor_list();
@@ -156,7 +167,7 @@ class PurchaseOrderServiceProvider extends ServiceProvider
         try
         {
             $data=purchase_order::generate_invoice_qry($id);
-            
+
             $vendor_data=vendor_master::get_vendorById($data->vender_id);
             $data['vendor_data']=$vendor_data;
 
@@ -167,7 +178,7 @@ class PurchaseOrderServiceProvider extends ServiceProvider
             $company_data->address=$company_address_data->address;
             $company_data->city=$company_address_data->city;
             $company_data->state=$company_address_data->state;
-            
+
             $data['company_data']=$company_data;
 
             return array('status_code' => 200, 'message' => 'get data successfully', 'data' => $data);

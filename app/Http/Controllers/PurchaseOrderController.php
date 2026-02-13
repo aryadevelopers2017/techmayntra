@@ -35,7 +35,7 @@ class PurchaseOrderController extends Controller
     public static function purchase_order_add()
     {
         $data=PurchaseOrderServiceProvider::get_vendordata();
-        
+
     	return view('purchase_order_add')->with('data', $data['data']);
     }
 
@@ -53,7 +53,7 @@ class PurchaseOrderController extends Controller
         }
 
         $message=$data['message'];
-    	
+
     	return redirect('/purchase_order_list')->with($status, $message);
     }
 
@@ -67,7 +67,7 @@ class PurchaseOrderController extends Controller
     public static function update_purchase_order(Request $request)
     {
         $data=PurchaseOrderServiceProvider::update_purchase_order($request);
-        
+
         if($data['status_code']==200)
         {
             $status='success';

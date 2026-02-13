@@ -1,4 +1,4 @@
-@extends('layouts.Admin.app')
+    @extends('layouts.Admin.app')
 
 @section('content')
 <div class="content-wrap">
@@ -108,34 +108,42 @@
                                        <select name="country" id="country" class="form-control select2" onchange="getStateByCountry();">
                                           <option value="" selected>Please Select Country</option>
                                           @foreach($data['country_data'] as $country)
-                                          <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @php
+                                          $selected='';
+                                          if(isset($data->country))
+                                          {
+                                          if(strtolower($data->country) == strtolower($country->name))
+                                          {
+                                          $selected='selected';
+                                          }
+                                          }
+                                          @endphp
+
+                                          <option value="{{ $country->id }}" {{ $selected }}>{{ $country->name }}</option>
                                           @endforeach
                                        </select>
                                     </div>
-                                    <!-- <div class="form-group">
-                                       <label>State</label>
-                                       <select name="state" id="state" onChange="getcity();" class="form-control select2">
-                                           <option value="" selected>Please Select State</option>
-                                           @foreach($data['state_data'] as $state)
-                                               @php
-                                                   $selected='';
 
-                                                   if(isset($data->state))
-                                                   {
-                                                       if(strtolower($data->state) == strtolower($state->name))
-                                                       {
-                                                           $selected='selected';
-                                                       }
-                                                   }
-                                               @endphp
-                                               <option value="{{ $state->id }}" {{ $selected }}>{{ $state->name }} </option>
-                                           @endforeach
-                                       </select>
-                                       </div> -->
                                     <div class="form-group">
                                        <label>State</label>
                                        <select name="state" id="state" class="form-control select2" onchange="getcity();">
+
                                           <option value="">Please Select State</option>
+
+                                           @foreach($data['state_data'] as $state)
+                                            @php
+                                          $selected='';
+                                          if(isset($data->state))
+                                          {
+                                          if(strtolower($data->state) == strtolower($state->name))
+                                          {
+                                          $selected='selected';
+                                          }
+                                          }
+                                          @endphp
+
+                                          <option value="{{ $state->id }}" {{ $selected }}>{{ $state->name }}</option>
+                                          @endforeach
                                        </select>
                                     </div>
                                     <div class="form-group" style="margin-top: 40px;">
