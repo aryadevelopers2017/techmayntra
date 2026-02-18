@@ -5,12 +5,12 @@
 
     <style>
         @page {
-             margin: 140px 30px 80px 30px;
+             margin: 110px 30px 80px 30px;
         }
 
         body {
             font-family: DejaVu Sans, sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             color: #000;
         }
 
@@ -137,7 +137,7 @@
     <main>
 
 {{-- INVOICE HEADER BOXES --}}
-<table width="100%" cellspacing="0" class="no-border" cellpadding="0" style="border-collapse:collapse; margin-top:10px;">
+<table width="100%" cellspacing="0" class="no-border" cellpadding="0" style="border-collapse:collapse; ">
     <tr>
 
         {{-- BILL TO BOX --}}
@@ -220,7 +220,7 @@
 
 
          {{-- INVOICE INFO HEADER TABLE --}}
-<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-bottom: 10px; margin-top: 20px;">
+<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse; padding:5px;">
 
     <tr style="background:#72cac5; color: #000000;">
         <td style="border:1px solid #000; padding:6px; font-weight:bold; text-align:center;">
@@ -259,22 +259,22 @@
 
 
         {{-- ITEMS TABLE --}}
-        <table>
+        <table style="padding:5px;">
             <thead>
                 <tr>
                     <th>#</th>
 
                     <th>Description</th>
 
-                    <th>{{ $data['currency_data']->symbol }} Price</th>
+                    <th>Price ({{ $data['currency_data']->symbol }})</th>
 
 
   <th> Qty / Unit </th>
-                    <th> {{ $data['currency_data']->symbol }} Amount</th>
+                    <th> Amount ({{ $data['currency_data']->symbol }})</th>
 
-                    <th>Vat</th>
+                    <th>VAT (5%)</th>
 
-                    <th>Total</th>
+                    <th>Total ({{ $data['currency_data']->symbol }})</th>
                 </tr>
             </thead>
             <tbody>
@@ -317,7 +317,7 @@ $rowprice = $amountWithoutVat / $qty ;
 
                         {{-- Total with VAT (original) --}}
                         <td class="text-right">
-                            {{ $data['currency_data']->symbol }} {{ number_format($totalWithVat, 2) }}
+                             {{ number_format($totalWithVat, 2) }}
                         </td>
 
 
@@ -352,7 +352,7 @@ $rowprice = $amountWithoutVat / $qty ;
 
 
 
-      <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin-top:10px;">
+      <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; padding:5px;">
     <tr>
         <td style="width:70%; text-align:right; padding:6px;">
             <strong>Sub Total</strong>
@@ -385,12 +385,11 @@ $rowprice = $amountWithoutVat / $qty ;
 </table>
 
 
-        <p><strong>Amount in words:</strong> {{ $data['amount_word'] }}</p>
-        {{-- BANK DETAILS --}}
 
-        <div id="legalcopy">
-            <p class="legal"><strong><b>Make all cheque payable / Online Transfer to Bank Account Below.:</b></strong></p>
-            <div class="row">
+        {{-- BANK DETAILS --}}
+            <div style="padding:5px;" class="row">
+                <p ><strong>Amount in words:</strong> {{ $data['amount_word'] }}</p>
+            <strong><b>Make all cheque payable / Online Transfer to Bank Account Below.:</b></strong>
                 <div class="col-md-6">
                      @if(!empty($data['bank_details']))
                             {!! $data['bank_details'] !!}
@@ -398,11 +397,7 @@ $rowprice = $amountWithoutVat / $qty ;
                             {!! $data['company_data']->bank_details !!}
                         @endif
                 </div>
-
             </div>
-        </div>
-
-
 
         <div class="legalcopy" style="text-align: right;">
 

@@ -79,7 +79,7 @@
                                                             @endif
                                                         @endforeach
                                                     </select>
-                                                    <span id="errname" style="display:none;color: #ff0000;">Please Select Client</span>
+                                                    <span id="errnewname" style="display:none;color: #ff0000;">Please Select Client</span>
                                                 </div>
                                             </div>
 
@@ -605,11 +605,11 @@
                                     </form>
                                     <!-- <div class="modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog"> -->
                                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-dialog modal-md" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header" style="background: #868e96;">
-                                                    <h6 class="modal-title">Select Item</h6>
-                                                    <button type="button" class="btn btn-danger close" data-dismiss="modal" style="background-color:red;">&times;</button>
+                                                    <h6 class="modal-title">Select Service</h6>
+                                                    <button type="button" class="btn  close" data-dismiss="modal" style="background-color:red; color: white;">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form>
@@ -617,7 +617,7 @@
                                                             <div class="col-lg-12">
                                                                 <div class="form-group">
                                                                     <select id="item_id" name="item_id" class="form-control select2" required >
-                                                                        <option value="">Please Select Item</option>
+                                                                        <option value="">Please Select Service</option>
                                                                         @foreach($details_array['item_data'] as $item)
                                                                             <option value="{{ $item->id }}" data-id="{{ $item->item_name }}"
 
@@ -640,20 +640,21 @@
                                                     </form>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <div class="row">
-                                                                <div class="col-md-2">
+                                                            <div class="row" style="display: flex;
+    justify-content: end;">
+                                                                <div class="">
                                                                     <button type="button" id="add_item" name="add_item" class="btn btn-primary" data-dismiss="modal">Add</button>
                                                                 </div>
-                                                                <div class="col-md-2">
+                                                                <!-- <div class="col-md-2">
                                                                     <a href="{{ url('/item_master_add')}}" class="btn btn-primary">Add New Item</a>
-                                                                </div>
+                                                                </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -779,6 +780,27 @@ $(document).on("input", ".item-orignal-price, .item-tax-percent, .item-qty", fun
 
    $("#finalbtn").click(function (e) {
     e.preventDefault(); // stop default submit
+   // Hide old errors first
+    $("#erritem").hide();
+
+
+    $("#errnewname").css("display", "none");
+
+    let clientId = $("#c_id").val();
+
+    if (clientId == "" || clientId == null) {
+
+        $("#errnewname").insertAfter($("#c_id").next(".select2"));
+        $("#errnewname").css("display", "block");
+
+        $("#c_id").select2("open");
+
+
+
+        return false;
+    }
+
+
 
     const itemsData = [];
 

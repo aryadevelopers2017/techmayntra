@@ -119,7 +119,7 @@ $tax_per = $request->gst_per ?? 0;
         }
 
         $data->quotation_status=0;
-        $data->gst_no=$customer->gst_no;
+        $data->gst_no=$customer->gst_no ?? null;
         $data->company_address_id=$request->company_address;
         $data->save();
 

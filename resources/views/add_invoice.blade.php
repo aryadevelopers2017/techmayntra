@@ -570,7 +570,7 @@
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h6 class="modal-title">Select Item</h6>
+                                                    <h6 class="modal-title">Select Service</h6>
                                                     <button type="button" class="btn btn-danger close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
@@ -579,7 +579,7 @@
                                                             <div class="col-lg-12">
                                                                 <div class="form-group">
                                                                     <select id="item_id" name="item_id" class="form-control select2" required >
-                                                                        <option value="">Please Select Item</option>
+                                                                        <option value="">Please Select Service</option>
                                                                         @foreach($details_array['item_data'] as $item)
                                                                             <option value="{{ $item->id }}" data-id="{{ $item->item_name }}"
 
@@ -615,7 +615,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
