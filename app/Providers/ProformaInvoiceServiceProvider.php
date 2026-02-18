@@ -18,6 +18,8 @@ use App\Models\invoice_item_master;
 use App\Models\item_master;
 use App\Models\company_module_master;
 use App\Models\company_address_master;
+use App\Models\quotation_item;
+
 
 class ProformaInvoiceServiceProvider extends ServiceProvider
 {
@@ -120,6 +122,18 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $data['address']=$customer->address;
         $data['city']=$customer->city;
         $data['state']=$customer->state;
+
+
+        $data['email']=$customer->email;
+
+
+        $data['mobile']= $customer->country_code .' '. $customer->mobile;
+
+        $data['AssignedStaffName']=$customer->getAssignedStaffName();
+
+        $data['due_date']=$quotation_data->due_date;
+
+
         $data['customer_name']=$customer->name;
         $data['customer_company_name']=$customer->company_name;
         $data['entrydate']=date('d-M-Y',strtotime($quotation_data->entrydate));
@@ -132,6 +146,9 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $data['price']=$quotation_data->price;
         $data['discount']=$quotation_data->discount;
         $data['igst']=$quotation_data->igst;
+
+
+
 
 
         // $total_amount=$quotation_data[0]['total_amount'];
@@ -163,8 +180,8 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $currency_data=Currency::getByID($quotation_data->currency_id);
         $data['currency_data']=$currency_data;
 
-        $f = new \NumberFormatter( locale_get_default(), \NumberFormatter::SPELLOUT );
-        $data['amount_word'] = $f->format($total_amount).' '.$currency_data->name.' Only';
+        $f = new \NumberFormatter(locale_get_default(), \NumberFormatter::SPELLOUT);
+        $data['amount_word'] = ucwords($f->format($total_amount)) . ' ' . $currency_data->name . ' Only';
 
         $item_id=$quotation_data->item_ids;
 
@@ -177,7 +194,13 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
 
          $data['original_quotation_data']= quotation::find($quotation_data->quotation_id);
 
-        // dd($data);
+         $data['quotation_item_data']= quotation_item::with('item')
+    ->where('quotation_id', $quotation_data->quotation_id)
+    ->get();
+
+
+
+        // dd($data['quotation_item_data']);
 
         return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
     }
@@ -274,13 +297,17 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         }
     }
 
-    public static function proforma_invoice_approve($id)
+    public static function proforma_invoice_approve($id,$due_date)
     {
         try
         {
             $req=array();
             $req['id']=$id;
             $req['status']=1;
+            $req['due_date']=$due_date;
+
+
+
             $data=proforma_invoice::change_status($req);
 
             return array('status_code' => 200, 'message' => 'invoice successfully approved', 'data' => $data);

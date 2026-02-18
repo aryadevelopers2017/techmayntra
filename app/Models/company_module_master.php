@@ -13,7 +13,7 @@ class company_module_master extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['milestone', 'terms_conditions', 'payment_terms_conditions', 'bank_details', 'personal_bank_details', 'company_name', 'company_logo', 'address', 'city', 'state','milestone_label','technology_label'];
+    protected $fillable = ['milestone','website', 'terms_conditions', 'payment_terms_conditions', 'bank_details', 'personal_bank_details', 'company_name', 'company_logo', 'address', 'city', 'state','milestone_label','technology_label'];
 
     public static function module_data()
     {
@@ -46,6 +46,10 @@ class company_module_master extends Model
         $data->company_name=$request->company_name;
         $data->address=$request->address;
         $data->city=$request->city;
+
+        $data->website=$request->website;
+
+
         $data->state=$request->state;
         $data->mobile=$request->company_mobile;
         $data->email=$request->company_email;

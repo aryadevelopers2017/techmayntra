@@ -130,7 +130,16 @@
                                                             {
                                                                 @endphp
                                                                    @can('invoice.approve')
-                                                                <a href="{{ url('/proforma_invoice_approve/').'/'. $item->id }}" class="btn btn-success sweetalert btn sweet-success" title="approve"><i class="fa fa-check"></i></a> &nbsp;&nbsp;&nbsp;
+                                                               
+                                                                <a href="javascript:void(0)"
+                                                                    class="btn btn-success"
+                                                                    title="approve"
+                                                                    data-toggle="modal"
+                                                                    data-target="#approveInvoiceModal"
+                                                                    onclick="setApproveInvoiceId('{{ $item->id }}')">
+                                                                    <i class="fa fa-check"></i>
+                                                                </a>
+
                                                                 <a href="{{ url('/proforma_invoice_cancel/').'/'. $item->id }}" class="btn btn-danger btn sweetalert sweet-success-cancel" title="cancel"><i class="fa fa-close"></i></a>
                                                                     @endcan
 
@@ -163,4 +172,49 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="approveInvoiceModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form method="GET" id="approveInvoiceForm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Approve Invoice</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" name="due_date" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">
+                        Approve
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+function setApproveInvoiceId(id) {
+    let url = "/proforma_invoice_approve/" + id;
+    document.getElementById("approveInvoiceForm").action = url;
+}
+</script>
+
+
 @endsection

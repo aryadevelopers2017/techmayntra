@@ -13,7 +13,7 @@ class proforma_invoice extends Model
     protected $table = 'proforma_invoice';
 
     protected $dates = ['deleted_at'];
-    protected $fillable = ['id', 'entrydate','trn_no', 'title', 'quotation_id', 'c_id', 'max_invoice_no', 'invoice_no', 'item_ids', 'price', 'discount', 'discount_amount', 'paid_amount', 'amount', 'gst_per', 'gst_amount', 'total_amount', 'bank_details', 'status'];
+    protected $fillable = ['id', 'entrydate', 'due_date', 'trn_no', 'title', 'quotation_id', 'c_id', 'max_invoice_no', 'invoice_no', 'item_ids', 'price', 'discount', 'discount_amount', 'paid_amount', 'amount', 'gst_per', 'gst_amount', 'total_amount', 'bank_details', 'status'];
 
     public static function add($request)
     {
@@ -91,6 +91,7 @@ class proforma_invoice extends Model
     {
         $data=proforma_invoice::find($request['id']);
         $data->status=$request['status'];
+        $data->due_date = $request['due_date'];
         $data->save();
 
         return $data;

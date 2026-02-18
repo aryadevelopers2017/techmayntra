@@ -176,4 +176,11 @@ class quotation_item extends Model
     {
         quotation_item::where('id',$id)->delete();
     }
+
+    public function item()
+    {
+        return $this->belongsTo(item_master::class, 'item_id');
+    }
+
+
 }

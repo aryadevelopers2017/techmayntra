@@ -68,6 +68,12 @@
                                             <label>Company Email-ID </label>
                                             <input type="email" class="form-control" id="company_email" name="company_email" value="{{ isset($module_data[0]->email) ? $module_data[0]->email : ''}}">
                                         </div>
+
+                                          <div class="form-group">
+                                            <label>Website </label>
+                                            <input type="text" class="form-control" id="Website" name="website" placeholder="Website" value="{{ isset($module_data[0]->website) ? $module_data[0]->website : '' }}">
+                                        </div>
+
                                         <div class="form-group">
                                             <label>Address </label>
                                             <br>
@@ -77,6 +83,8 @@
                                             <label>City </label>
                                             <input type="text" class="form-control" id="city" name="city" placeholder="City" value="{{ isset($module_data[0]->city) ? $module_data[0]->city : '' }}">
                                         </div>
+
+
                                         <div class="form-group">
                                             <label>State </label>
                                             <input type="text" class="form-control" id="state" name="state" placeholder="State" value="{{ isset($module_data[0]->state) ? $module_data[0]->state : '' }}">

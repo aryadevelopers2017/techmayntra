@@ -56,13 +56,12 @@ class ProformaInvoiceController extends Controller
         $id = $request->invoice_no;
         // dd($id);
 
-    $invoice_number = proforma_invoice::where('invoice_no', $id)->first();
+     $invoice_number = proforma_invoice::where('invoice_no', $id)->first();
 
 
 
         $data=ProformaInvoiceServiceProvider::proforma_invoice_generate($invoice_number->id);
 
-        // dd($data);
 
          if (ob_get_level() > 0) {
         ob_end_clean();
@@ -136,9 +135,15 @@ class ProformaInvoiceController extends Controller
         return view('invoice_list')->with('list_data', $data['data']);
     }
 
-    public static function proforma_invoice_approve($id)
+    public static function proforma_invoice_approve(Request $request,$id)
     {
-        $data=ProformaInvoiceServiceProvider::proforma_invoice_approve($id);
+
+
+    // dd($request->all());
+
+    $due_date = $request->due_date;
+
+        $data=ProformaInvoiceServiceProvider::proforma_invoice_approve($id,$due_date);
 
         if($data['status_code']==200)
         {

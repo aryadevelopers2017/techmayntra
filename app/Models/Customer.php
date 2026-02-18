@@ -13,7 +13,7 @@ class Customer extends Model
     protected $table = 'customer';
 
     protected $dates = ['deleted_at'];
-    protected $fillable = ['name', 'company_name', 'address', 'email', 'mobile', 'city', 'state', 'status','assigned_staff','country','departure_date','return_date','travel_country','travel_state','travel_city'];
+    protected $fillable = ['name','country_code', 'company_name', 'address', 'email', 'mobile', 'city', 'state', 'status','assigned_staff','country','departure_date','return_date','travel_country','travel_state','travel_city'];
 
     public static function customer_list()
     {
