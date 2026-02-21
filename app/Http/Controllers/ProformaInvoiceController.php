@@ -63,10 +63,10 @@ class ProformaInvoiceController extends Controller
         $data=ProformaInvoiceServiceProvider::proforma_invoice_generate($invoice_number->id);
 
 
-         if (ob_get_level() > 0) {
-        ob_end_clean();
-    }
-    ob_start();
+            if (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+            ob_start();
 
          $pdf = Pdf::loadView('pdf.proforma-invoice', [
             'data' => $data['data']
@@ -75,6 +75,28 @@ class ProformaInvoiceController extends Controller
 
         return $pdf->stream($data['data']['invoice_no'] . '.pdf');
     }
+
+
+   public function final_invoice($id)
+    {
+
+        $data = ProformaInvoiceServiceProvider::final_invoice_data($id);
+
+        // dd($data['data']);
+
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+        ob_start();
+
+        $pdf = Pdf::loadView('pdf.final-invoice', [
+            'data' => $data['data']
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->stream($data['data']['invoice_no'] . '.pdf');
+
+    }
+
 
     public static function proforma_invoice_payment($id)
     {
@@ -108,24 +130,6 @@ class ProformaInvoiceController extends Controller
         $data=ProformaInvoiceServiceProvider::invoice_payment_details($id);
 
         return view('/proforma_invoice_details_list')->with('proforma_invoice_details', $data['data']);
-    }
-
-   public function final_invoice($id)
-    {
-        $data = ProformaInvoiceServiceProvider::final_invoice_data($id);
-
-    if (ob_get_level() > 0) {
-        ob_end_clean();
-    }
-    ob_start();
-
-        // dd($data['data']['original_quotation_data']->vat);
-
-        $pdf = Pdf::loadView('pdf.final-invoice', [
-            'data' => $data['data']
-        ])->setPaper('a4', 'portrait');
-
-        return $pdf->stream($data['data']['invoice_no'] . '.pdf');
     }
 
     public static function invoice_list($id)

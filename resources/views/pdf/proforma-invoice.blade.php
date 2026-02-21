@@ -85,9 +85,6 @@
 <body>
     {{-- HEADER --}}
     <header >
-        <!-- <img src="{{ public_path('asset/images/leterhead-header.jpg') }}" > -->
-
-
         <table width="100%" class="no-border" style="margin-top: 25px;">
             <tr>
 
@@ -115,149 +112,133 @@
 
     </header>
     {{-- FOOTER --}}
-  <footer>
-    <table width="100%" style="border: none; font-size: 11px;">
-        <tr>
-            <td style="text-align:left; border:none; width: 30%;">
-                {{ $data['company_data']->mobile ?? '' }}
-            </td>
+    <footer>
+        <table width="100%" style="border: none; font-size: 11px;">
+            <tr>
+                <td style="text-align:left; border:none; width: 30%;">
+                    {{ $data['company_data']->mobile ?? '' }}
+                </td>
 
-            <td style="text-align:center; border:none; width: 30%;">
-                {{ $data['company_data']->email ?? '' }}
-            </td>
+                <td style="text-align:center; border:none; width: 30%;">
+                    {{ $data['company_data']->email ?? '' }}
+                </td>
 
-            <td style="text-align:right; border:none; width: 30%;">
-                {{ $data['company_data']->website ?? '' }}
-            </td>
-        </tr>
-    </table>
-</footer>
-
+                <td style="text-align:right; border:none; width: 30%;">
+                    {{ $data['company_data']->website ?? '' }}
+                </td>
+            </tr>
+        </table>
+    </footer>
 
     <main>
 
-{{-- INVOICE HEADER BOXES --}}
-<table width="100%" cellspacing="0" class="no-border" cellpadding="0" style="border-collapse:collapse; ">
-    <tr>
+        {{-- INVOICE HEADER BOXES --}}
+        <table width="100%" cellspacing="0" class="no-border" cellpadding="0" style="border-collapse:collapse; ">
+            <tr>
 
-        {{-- BILL TO BOX --}}
-        <td width="50%" style="vertical-align:top; padding-right:10px;">
-            <table width="100%" cellspacing="0" class="no-border" cellpadding="0" style="border:1px solid #000; border-collapse:collapse;">
+                {{-- BILL TO BOX --}}
+                <td width="50%" style="vertical-align:top; padding-right:10px;">
+                    <table width="100%" cellspacing="0" class="no-border" cellpadding="0" style="border:1px solid #000; border-collapse:collapse;">
 
-                <tr>
-                    <td style="background:#72cac5;color:#000000; padding:6px; font-weight:bold; text-align:center; border-bottom:1px solid #000;">
-                        Invoice To
-                    </td>
-                </tr>
+                        <tr>
+                            <td style="background:#72cac5;color:#000000; padding:6px; font-weight:bold; text-align:center; border-bottom:1px solid #000;">
+                                Invoice To
+                            </td>
+                        </tr>
 
-                <tr>
-                    <td style="padding:0; border:0;">
-                        <div style="height:110px; padding:8px; font-size:12px; line-height:18px;">
-                            <strong>{{ $data['customer_name'] }}</strong><br>
-
-
-{{ $data['customer_company_name'] }}<br>
-
-                            {{ strip_tags($data['address']) }}
-@if(!empty($data['city']))
-    , {{ $data['city'] }}
-@endif
-@if(!empty($data['state']))
-    , {{ $data['state'] }}
-@endif
- <br>
-
-{{ $data['email'] }}<br>
-
-{{ $data['mobile'] }}<br>
+                        <tr>
+                            <td style="padding:0; border:0;">
+                                <div style="height:110px; padding:8px; font-size:12px; line-height:18px;">
+                                    <strong>{{ $data['customer_name'] }}</strong><br>
 
 
-                            {{ $data['gst_no'] }}
-                        </div>
-                    </td>
-                </tr>
+        {{ $data['customer_company_name'] }}<br>
 
-            </table>
-        </td>
+                                    {{ strip_tags($data['address']) }}
+        @if(!empty($data['city']))
+            , {{ $data['city'] }}
+        @endif
+        @if(!empty($data['state']))
+            , {{ $data['state'] }}
+        @endif
+        <br>
 
-        {{-- COMPANY BOX --}}
-        <td width="50%" style="vertical-align:top; padding-left:10px;">
-            <table width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #000; border-collapse:collapse;">
+        {{ $data['email'] }}<br>
 
-                <tr>
-                    <td style="background:#72cac5;color:#000000; padding:6px; font-weight:bold; text-align:center; border-bottom:1px solid #000;">
-                        Company Info
-                    </td>
-                </tr>
+        {{ $data['mobile'] }}<br>
 
-                <tr>
-                    <td style="padding:0; border:0;">
-                        <div style="height:110px; padding:8px; font-size:12px; line-height:18px;">
-                            <strong>{{ strtoupper($data['company_data']->company_name) }}</strong><br>
-                            {!! $data['company_address'] !!}<br>
-                            {{ $data['company_city'] }}, {{ $data['company_state'] }}<br>
+                                </div>
+                            </td>
+                        </tr>
 
-                            @if(!empty($data['company_data']->trn_no))
-                                <strong>TRN:</strong> {{ $data['company_data']->trn_no }}
-                            @endif
-                        </div>
-                    </td>
-                </tr>
+                    </table>
+                </td>
 
-            </table>
-        </td>
+                {{-- COMPANY BOX --}}
+                <td width="50%" style="vertical-align:top; padding-left:10px;">
+                    <table width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #000; border-collapse:collapse;">
 
-    </tr>
-</table>
+                        <tr>
+                            <td style="background:#72cac5;color:#000000; padding:6px; font-weight:bold; text-align:center; border-bottom:1px solid #000;">
+                                Company Info
+                            </td>
+                        </tr>
 
+                        <tr>
+                            <td style="padding:0; border:0;">
+                                <div style="height:110px; padding:8px; font-size:12px; line-height:18px;">
+                                    <strong>{{ strtoupper($data['company_data']->company_name) }}</strong><br>
+                                    {!! $data['company_address'] !!}<br>
+                                    {{ $data['company_city'] }}, {{ $data['company_state'] }}<br>
 
+                                    @if(!empty($data['company_data']->trn_no))
+                                        <strong>TRN:</strong> {{ $data['company_data']->trn_no }}
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
 
+                    </table>
+                </td>
 
+            </tr>
+        </table>
 
-        <!-- <br>
-        <h3 class="text-center">TAX INVOICE</h3>
-         <p><b>Title</b> - {{ $data['title'] }} </p> -->
+                {{-- INVOICE INFO HEADER TABLE --}}
+        <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse; padding:5px;">
 
+            <tr style="background:#72cac5; color: #000000;">
+                <td style="border:1px solid #000; padding:6px; font-weight:bold; text-align:center;">
+                    Title
+                </td>
+                <td style="border:1px solid #000; padding:6px; font-weight:bold; text-align:center;">
+                    Invoice Date
+                </td>
+                <td style="border:1px solid #000; padding:6px; font-weight:bold; text-align:center;">
+                    Due Date
+                </td>
 
-         {{-- INVOICE INFO HEADER TABLE --}}
-<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse; padding:5px;">
+                <td style="border:1px solid #000; padding:6px; font-weight:bold; text-align:center;">
+                    Agent Name
+                </td>
+            </tr>
 
-    <tr style="background:#72cac5; color: #000000;">
-        <td style="border:1px solid #000; padding:6px; font-weight:bold; text-align:center;">
-            Title
-        </td>
-        <td style="border:1px solid #000; padding:6px; font-weight:bold; text-align:center;">
-            Invoice Date
-        </td>
-        <td style="border:1px solid #000; padding:6px; font-weight:bold; text-align:center;">
-            Due Date
-        </td>
+            <tr>
+                <td style="border:1px solid #000; padding:6px; text-align:center;">
+                    {{ $data['title'] }}
+                </td>
+                <td style="border:1px solid #000; padding:6px; text-align:center;">
+                    {{ $data['entrydate'] }}
+                </td>
+                <td style="border:1px solid #000; padding:6px; text-align:center;">
+                    {{ $data['due_date'] }}
+                </td>
+                <td style="border:1px solid #000; padding:6px; text-align:center;">
+                    {{ $data['AssignedStaffName'] }}
+                </td>
+            </tr>
 
-         <td style="border:1px solid #000; padding:6px; font-weight:bold; text-align:center;">
-            Agent Name
-        </td>
-    </tr>
-
-    <tr>
-        <td style="border:1px solid #000; padding:6px; text-align:center;">
-            {{ $data['title'] }}
-        </td>
-        <td style="border:1px solid #000; padding:6px; text-align:center;">
-            {{ $data['entrydate'] }}
-        </td>
-        <td style="border:1px solid #000; padding:6px; text-align:center;">
-            {{ $data['due_date'] }}
-        </td>
-        <td style="border:1px solid #000; padding:6px; text-align:center;">
-            {{ $data['AssignedStaffName'] }}
-        </td>
-    </tr>
-
-</table>
-
-
-
-
+        </table>
         {{-- ITEMS TABLE --}}
         <table style="padding:5px;">
             <thead>
@@ -281,21 +262,22 @@
                 @php $i = 1; @endphp
                 @foreach($data['quotation_item_data'] as $item)
 
+
+
                 @php
-    $qty = $item->qty;
-    $totalWithVat =  number_format($item->net_rate, 2)  * $qty;  // VAT already included
+                    $qty = (float) $item->qty;
+                    $netRate = (float) $item->net_rate; // already VAT included
 
+                    $totalWithVat = $netRate * $qty;
 
+                    $vatPercent = (float) ($item->taxvalue ?? 0);
 
-    $vatPercent = $item->taxvalue ?? 0;
+                    $vatAmount = ($totalWithVat * $vatPercent) / (100 + $vatPercent);
 
-    $vatAmount = ($totalWithVat * $vatPercent) / (100 + $vatPercent);
+                    $amountWithoutVat = $totalWithVat - $vatAmount;
 
-    $amountWithoutVat = $totalWithVat - $vatAmount;
-
-$rowprice = $amountWithoutVat / $qty ;
-
-@endphp
+                    $rowprice = $qty > 0 ? ($amountWithoutVat / $qty) : 0;
+                @endphp
 
 
                 <tr>

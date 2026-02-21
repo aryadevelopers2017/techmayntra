@@ -130,7 +130,7 @@
                                                             {
                                                                 @endphp
                                                                    @can('invoice.approve')
-                                                               
+
                                                                 <a href="javascript:void(0)"
                                                                     class="btn btn-success"
                                                                     title="approve"
@@ -195,11 +195,13 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">
-                        Approve
-                    </button>
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+                        Approve
                     </button>
                 </div>
 

@@ -190,6 +190,7 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $data['item_data']=$item;
 
 
+
         // ====
 
          $data['original_quotation_data']= quotation::find($quotation_data->quotation_id);
@@ -211,9 +212,10 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $invoice_data=invoice_master::find($id);
         $quotation_data=proforma_invoice::where('id', $invoice_data->proforma_invoice_id)->get()->toArray();
 
-        // dd($quotation_data);
-
         $customer=Customer::where('id',$quotation_data[0]['c_id'])->get()->toArray();
+
+        $customer_data=Customer::where('id',$quotation_data[0]['c_id'])->first();
+
         $data['quotation_id']=$id;
         $customer_id=$customer[0]['id'];
         $data['customer_id']=$customer[0]['id'];
@@ -222,6 +224,13 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $data['state']=$customer[0]['state'];
         $data['customer_name']=$customer[0]['name'];
         $data['customer_company_name']=$customer[0]['company_name'];
+
+        $data['email']=$customer[0]['email'];
+
+        $data['mobile']=  $customer[0]['country_code'].' '. $customer[0]['mobile'];
+
+        $data['AssignedStaffName']=$customer_data->getAssignedStaffName();
+
         $data['entrydate']=date('d-M-Y',strtotime($invoice_data->entrydate));
         $data['open_date']=date("d-M-Y", strtotime('7 day', strtotime($quotation_data[0]['entrydate'])));
         $data['title']=$quotation_data[0]['title'];
@@ -235,7 +244,6 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
 
         $data['trn_no']=$quotation_data[0]['trn_no'];
 
-        // $total_amount=$quotation_data[0]['total_amount'];
         $data['taxable_amount']=$invoice_data->taxable_amount;
         $data['gst_per']=$invoice_data->gst_per;
         $data['gst_amount']=$invoice_data->gst_amount;
@@ -264,20 +272,49 @@ class ProformaInvoiceServiceProvider extends ServiceProvider
         $currency_data=Currency::getByID($currency_id);
         $data['currency_data']=$currency_data;
 
-
-        $f = new \NumberFormatter( locale_get_default(), \NumberFormatter::SPELLOUT );
-        $data['amount_word'] = $f->format($total_amount).' '.$currency_data->name.' Only';
+        $f = new \NumberFormatter(locale_get_default(), \NumberFormatter::SPELLOUT);
+        $data['amount_word'] = ucwords($f->format($total_amount)) . ' ' . $currency_data->name . ' Only';
 
         $item_id=$invoice_data->item_ids;
 
         $item=item_master::final_invoice_item($id, $item_id);
 
-        $data['item_data']=$item;
 
-           $data['original_quotation_data']= quotation::find($quotation_data[0]['quotation_id']);
+        $quotationItems = quotation_item::select('item_id','taxvalue','taxtype')
+    ->where('quotation_id', $quotation_data[0]['quotation_id'])
+    ->get()
+    ->keyBy('item_id');
 
 
-        // dd($data);
+    $merged = $item->map(function ($item) use ($quotationItems) {
+
+    $taxRow = $quotationItems->get($item->id); // item_master.id = item_id
+
+    $item->tax_value = $taxRow->taxvalue ?? 0;
+    $item->tax_type  = $taxRow->taxtype ?? null;
+
+    return $item;
+});
+
+        $data['item_data']=$merged;
+
+        // dd($data['item_data']);
+
+
+
+        $data['original_quotation_data']= quotation::find($quotation_data[0]['quotation_id']);
+
+
+         $data['quotation_item_data']= quotation_item::with('item')
+          ->select('id','taxtype','taxvalue','item_id')
+        ->where('quotation_id', $quotation_data[0]['quotation_id'])
+        ->get();
+
+        // dd($data['quotation_item_data_with_item']);
+
+
+        $data['due_date']=$quotation_data[0]['due_date'];
+
 
         return array('status_code' => 200, 'message' => 'Get Record Successfully', 'data' => $data);
     }

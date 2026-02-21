@@ -137,6 +137,7 @@ class item_master extends Model
     public static function final_invoice_item($id, $item_id)
     {
         $data=item_master::select('item_master.id', 'item_master.item_name', 'invoice_item_master.description', 'invoice_item_master.price', 'invoice_item_master.rate', 'invoice_item_master.net_price', 'invoice_item_master.net_rate', 'invoice_item_master.qty')
+
             ->join("invoice_item_master", 'item_master.id', '=', 'invoice_item_master.item_id')
             ->whereIn('invoice_item_master.item_id', explode(',',$item_id))
             ->where('invoice_item_master.invoice_id', '=', $id)

@@ -141,13 +141,12 @@
         </table>
         <br>
         <h3 class="text-center">TAX INVOICE</h3>
-         <p><b>Title</b> - {{ $data['title'] }} </p>
         {{-- ITEMS TABLE --}}
         <table>
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Description of Services</th>
+                    <th>Description</th>
                     <th>HSN</th>
                     <th>Rate</th>
                     <th>Qty</th>
@@ -161,9 +160,9 @@
                     <td class="text-center">{{ $i++ }}</td>
                     <td>{{ $item->item_name }}</td>
                     <td class="text-center">998313</td>
-                    <td class="text-right">₹ {{ number_format($item->net_rate, 2) }}</td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ number_format($item->net_rate, 2) }}</td>
                     <td class="text-center">{{ $item->qty }} {{ $item->qty_name }}</td>
-                    <td class="text-right">₹ {{ number_format($item->net_price, 2) }}</td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ number_format($item->net_price, 2) }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -172,58 +171,82 @@
         <table>
             <tr>
                 <td colspan="5" class="text-right"><strong>Sub Total</strong></td>
-                <td class="text-right">₹ {{ $data['taxable_amount'] }}</td>
+                <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['taxable_amount'] }}</td>
             </tr>
-            @if($data['gst_per']>0)
 
-                @if($data['igst']==1)
-                    <tr>
-                        <td colspan="5" class="text-right">
-                            <strong>IGST {{ $data['gst_per'] }}(%)</strong>
-                        </td>
-                        <td class="text-right">₹ {{ $data['gst_amount']}} </td>
-                    </tr>
+            @if($data['gst_per'] > 0)
+                @if ($data['original_quotation_data']->vat == 1)
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <strong>VAT {{ $data['gst_per'] }}(%)</strong>
+                    </td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}} </td>
+                </tr>
+                @elseif($data['igst'] == 1)
+                <tr>
+                     <td colspan="5" class="text-right">
+                        <strong>IGST {{ $data['gst_per'] }}(%)</strong>
+                    </td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']}} </td>
+                </tr>
                 @else
-                    <tr>
-                        <td colspan="5" class="text-right">
-                            <strong>CGST ({{ $data['gst_per']/2 }}(%))</strong>
-                        </td>
-                        <td class="text-right">₹ {{ $data['gst_amount']/2}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="text-right">
-                            <strong>SGST ({{ $data['gst_per']/2 }}(%))</strong>
-                        </td>
-                        <td class="text-right">₹ {{ $data['gst_amount']/2}}</td>
-                    </tr>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <strong>CGST ({{ $data['gst_per']/2 }}(%))</strong>
+                    </td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']/2}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <strong>SGST ({{ $data['gst_per']/2 }}(%))</strong>
+                    </td>
+                    <td class="text-right">{{ $data['currency_data']->symbol }} {{ $data['gst_amount']/2}}</td>
+                </tr>
+
                 @endif
             @endif
             <tr>
                 <td colspan="5" class="text-right"><strong>Total</strong></td>
-                <td class="text-right"><strong>₹ {{ $data['total_amount'] }}</strong></td>
+                <td class="text-right"><strong>{{ $data['currency_data']->symbol }} {{ $data['total_amount'] }}</strong></td>
             </tr>
         </table>
         <p><strong>Amount in words:</strong> {{ $data['amount_word'] }}</p>
         {{-- BANK DETAILS --}}
-
+        <!-- <p class="section-title">Payment Details</p>
+        {!! $data['bank_details'] ?: $data['company_data']->bank_details !!}
+        <br><br> -->
         <div id="legalcopy">
             <p class="legal"><strong><b>Payment Details are as mentioned below :</b></strong></p>
             <div class="row">
                 <div class="col-md-6">
-                     @if(!empty($data['bank_details']))
-                            {!! $data['bank_details'] !!}
-                        @else
-                            {!! $data['company_data']->bank_details !!}
-                        @endif
+                    @php
+                    if($data['bank_details']!='')
+                    {
+                    echo $data['bank_details'];
+                    }
+                    else
+                    {
+                    echo $data['company_data']->bank_details;
+                    }
+                    @endphp
                 </div>
-
+                <!-- <div class="col-md-6">
+                    <p style="text-align: right;"><b>For,  {{ $data['company_data']->company_name }}</b></p>
+                    <p style="text-align: right;"><b>Authorised Signatory <b></p>
+                    </div> -->
             </div>
         </div>
-
-
-
         <div class="legalcopy" style="text-align: right;">
-
+            <!-- <img  id="invoice-logo" src="{{ asset('asset/images/'.$data['company_data']->company_logo) }}" height="50px" alt=""/> -->
+            <img
+                src="{{ public_path('asset/images/paid.webp') }}"
+                alt="PAID"
+                style="
+                width: 140px;
+                top: -90px;
+                right: 20px;
+                "
+                >
             <p style="font-family: 'Shadows Into Light', cursive; font-style: oblique; font-stretch: ultra-condensed; font-size: 22px;margin-right: 25px;"><i>Subhash</i></p>
             <p style="text-align: right;"><b>Authorised Signatory <b></p>
             <p style="text-align: right;"><b>For,  {{ $data['company_data']->company_name }}</b></p>
@@ -234,83 +257,6 @@
             <!--End Info-->
             <!--End Title-->
         </div>
-
-
-<div style="page-break-before: always;"></div>
-
-
-        <div id="legalcopy">
-            <p class="legal"><strong><b> {{  $data['company_data']->technology_label ?? 'Technology' }}  :</b></strong></p>
-            <div class="row">
-                <div class="col-md-6">
-
-                        @if(!empty($data['original_quotation_data']->technology))
-                            {!! $data['original_quotation_data']->technology !!}
-                        @else
-                            {!! $data['company_data']->technology !!}
-                        @endif
-                </div>
-
-            </div>
-        </div>
-
-<div style="page-break-before: always;"></div>
-
-        <div id="legalcopy">
-            <p class="legal"><strong><b>{{  $data['company_data']->milestone_label ?? 'Mile Stone' }} :</b></strong></p>
-            <div class="row">
-                <div class="col-md-6">
-
-                           @if(!empty($data['original_quotation_data']->milestone))
-                            {!! $data['original_quotation_data']->milestone !!}
-                        @else
-                            {!! $data['company_data']->milestone !!}
-                        @endif
-                </div>
-
-            </div>
-        </div>
-
-
-      @if(isset($data['original_quotation_data']) && $data['original_quotation_data']->terms_conditions_flag == 1)
-      <div style="page-break-before: always;"></div>
-
-        <div id="legalcopy">
-            <p class="legal"><strong><b>Terms & Conditions :</b></strong></p>
-
-            <div class="row">
-                <div class="col-md-6">
-                    @if(!empty($data['original_quotation_data']->terms_conditions))
-                        {!! $data['original_quotation_data']->terms_conditions !!}
-                    @else
-                        {!! $data['company_data']->terms_conditions !!}
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endif
-
-
-     @if(isset($data['original_quotation_data']) && $data['original_quotation_data']->payment_terms_conditions_flag == 1)
-     <div style="page-break-before: always;"></div>
-
-        <div id="legalcopy">
-            <p class="legal"><strong><b>Payment terms & Conditions :</b></strong></p>
-
-            <div class="row">
-                <div class="col-md-6">
-                    @if(!empty($data['original_quotation_data']->payment_terms_conditions))
-                        {!! $data['original_quotation_data']->payment_terms_conditions !!}
-                    @else
-                        {!! $data['company_data']->payment_terms_conditions !!}
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endif
-
-
-
     </main>
 </body>
 </html>
