@@ -76,7 +76,7 @@ class item_master extends Model
    public static function update_item($request)
 {
     $item_master = item_master::find($request->id);
-
+    
     $item_master->item_name = $request->item_name;
     $item_master->description = $request->description;
 

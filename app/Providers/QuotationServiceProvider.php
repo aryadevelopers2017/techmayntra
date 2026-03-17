@@ -45,9 +45,6 @@ class QuotationServiceProvider extends ServiceProvider
     {
         try {
 
-        // dd($request->all());
-
-
             $items = json_decode($request->services_item, true);
 
             if (!is_array($items)) {

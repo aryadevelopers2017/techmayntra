@@ -7,8 +7,6 @@ use App\Providers\CustomerServiceProvider;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\CountryPhoneCode;
-
-
 use DB;
 
 use Illuminate\Http\Request;
