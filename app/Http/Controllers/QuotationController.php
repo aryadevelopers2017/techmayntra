@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Providers\QuotationServiceProvider;
 use Illuminate\Http\Request;
+use App\Models\Bank;
 
 class QuotationController extends Controller
 {
@@ -29,8 +30,11 @@ class QuotationController extends Controller
     {
         $data=QuotationServiceProvider::get_customer_item_list();
 
+        $banks = Bank::orderBy('id', 'desc')->get();
 
-        return view('quotation_add')->with('details_array',  $data['data']);
+        // dd($data);
+
+        return view('quotation_add')->with('details_array',  $data['data'])->with('banks', $banks);
     }
 
     public static function add_quotation(Request $request)
@@ -57,9 +61,11 @@ class QuotationController extends Controller
     {
         $data=QuotationServiceProvider::quotation_edit($id);
 
-        // dd($data['data']);
+        $banks = Bank::orderBy('id', 'desc')->get();
 
-        return view('quotation_add')->with('details_array', $data['data']);
+        // dd($data['data']['item_data']);
+
+        return view('quotation_add')->with('details_array', $data['data'])->with('banks', $banks);
     }
 
     public static function update_quotation(Request $request)

@@ -10,7 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Providers\QuotationServiceProvider;
 use App\Models\proforma_invoice;
 use Illuminate\Support\Facades\Log;
-
+use App\Models\Bank;
 
 class ProformaInvoiceController extends Controller
 {
@@ -30,28 +30,18 @@ class ProformaInvoiceController extends Controller
 
         return view('proforma_invoice_list')->with('proforma_invoice_list', $data['data']);
     }
-
-       public static function add_new()
+    public static function add_new()
     {
         $data=QuotationServiceProvider::get_customer_item_list();
-
-        return view('add_invoice')->with('details_array', value: $data['data']);
+        $banks = Bank::orderBy('id', 'desc')->get();
+        return view('add_invoice')->with('details_array', value: $data['data'])->with('banks', $banks);
     }
-
     public static function save_invoice(Request $request){
     	  $Quotation=QuotationServiceProvider::add_quotation($request);
          $quotation_approve = QuotationServiceProvider::quotation_approve($Quotation['data']['id']);
         return redirect()->route('proforma_invoice.list');
     }
-
-    // public static function proforma_invoice_generate($id)
-    // {
-    //     $data=ProformaInvoiceServiceProvider::proforma_invoice_generate($id);
-
-    //     return view('proforma_invoice')->with('data', $data['data']);
-    // }
-
-     public static function proforma_invoice_generate(Request $request)
+    public static function proforma_invoice_generate(Request $request)
     {
         $id = $request->invoice_no;
         // dd($id);
@@ -75,9 +65,7 @@ class ProformaInvoiceController extends Controller
 
         return $pdf->stream($data['data']['invoice_no'] . '.pdf');
     }
-
-
-   public function final_invoice($id)
+    public function final_invoice($id)
     {
 
         $data = ProformaInvoiceServiceProvider::final_invoice_data($id);
@@ -96,8 +84,6 @@ class ProformaInvoiceController extends Controller
         return $pdf->stream($data['data']['invoice_no'] . '.pdf');
 
     }
-
-
     public static function proforma_invoice_payment($id)
     {
         $data=ProformaInvoiceServiceProvider::proformainvoice_payment($id);

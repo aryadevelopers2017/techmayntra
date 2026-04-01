@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
 
     <style>
         @page {
-             margin: 110px 30px 80px 30px;
+            margin: 110px 30px 80px 30px;
         }
 
         body {
@@ -50,7 +51,8 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #000;
             padding: 6px;
         }
@@ -58,12 +60,21 @@
         th {
             background: #72cac5;
             text-align: center;
-            color: #000000;;
+            color: #000000;
+            ;
         }
 
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-        .no-border td { border: none; }
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .no-border td {
+            border: none;
+        }
 
         .section-title {
             margin-top: 10px;
@@ -75,29 +86,27 @@
         }
 
 
-        #invoice-logo{
-            margin-top:17px;
+        #invoice-logo {
+            margin-top: 17px;
         }
-
     </style>
 </head>
 
 
 <body>
     {{-- HEADER --}}
-    <header >
+    <header>
         <table width="100%" class="no-border" style="margin-top: 25px;">
             <tr>
 
                 <td width="65%" style="vertical-align: top;">
-                    <table class="no-border" width="100%" >
+                    <table class="no-border" width="100%">
                         <tr>
-                            <td >
+                            <td>
                                 <img
                                     src="{{ public_path('asset/images/'.$data['company_data']->company_logo) }}"
                                     style="height: 85px;width:auto; "
-                                    alt="Company Logo"
-                                    >
+                                    alt="Company Logo">
                             </td>
                         </tr>
                     </table>
@@ -105,7 +114,7 @@
 
                 <td width="35%" style="vertical-align: end; text-align: right;">
                     <strong style="font-size:22px;">Receipt</strong> <br>
-                        <span> #{{ $data['invoice_no'] }}</span>
+                    <span> #{{ $data['invoice_no'] }}</span>
 
                 </td>
             </tr>
@@ -135,74 +144,74 @@
         {{-- INVOICE HEADER --}}
 
         <table width="100%" cellspacing="0" class="no-border" cellpadding="0" style="border-collapse:collapse; ">
-    <tr>
+            <tr>
 
-        {{-- BILL TO BOX --}}
-        <td width="50%" style="vertical-align:top; padding-right:10px;">
-            <table width="100%" cellspacing="0" class="no-border" cellpadding="0" style="border:1px solid #000; border-collapse:collapse;">
+                {{-- BILL TO BOX --}}
+                <td width="50%" style="vertical-align:top; padding-right:10px;">
+                    <table width="100%" cellspacing="0" class="no-border" cellpadding="0" style="border:1px solid #000; border-collapse:collapse;">
 
-                <tr>
-                    <td style="background:#72cac5;color:#000000; padding:6px; font-weight:bold; text-align:center; border-bottom:1px solid #000;">
-                        Receipt To
-                    </td>
-                </tr>
+                        <tr>
+                            <td style="background:#72cac5;color:#000000; padding:6px; font-weight:bold; text-align:center; border-bottom:1px solid #000;">
+                                Receipt To
+                            </td>
+                        </tr>
 
-                <tr>
-                    <td style="padding:0; border:0;">
-                        <div style="height:110px; padding:8px; font-size:12px; line-height:18px;">
-                            <strong>{{ $data['customer_name'] }}</strong><br>
+                        <tr>
+                            <td style="padding:0; border:0;">
+                                <div style="height:110px; padding:8px; font-size:12px; line-height:18px;">
+                                    <strong>{{ $data['customer_name'] }}</strong><br>
 
 
-                            {{ $data['customer_company_name'] }}<br>
+                                    {{ $data['customer_company_name'] }}<br>
 
-                                                        {{ strip_tags($data['address']) }}
-                            @if(!empty($data['city']))
-                                , {{ $data['city'] }}
-                            @endif
-                            @if(!empty($data['state']))
-                                , {{ $data['state'] }}
-                            @endif
-                            <br>
+                                    {{ strip_tags($data['address']) }}
+                                    @if(!empty($data['city']))
+                                    , {{ $data['city'] }}
+                                    @endif
+                                    @if(!empty($data['state']))
+                                    , {{ $data['state'] }}
+                                    @endif
+                                    <br>
 
-                            {{ $data['email'] }}<br>
+                                    {{ $data['email'] }}<br>
 
-                            {{ $data['mobile'] }}<br>
+                                    {{ $data['mobile'] }}<br>
 
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                </div>
+                            </td>
+                        </tr>
 
-                                        </table>
-                                    </td>
+                    </table>
+                </td>
 
-                                    {{-- COMPANY BOX --}}
-                                    <td width="50%" style="vertical-align:top; padding-left:10px;">
-                                        <table width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #000; border-collapse:collapse;">
+                {{-- COMPANY BOX --}}
+                <td width="50%" style="vertical-align:top; padding-left:10px;">
+                    <table width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #000; border-collapse:collapse;">
 
-                                            <tr>
-                                                <td style="background:#72cac5;color:#000000; padding:6px; font-weight:bold; text-align:center; border-bottom:1px solid #000;">
-                                                    Company Info
-                                                </td>
-                                            </tr>
+                        <tr>
+                            <td style="background:#72cac5;color:#000000; padding:6px; font-weight:bold; text-align:center; border-bottom:1px solid #000;">
+                                Company Info
+                            </td>
+                        </tr>
 
-                                            <tr>
-                                                <td style="padding:0; border:0;">
-                                                    <div style="height:110px; padding:8px; font-size:12px; line-height:18px;">
-                                                        <strong>{{ strtoupper($data['company_data']->company_name) }}</strong><br>
-                                                        {!! $data['company_address'] !!}<br>
-                                                        {{ $data['company_city'] }}, {{ $data['company_state'] }}<br>
+                        <tr>
+                            <td style="padding:0; border:0;">
+                                <div style="height:110px; padding:8px; font-size:12px; line-height:18px;">
+                                    <strong>{{ strtoupper($data['company_data']->company_name) }}</strong><br>
+                                    {!! $data['company_address'] !!}<br>
+                                    {{ $data['company_city'] }}, {{ $data['company_state'] }}<br>
 
-                                                        @if(!empty($data['company_data']->trn_no))
-                                                            <strong>TRN:</strong> {{ $data['company_data']->trn_no }}
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                    @if(!empty($data['company_data']->trn_no))
+                                    <strong>TRN:</strong> {{ $data['company_data']->trn_no }}
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
 
-                                        </table>
-                                    </td>
+                    </table>
+                </td>
 
-                                </tr>
+            </tr>
         </table>
 
         {{-- INVOICE INFO HEADER TABLE --}}
@@ -243,12 +252,12 @@
         </table>
 
         {{-- ITEMS TABLE --}}
-@php
-    $i = 1;
-    $subTotal = 0;
-    $totalVat = 0;
-    $grandTotal = 0;
-@endphp
+        @php
+        $i = 1;
+        $subTotal = 0;
+        $totalVat = 0;
+        $grandTotal = 0;
+        @endphp
 
         <table style="padding: 5px;">
             <thead>
@@ -266,31 +275,31 @@
                 @php $i = 1; @endphp
                 @foreach($data['item_data'] as $item)
 
-                     @php
-    $qty = (float) $item->qty;
-    $totalWithVat = (float) $item->net_price;
+                @php
+                $qty = (float) $item->qty;
+                $totalWithVat = (float) $item->net_price;
 
-    $vatPercent = (float) ($item->tax_value ?? 0);
+                $vatPercent = (float) ($item->tax_value ?? 0);
 
-    $vatAmount = ($totalWithVat * $vatPercent) / (100 + $vatPercent);
-    $amountWithoutVat = $totalWithVat - $vatAmount;
+                $vatAmount = ($totalWithVat * $vatPercent) / (100 + $vatPercent);
+                $amountWithoutVat = $totalWithVat - $vatAmount;
 
-    $rowprice = $qty > 0 ? ($amountWithoutVat / $qty) : 0;
+                $rowprice = $qty > 0 ? ($amountWithoutVat / $qty) : 0;
 
-    // totals
-    $subTotal += $amountWithoutVat;
-    $totalVat += $vatAmount;
-    $grandTotal += $totalWithVat;
-@endphp
+                // totals
+                $subTotal += $amountWithoutVat;
+                $totalVat += $vatAmount;
+                $grandTotal += $totalWithVat;
+                @endphp
 
 
 
                 <tr>
                     <td class="text-center">{{ $i++ }}</td>
                     <td style="width:30%">{{ $item->item_name }}</td>
-                   <td class="text-right">{{ number_format($rowprice, 2) }}</td>
+                    <td class="text-right">{{ number_format($rowprice, 2) }}</td>
                     <td class="text-right">{{ $item->qty }} {{ $item->qty_name }}</td>
-                       <td class="text-right">{{ number_format($amountWithoutVat, 2) }}</td>
+                    <td class="text-right">{{ number_format($amountWithoutVat, 2) }}</td>
                     <td class="text-right">{{ number_format($vatAmount, 2) }}</td>
                     <td class="text-right"> {{ number_format($totalWithVat, 2) }} </td>
                 </tr>
@@ -300,45 +309,45 @@
 
         {{-- TOTALS --}}
 
-         <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; padding:5px;">
-    <tr>
-        <td style="width:70%; text-align:right; padding:6px;">
-            <strong>Sub Total</strong>
-        </td>
+        <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; padding:5px;">
+            <tr>
+                <td style="width:70%; text-align:right; padding:6px;">
+                    <strong>Sub Total</strong>
+                </td>
 
-        <td style="width:30%; text-align:right; padding:6px;">
-            {{ $data['currency_data']->symbol }} {{ number_format($subTotal, 2) }}
-        </td>
-    </tr>
+                <td style="width:30%; text-align:right; padding:6px;">
+                    {{ $data['currency_data']->symbol }} {{ number_format($subTotal, 2) }}
+                </td>
+            </tr>
 
-    <tr>
-        <td style="width:70%; text-align:right; padding:6px;">
-            <strong>Total VAT</strong>
-        </td>
+            <tr>
+                <td style="width:70%; text-align:right; padding:6px;">
+                    <strong>Total VAT</strong>
+                </td>
 
-        <td style="width:30%; text-align:right; padding:6px;">
-            {{ $data['currency_data']->symbol }} {{ number_format($totalVat, 2) }}
-        </td>
-    </tr>
+                <td style="width:30%; text-align:right; padding:6px;">
+                    {{ $data['currency_data']->symbol }} {{ number_format($totalVat, 2) }}
+                </td>
+            </tr>
 
-    <tr>
-        <td style="width:70%; text-align:right; padding:6px;">
-            <strong>Total</strong>
-        </td>
+            <tr>
+                <td style="width:70%; text-align:right; padding:6px;">
+                    <strong>Total</strong>
+                </td>
 
-        <td style="width:30%; text-align:right; padding:6px;">
-            <strong>{{ $data['currency_data']->symbol }} {{ number_format($grandTotal, 2) }}</strong>
-        </td>
-    </tr>
-</table>
+                <td style="width:30%; text-align:right; padding:6px;">
+                    <strong>{{ $data['currency_data']->symbol }} {{ number_format($grandTotal, 2) }}</strong>
+                </td>
+            </tr>
+        </table>
 
         {{-- BANK DETAILS --}}
 
-        <div style="padding:5px;"  class="row">
-                 <strong>Amount in words:</strong> {{ $data['amount_word'] }}  <br>
+        <div style="padding:5px;" class="row">
+            <strong>Amount in words:</strong> {{ $data['amount_word'] }} <br>
 
 
-                 <strong><b>Make all cheque payable / Online Transfer to Bank Account Below.:</b></strong>
+            <!-- <strong><b>Make all cheque payable / Online Transfer to Bank Account Below.:</b></strong>
                 <div class="col-md-6">
                     @php
                     if($data['bank_details']!='')
@@ -349,10 +358,47 @@
                     {
                     echo $data['company_data']->bank_details;
                     }
-                    @endphp
-                </div>
+                    @endphp -->
+
+            @if(!empty($data['original_quotation_data']->bank_id) && $data['original_quotation_data']->bank)
+            <strong><b>Make all cheque payable / Online Transfer to Bank Account Below.:</b></strong>
+
+
+            <div class="col-md-6">
+
+                <p><strong> {{ $data['original_quotation_data']->bank->bank_name }}:-</strong>
+
+                    <!-- @if(!empty($data['bank_details']))
+                {!! $data['bank_details'] !!}
+                @else
+                {!! $data['company_data']->bank_details !!}
+                @endif -->
+
+                    {!! $data['original_quotation_data']->bank->bank_detail !!}
+
+            </div>
+            @endif
 
         </div>
+
+        </div>
+
+        @if(isset($data['original_quotation_data']) && $data['original_quotation_data']->terms_conditions_flag == 1)
+        <div id="legalcopy">
+            <p class="legal"><strong><b>Terms & Conditions :</b></strong></p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    @if(!empty($data['original_quotation_data']->terms_conditions))
+                    {!! $data['original_quotation_data']->terms_conditions !!}
+                    @else
+                    {!! $data['company_data']->terms_conditions !!}
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endif
+
 
         <div class="legalcopy" style="text-align: right;">
             <!-- <img  id="invoice-logo" src="{{ asset('asset/images/'.$data['company_data']->company_logo) }}" height="50px" alt=""/> -->
@@ -363,19 +409,19 @@
                 width: 140px;
                 top: -90px;
                 right: 20px;
-                "
-                >
+                ">
             <p style="font-family: 'Shadows Into Light', cursive; font-style: oblique; font-stretch: ultra-condensed; font-size: 22px;margin-right: 25px;"><i>Subhash</i></p>
             <p style="text-align: right;"><b>Authorised Signatory <b></p>
-            <p style="text-align: right;"><b>For,  {{ $data['company_data']->company_name }}</b></p>
+            <p style="text-align: right;"><b>For, {{ $data['company_data']->company_name }}</b></p>
         </div>
 
         <div class="legalcopy">
             <p><b>Declaration</b></p>
-            <p style="margin-left: 10px;font-weight: 400;">We declare that this invoice shows the actual price of the goods/services described and that all particulars are true and correct.</p>
+            <p style="margin-left: 10px;font-weight: 400;">Please advise us of any discrepancies within 2 working days from the date of receipt, otherwise the invoice/receipt is considered as accepted. After that, no queries will be entertained under any circumstances.</p>
 
         </div>
 
     </main>
 </body>
+
 </html>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Providers\CompanyModuleServiceProvider;
 use Illuminate\Http\Request;
+use App\Models\Bank;
+
 
 class CompanyModuleController extends Controller
 {
@@ -17,17 +19,19 @@ class CompanyModuleController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public static function index()
     {
     	$data=CompanyModuleServiceProvider::module_list();
-    	
-        return view('module_list')->with('module_data', $data['data'])->with('currency', $data['currency']);
+
+        //  get all banks
+        $banks = Bank::orderBy('id', 'desc')->get();
+        return view('module_list')->with('module_data', $data['data'])->with('currency', $data['currency'])->with('banks', $banks);
     }
 
     public static function update_module(Request $request)
     {
-		
+
 		$data=CompanyModuleServiceProvider::update_module($request);
 
         if($data['status_code']==200)
@@ -47,7 +51,7 @@ class CompanyModuleController extends Controller
     public static function address_list()
     {
         $address_data=CompanyModuleServiceProvider::company_address_list();
-        
+
         return view('company_address_list')->with('address_data', $address_data['data']);
     }
 

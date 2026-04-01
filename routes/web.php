@@ -202,5 +202,12 @@ Route::get('staff-report/{id}', [App\Http\Controllers\userController::class, 're
 
     Route::post('/roles/delete', [App\Http\Controllers\RoleController::class, 'delete']);
 
+Route::post('/bank/add', [App\Http\Controllers\BankController::class, 'store'])->name('bank.add');
+Route::post('/bank/update', [App\Http\Controllers\BankController::class, 'update'])->name('bank.update');
+Route::post('/bank/delete', [App\Http\Controllers\BankController::class, 'delete'])->name('bank.delete');
+Route::get('/bank/get', [App\Http\Controllers\BankController::class, 'get'])->name('bank.get');
+
+
+
 
 // });

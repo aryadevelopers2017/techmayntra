@@ -45,6 +45,8 @@ class QuotationServiceProvider extends ServiceProvider
     {
         try {
 
+            // dd($request->all());
+
             $items = json_decode($request->services_item, true);
 
             if (!is_array($items)) {
@@ -130,6 +132,7 @@ class QuotationServiceProvider extends ServiceProvider
 
         $data['trn_no']=$quotation_data[0]['trn_no'];
 
+        $data['bank_id'] = $quotation_data[0]['bank_id'];
 
 
         $data['igst']=$quotation_data[0]['igst'];
@@ -309,6 +312,10 @@ class QuotationServiceProvider extends ServiceProvider
         $data['payment_terms_conditions']=$quotation_data[0]['payment_terms_conditions'];
         $data['bank_details_flag']=$quotation_data[0]['bank_details_flag'];
         $data['bank_details']=$quotation_data[0]['bank_details'];
+        $data['bank_id'] = $quotation_data[0]['bank_id'];
+
+        $data['quotation'] = quotation::with('bank')->find($id);
+
         $company_address_id=$quotation_data[0]['company_address_id'];
         $data['company_address_id']=$company_address_id;
 
@@ -405,4 +412,3 @@ class QuotationServiceProvider extends ServiceProvider
         }
 
 }
-    

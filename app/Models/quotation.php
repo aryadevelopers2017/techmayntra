@@ -14,6 +14,7 @@ class quotation extends Model
 
     protected $dates = ['deleted_at'];
     protected $fillable = ['id', 'entrydate', 'c_id',   'v_id', 'trn_no',
+        'bank_id',
     'vat','title', 'invoice_no', 'max_invoice_no', 'quotation_item_id', 'price', 'discount', 'discount_amount', 'amount', 'gst', 'igst', 'gst_per', 'gst_amount', 'total_amount', 'milestone', 'working_days', 'terms_conditions_flag', 'terms_conditions', 'payment_terms_conditions_flag', 'payment_terms_conditions', 'bank_details_flag', 'bank_details'];
 
 
@@ -111,7 +112,10 @@ $tax_per = $request->gst_per ?? 0;
         $data->payment_terms_conditions=$request->payment_terms_conditions;
 
         $data->bank_details_flag=isset($request->bank_details_flag) ?? '0';
+
         $data->bank_details=$request->bank_details;
+
+        $data->bank_id = $request->bank_id;
 
         if(!isset($request->gst))
         {
@@ -231,6 +235,8 @@ $tax_per = $request->gst_per ?? 0;
 
         $data->bank_details=$request->bank_details;
 
+        $data->bank_id = $request->bank_id;
+
         if(!isset($request->gst))
         {
             $data->bank_details=$request->personal_bank_details;
@@ -264,5 +270,11 @@ $tax_per = $request->gst_per ?? 0;
     {
         $data=quotation::find($id);
         return $data;
+    }
+
+
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class, 'bank_id');
     }
 }

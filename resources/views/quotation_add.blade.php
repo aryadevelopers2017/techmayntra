@@ -1,8 +1,8 @@
 <style type="text/css">
-    .modal-backdrop
-    {
+    .modal-backdrop {
         /*background-color: transparent !important;*/
-        background-color: rgba(0, 0, 0, 0.4) !important;;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+        ;
         -webkit-transition: 0.5s;
         overflow: auto;
         transition: all 0.3s linear;
@@ -46,93 +46,93 @@
                             <div class="card-body">
                                 <div class="basic-form">
                                     @php
-                                        $currency_data=$details_array['currency_data'];
+                                    $currency_data=$details_array['currency_data'];
                                     @endphp
                                     @if(isset($details_array['quotation_id']))
-                                        <form action="{{ url('/update_quotation') }}" id="quotationform" method="POST">
-                                            <input type="hidden" name="id" id="id" value="{{ $details_array['quotation_id'] }}" />
-                                    @else
+                                    <form action="{{ url('/update_quotation') }}" id="quotationform" method="POST">
+                                        <input type="hidden" name="id" id="id" value="{{ $details_array['quotation_id'] }}" />
+                                        @else
                                         <form action="{{ url('/add_quotation') }}" id="quotationform" method="POST">
-                                    @endif
-                                    <input type="hidden" name="services_item" id="services_item">
+                                            @endif
+                                            <input type="hidden" name="services_item" id="services_item">
 
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                        <input type="hidden" name="currency_id" value="{{ $currency_data->id }}" />
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>Title </label>
-                                                    <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="{{ isset($details_array['title']) ? $details_array['title'] : ''}}">
-                                                    <span id="errtitle" style="display:none;color: #ff0000;">Please Enter Title</span>
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                            <input type="hidden" name="currency_id" value="{{ $currency_data->id }}" />
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Title </label>
+                                                        <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="{{ isset($details_array['title']) ? $details_array['title'] : ''}}">
+                                                        <span id="errtitle" style="display:none;color: #ff0000;">Please Enter Title</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>Select Client </label>
-                                                    <select id="c_id" name="c_id" class="form-control select2" required>
-                                                        <option value="">Please Select Client</option>
-                                                        @foreach($details_array['customer_data'] as $customer)
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Select Client </label>
+                                                        <select id="c_id" name="c_id" class="form-control select2" required>
+                                                            <option value="">Please Select Client</option>
+                                                            @foreach($details_array['customer_data'] as $customer)
                                                             @if(isset($details_array['customer_id']) && $details_array['customer_id'] == $customer->id)
-                                                                <option value="{{ $customer->id }}" selected>{{ $customer->name }} - {{ $customer->company_name }}</option>
+                                                            <option value="{{ $customer->id }}" selected>{{ $customer->name }} - {{ $customer->company_name }}</option>
                                                             @else
-                                                                <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->company_name }}</option>
+                                                            <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->company_name }}</option>
                                                             @endif
-                                                        @endforeach
-                                                    </select>
-                                                    <span id="errnewname" style="display:none;color: #ff0000;">Please Select Client</span>
+                                                            @endforeach
+                                                        </select>
+                                                        <span id="errnewname" style="display:none;color: #ff0000;">Please Select Client</span>
+                                                    </div>
                                                 </div>
-                                            </div>
 
 
 
-                                            <div class="col-lg-6 hidden">
-                                                <div class="form-group">
-                                                    <label>Select Vendor</label>
-                                                    <select id="v_id" name="v_id" class="form-control select2" required>
-                                                        <option value="">Please Select Vendor</option>
-                                                        @foreach($details_array['vendor_data'] as $vendor)
+                                                <div class="col-lg-6 hidden">
+                                                    <div class="form-group">
+                                                        <label>Select Vendor</label>
+                                                        <select id="v_id" name="v_id" class="form-control select2" required>
+                                                            <option value="">Please Select Vendor</option>
+                                                            @foreach($details_array['vendor_data'] as $vendor)
                                                             @if(isset($details_array['v_id']) && $details_array['v_id'] == $vendor->id)
-                                                                <option value="{{ $vendor->id }}" selected>
-                                                                    {{ $vendor->name }} - {{ $vendor->company_name }}
-                                                                </option>
+                                                            <option value="{{ $vendor->id }}" selected>
+                                                                {{ $vendor->name }} - {{ $vendor->company_name }}
+                                                            </option>
                                                             @else
-                                                                <option value="{{ $vendor->id }}">
-                                                                    {{ $vendor->name }} - {{ $vendor->company_name }}
-                                                                </option>
+                                                            <option value="{{ $vendor->id }}">
+                                                                {{ $vendor->name }} - {{ $vendor->company_name }}
+                                                            </option>
                                                             @endif
-                                                        @endforeach
-                                                    </select>
-                                                    <span id="errvendor" style="display:none;color: #ff0000;">
-                                                        Please Select Vendor
-                                                    </span>
+                                                            @endforeach
+                                                        </select>
+                                                        <span id="errvendor" style="display:none;color: #ff0000;">
+                                                            Please Select Vendor
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                        </div>
-                                        <div class="form-group" style="display: none;">
-                                            <label>Select Company Branch Address</label>
-                                            <select id="company_address" name="company_address" class="form-control select2" required>
-                                                <option value="" disabled>Please Company Address</option>
-                                                @php
+                                            </div>
+                                            <div class="form-group" style="display: none;">
+                                                <label>Select Company Branch Address</label>
+                                                <select id="company_address" name="company_address" class="form-control select2" required>
+                                                    <option value="" disabled>Please Company Address</option>
+                                                    @php
                                                     $i=0;
-                                                @endphp
-                                                @foreach($details_array['company_address_data'] as $address_data)
+                                                    @endphp
+                                                    @foreach($details_array['company_address_data'] as $address_data)
                                                     @if(isset($details_array['customer_id']) && $details_array['company_address_id']== $address_data->id)
-                                                        <option value="{{ $address_data->id }}" selected>{{ $address_data->address }} - {{ $address_data->city }} - {{ $address_data->state }}</option>
+                                                    <option value="{{ $address_data->id }}" selected>{{ $address_data->address }} - {{ $address_data->city }} - {{ $address_data->state }}</option>
                                                     @else
-                                                        <option value="{{ $address_data->id }}" @if($i==0) selected @endif>{{ $address_data->address }} - {{ $address_data->city }} - {{ $address_data->state }}</option>
+                                                    <option value="{{ $address_data->id }}" @if($i==0) selected @endif>{{ $address_data->address }} - {{ $address_data->city }} - {{ $address_data->state }}</option>
                                                     @endif
                                                     @php
-                                                        $i++;
+                                                    $i++;
                                                     @endphp
-                                                @endforeach
-                                            </select>
-                                            <span id="errname" style="display:none;color: #ff0000;">Please Select Company</span>
-                                        </div>
-                                        <div class="row form-group">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Service</button>
-                                        </div>
-                                        <label>Service</label>
+                                                    @endforeach
+                                                </select>
+                                                <span id="errname" style="display:none;color: #ff0000;">Please Select Company</span>
+                                            </div>
+                                            <div class="row form-group">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Service</button>
+                                            </div>
+                                            <label>Service</label>
                                             <div class="form-group" id="items"></div>
 
                                             @if(isset($details_array['quotation_id']))
@@ -150,10 +150,10 @@
                                                 <!-- LEFT PART -->
                                                 <div class="col-md-6">
                                                     <h4><b>{{ $item->item_name }}</b></h4>
-
+                                                    <p><b>Vendor:</b> {{ $item->vendor->name ?? 'N/A' }} </p>
                                                     <textarea class="item-desc summernote"
-                                                            placeholder="{{ $item->item_name }} Description"
-                                                            rows="5">{{ $item->description }}</textarea>
+                                                        placeholder="{{ $item->item_name }} Description"
+                                                        rows="5">{{ $item->description }}</textarea>
                                                 </div>
 
                                                 <!-- RIGHT PART -->
@@ -166,7 +166,7 @@
 
                                                             <label>
                                                                 <input type="radio"
-                                                                   name="passenger_{{ $rowCounter }}_{{ $item->item_id }}"
+                                                                    name="passenger_{{ $rowCounter }}_{{ $item->item_id }}"
                                                                     value="adult"
                                                                     {{ $item->passenger_type == 'adult' ? 'checked' : '' }}>
                                                                 Adult
@@ -219,8 +219,7 @@
                                                                 placeholder="Tax %"
                                                                 value="{{ $item->taxvalue }}"
                                                                 min="0"
-                                                                max="100"
-                                                            >
+                                                                max="100">
                                                         </div>
 
                                                         <div class="col-md-4 ">
@@ -233,14 +232,14 @@
                                                         </div>
 
                                                         @php
-    $original = $item->original_price ?? 0;
-    $admin = $item->admin_cost ?? 0;
-    $taxPercent = $item->taxvalue ?? 0;
+                                                        $original = $item->original_price ?? 0;
+                                                        $admin = $item->admin_cost ?? 0;
+                                                        $taxPercent = $item->taxvalue ?? 0;
 
-    $base = $original + $admin;
-    $taxAmount = ($base * $taxPercent) / 100;
-    $subTotal = $base + $taxAmount;
-@endphp
+                                                        $base = $original + $admin;
+                                                        $taxAmount = ($base * $taxPercent) / 100;
+                                                        $subTotal = $base + $taxAmount;
+                                                        @endphp
 
 
                                                         <div class="col-md-4">
@@ -249,10 +248,9 @@
                                                                 type="text"
                                                                 class="form-control item-sub-total"
                                                                 placeholder="Sub Total ({{ $currency_data->symbol }})"
-                                                                 value="{{ number_format($subTotal, 2) }}"
+                                                                value="{{ number_format($subTotal, 2) }}"
                                                                 required
-                                                                readonly
-                                                            >
+                                                                readonly>
                                                         </div>
 
                                                         <div class="col-md-4">
@@ -270,24 +268,24 @@
                                                     <div class="row">
 
 
-                                                        <div class="col-md-6 " style="display: none;" >
+                                                        <div class="col-md-6 " style="display: none;">
                                                             <label><b>Ticket Type</b></label>
 
                                                             <select class="form-control service-type">
                                                                 <option value="">Select Ticket Type</option>
                                                                 @php
                                                                 $category = collect($details_array['service_types'])
-                                                                    ->firstWhere('id', $item->category_id);
-                                                            @endphp
+                                                                ->firstWhere('id', $item->category_id);
+                                                                @endphp
 
-                                                            @if($category)
+                                                                @if($category)
                                                                 @foreach($category['services'] as $service)
-                                                                    <option value="{{ $service['code'] }}"
-                                                                        {{ $item->service_type == $service['code'] ? 'selected' : '' }}>
-                                                                        {{ $service['name'] }}
-                                                                    </option>
+                                                                <option value="{{ $service['code'] }}"
+                                                                    {{ $item->service_type == $service['code'] ? 'selected' : '' }}>
+                                                                    {{ $service['name'] }}
+                                                                </option>
                                                                 @endforeach
-                                                            @endif
+                                                                @endif
                                                             </select>
                                                         </div>
                                                     </div>
@@ -299,12 +297,12 @@
                                             @endforeach
                                             @endif
 
-                                        <span id="erritem" style="display: none; color: #ff0000;">Please Select item</span>
+                                            <span id="erritem" style="display: none; color: #ff0000;">Please Select item</span>
 
-                                         <div class="col-lg-6" style="display: none;">
+                                            <div class="col-lg-6" style="display: none;">
                                                 <div class="form-group row mt-4">
                                                     <div class="col-md-3">
-                                                        <input type="checkbox" id="gst"  name="gst" value="1">&nbsp;&nbsp;&nbsp;<label>GST</label>
+                                                        <input type="checkbox" id="gst" name="gst" value="1">&nbsp;&nbsp;&nbsp;<label>GST</label>
                                                     </div>
 
                                                     <div class="col-md-3">
@@ -325,32 +323,34 @@
 
                                                     </div>
                                                 </div>
-                                        </div>
+                                            </div>
 
 
-                                        <div class="row">
+                                            <div class="row">
 
-                                            <div class="col-lg-6" >
-                                                <div class="form-group">
-                                                    <label>Discount (%)</label>
-                                                    <input type="text" class="form-control number" id="discount" value="{{ isset($details_array['discount']) ? $details_array['discount'] : '' }}" min="0" max="100" name="discount" placeholder="0" required>
+                                                <div class="col-lg-6">
+                                                </div>
+                                                <div class="col-lg-6 d-none">
+                                                    <div class="form-group">
+                                                        <label>Discount (%)</label>
+                                                        <input type="text" class="form-control number" id="discount" value="{{ isset($details_array['discount']) ? $details_array['discount'] : '' }}" min="0" max="100" name="discount" placeholder="0" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Total Amount ({{ $currency_data->symbol }})</label>
+                                                        <input type="text" class="form-control number" id="total_amount" name="total_amount" readonly disabled value="{{ isset($details_array['total_amount']) ? $details_array['total_amount'] : '0'}}" required>
+                                                    </div>
+
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6" >
-                                                <div class="form-group">
-                                                    <label>Total Amount ({{ $currency_data->symbol }})</label>
-                                                    <input type="text" class="form-control number" id="total_amount" name="total_amount" readonly disabled value="{{ isset($details_array['total_amount']) ? $details_array['total_amount'] : '0'}}" required>
-                                                </div>
-
-                                            </div>
-                                        </div>
 
 
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label> {{ $details_array['company_data'][0]->technology_label ?? 'Technology' }}  </label>
-                                                    <textarea class="summernote" id="technology" name="technology">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label> {{ $details_array['company_data'][0]->technology_label ?? 'Technology' }} </label>
+                                                        <textarea class="summernote" id="technology" name="technology">
                                                         @php
                                                             if(isset($details_array['technology']))
                                                             {
@@ -370,12 +370,12 @@
                                                         @endphp
 
                                                         </textarea>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label> {{ $details_array['company_data'][0]->milestone_label ?? 'Mile Stone' }}  </label>
-                                                    <textarea class="summernote" id="milestone" name="milestone">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label> {{ $details_array['company_data'][0]->milestone_label ?? 'Mile Stone' }} </label>
+                                                        <textarea class="summernote" id="milestone" name="milestone">
                                                         @php
                                                             if(isset($details_array['milestone']))
                                                             {
@@ -394,14 +394,14 @@
                                                             }
                                                         @endphp
                                                         </textarea>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    @if(isset($details_array['terms_conditions_flag']) && $details_array['terms_conditions_flag'] == 1)
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        @if(isset($details_array['terms_conditions_flag']) && $details_array['terms_conditions_flag'] == 1)
                                                         <input type="checkbox" id="terms_conditions_flag" name="terms_conditions_flag" value="1" checked>&nbsp;&nbsp;&nbsp;<label>Terms & condition</label>
                                                         <div id="term">
                                                             <textarea class="summernote" id="terms_conditions" name="terms_conditions">
@@ -424,7 +424,7 @@
                                                                 @endphp
                                                             </textarea>
                                                         </div>
-                                                    @else
+                                                        @else
                                                         <input type="checkbox" id="terms_conditions_flag" name="terms_conditions_flag" value="1">&nbsp;&nbsp;&nbsp;<label>Terms & condition</label>
                                                         <div id="term" style="display: none;">
                                                             <textarea class="summernote" id="terms_conditions" name="terms_conditions">
@@ -447,12 +447,12 @@
                                                                 @endphp
                                                             </textarea>
                                                         </div>
-                                                    @endif
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    @if(isset($details_array['payment_terms_conditions_flag']) && $details_array['payment_terms_conditions_flag'] == 1)
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        @if(isset($details_array['payment_terms_conditions_flag']) && $details_array['payment_terms_conditions_flag'] == 1)
                                                         <input type="checkbox" id="payment_terms_conditions_flag" name="payment_terms_conditions_flag" value="1" checked>&nbsp;&nbsp;&nbsp;<label> Payment Terms & condition</label>
                                                         <div id="pay_term">
                                                             <textarea class="summernote" id="payment_terms_conditions" name="payment_terms_conditions">
@@ -475,7 +475,7 @@
                                                                 @endphp
                                                             </textarea>
                                                         </div>
-                                                    @else
+                                                        @else
                                                         <input type="checkbox" id="payment_terms_conditions_flag" name="payment_terms_conditions_flag" value="1">&nbsp;&nbsp;&nbsp;<label> Payment Terms & condition</label>
                                                         <div id="pay_term" style="display: none;">
                                                             <textarea class="summernote" id="payment_terms_conditions" name="payment_terms_conditions">
@@ -498,14 +498,14 @@
                                                                 @endphp
                                                             </textarea>
                                                         </div>
-                                                    @endif
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    @if(isset($details_array['bank_details_flag']) && $details_array['bank_details_flag'] == 1)
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <!-- @if(isset($details_array['bank_details_flag']) && $details_array['bank_details_flag'] == 1)
                                                         <input type="checkbox" id="bank_details_flag" name="bank_details_flag" value="1" checked>&nbsp;&nbsp;&nbsp;<label>Bank Details</label>
                                                         <div id="bank">
                                                             <div id="company_bank">
@@ -551,7 +551,7 @@
                                                                 </textarea>
                                                             </div>
                                                         </div>
-                                                    @else
+                                                        @else
                                                         <input type="checkbox" id="bank_details_flag" name="bank_details_flag" value="1">&nbsp;&nbsp;&nbsp;<label>Bank Details</label>
                                                         <div id="bank">
                                                             <div id="company_bank">
@@ -597,55 +597,82 @@
                                                                 </textarea>
                                                             </div>
                                                         </div>
-                                                    @endif
+                                                        @endif -->
+
+
+                                                        <div id="bank_section">
+
+                                                            <!--  BANK SELECT -->
+                                                            <div class="form-group">
+                                                                <label>Select Bank</label>
+                                                                <select id="bank_select" class="form-control" name="bank_id">
+                                                                    <option value="">-- Select Bank --</option>
+
+                                                                    @foreach($banks ?? [] as $bank)
+                                                                    <option value="{{ $bank->id }}" {{ (isset($details_array['bank_id']) && $details_array['bank_id'] == $bank->id) ? 'selected' : '' }}>
+                                                                        {{ $bank->bank_name }}
+                                                                    </option>
+                                                                    @endforeach
+
+                                                                </select>
+                                                            </div>
+
+                                                            <!--  BANK DETAILS (READ ONLY) -->
+                                                            <div id="company_bank_section">
+                                                                <textarea class="summernote" id="bank_details" name="bank_details"></textarea>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <button type="submit" id="finalbtn" class="btn btn-primary">Submit</button>
-                                    </form>
-                                    <!-- <div class="modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog"> -->
-                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-md" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header" style="background: #868e96;">
-                                                    <h6 class="modal-title">Select Service</h6>
-                                                    <button type="button" class="btn  close" data-dismiss="modal" style="background-color:red; color: white;">&times;</button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form>
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="form-group">
-                                                                    <select id="item_id" name="item_id" class="form-control select2" required >
-                                                                        <option value="">Please Select Service</option>
-                                                                        @foreach($details_array['item_data'] as $item)
+                                            <button type="submit" id="finalbtn" class="btn btn-primary">Submit</button>
+                                        </form>
+                                        <!-- <div class="modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog"> -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h6 class="modal-title">Select Service</h6>
+                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <select id="item_id" name="item_id" class="form-control select2" required>
+                                                                            <option value="">Please Select Service</option>
+                                                                            @foreach($details_array['item_data'] as $item)
                                                                             <option value="{{ $item->id }}" data-id="{{ $item->item_name }}"
 
-                                                                             data-category-id="{{ $item->category_id }}"
+                                                                                data-category-id="{{ $item->category_id }}"
 
-                                                                             data-admin-cost="{{ $item->admin_cost }}"
+                                                                                data-admin-cost="{{ $item->admin_cost }}"
+
+                                                                                data-vendor="{{ $item->vendor->name ?? '' }}"
+
+                                                                                data-tax-type="{{ $item->tax_type }}"
 
 
-                                                                             data-tax-type="{{ $item->tax_type }}"
+                                                                                data-tax-value="{{ $item->tax_value }}"
 
-
-                                                                             data-tax-value="{{ $item->tax_value }}"
-
-                                                                            data-name="{{ strip_tags($item->description) }}">{{ $item->item_name }}</option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                                data-name="{{ strip_tags($item->description) }}">{{ $item->item_name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </form>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <div class="row" style="display: flex;
+                                                        </form>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <div class="row" style="display: flex;
     justify-content: end;">
-                                                                <div class="">
-                                                                    <button type="button" id="add_item" name="add_item" class="btn btn-primary" data-dismiss="modal">Add</button>
-                                                                </div>
-                                                                <!-- <div class="col-md-2">
+                                                                    <div class="">
+                                                                        <button type="button" id="add_item" name="add_item" class="btn btn-primary" data-dismiss="modal">Add</button>
+                                                                    </div>
+                                                                    <!-- <div class="col-md-2">
                                                                     <a href="{{ url('/item_master_add')}}" class="btn btn-primary">Add New Item</a>
                                                                 </div> -->
                                                                 </div>
@@ -654,80 +681,74 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                    </div>
-                                    </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
         </div>
+        </section>
     </div>
 </div>
+</div>
 <script type="text/javascript">
-
-
     const SERVICE_TYPES = @json($details_array['service_types']);
 
-$(document).on("input", ".item-orignal-price, .item-tax-percent, .item-qty", function () {
+    $(document).on("input", ".item-orignal-price, .item-tax-percent, .item-qty", function() {
 
-    let row = $(this).closest(".item-row");
+        let row = $(this).closest(".item-row");
 
-    let originalPrice = parseFloat(row.find(".item-orignal-price").val()) || 0;
-    let adminCost = parseFloat(row.find(".item-admin-cost-price").val()) || 0;
-    let taxPercent = parseFloat(row.find(".item-tax-percent").val()) || 0;
-    let qty = parseFloat(row.find(".item-qty").val()) || 1;
+        let originalPrice = parseFloat(row.find(".item-orignal-price").val()) || 0;
+        let adminCost = parseFloat(row.find(".item-admin-cost-price").val()) || 0;
+        let taxPercent = parseFloat(row.find(".item-tax-percent").val()) || 0;
+        let qty = parseFloat(row.find(".item-qty").val()) || 1;
 
-    if (taxPercent < 0) taxPercent = 0;
-    if (taxPercent > 100) taxPercent = 100;
+        if (taxPercent < 0) taxPercent = 0;
+        if (taxPercent > 100) taxPercent = 100;
 
-    if (qty < 1) qty = 1;
+        if (qty < 1) qty = 1;
 
-    let basePrice = originalPrice + adminCost;
+        let basePrice = originalPrice + adminCost;
 
-    let taxAmount = (basePrice * taxPercent) / 100;
+        let taxAmount = (basePrice * taxPercent) / 100;
 
-    let subTotal = basePrice + taxAmount;     // without qty
-    let finalPrice = subTotal * qty;          // with qty
+        let subTotal = basePrice + taxAmount; // without qty
+        let finalPrice = subTotal * qty; // with qty
 
-    // set subtotal
-    row.find(".item-sub-total").val(subTotal.toFixed(2));
+        // set subtotal
+        row.find(".item-sub-total").val(subTotal.toFixed(2));
 
-    // set final price
-    row.find(".item-price").val(finalPrice.toFixed(2));
+        // set final price
+        row.find(".item-price").val(finalPrice.toFixed(2));
 
-});
-
-
+    });
 
 
 
-    $('.item').click(function()
-    {
-        $('.item').each(function () {
-            var id=$(this).val();
-            if($(this).is(':checked'))
-            {
-                $("#item_price_"+id+"").prop('disabled',false);
-                $("#item_desc_"+id+"").prop('disabled',false);
-                $("#item_qty_"+id+"").prop('disabled',false);
-                $("#item_qty_id_"+id+"").prop('disabled',false);
+
+
+    $('.item').click(function() {
+        $('.item').each(function() {
+            var id = $(this).val();
+            if ($(this).is(':checked')) {
+                $("#item_price_" + id + "").prop('disabled', false);
+                $("#item_desc_" + id + "").prop('disabled', false);
+                $("#item_qty_" + id + "").prop('disabled', false);
+                $("#item_qty_id_" + id + "").prop('disabled', false);
                 // $("#item_price_"+id+"").prop('required',true);
                 // $("#item_qty_"+id+"").prop('required',true);
                 // $("#item_desc_"+id+"").prop('required',true);
                 // $("#item_qty_id_"+id+"").prop('required',true);
-            }
-            else
-            {
-                $("#item_price_"+id+"").prop('disabled',true);
-                $("#item_desc_"+id+"").prop('disabled',true);
-                $("#item_qty_"+id+"").prop('disabled',true);
-                $("#item_qty_id_"+id+"").prop('disabled',true);
-                $("#item_price_"+id+"").prop('required',false);
-                $("#item_desc_"+id+"").prop('required',false);
-                $("#item_qty_"+id+"").prop('required',false);
-                $("#item_qty_id_"+id+"").prop('required',false);
+            } else {
+                $("#item_price_" + id + "").prop('disabled', true);
+                $("#item_desc_" + id + "").prop('disabled', true);
+                $("#item_qty_" + id + "").prop('disabled', true);
+                $("#item_qty_id_" + id + "").prop('disabled', true);
+                $("#item_price_" + id + "").prop('required', false);
+                $("#item_desc_" + id + "").prop('required', false);
+                $("#item_qty_" + id + "").prop('required', false);
+                $("#item_qty_id_" + id + "").prop('required', false);
             }
         });
 
@@ -736,7 +757,7 @@ $(document).on("input", ".item-orignal-price, .item-tax-percent, .item-qty", fun
 
 
     // Whenever quantity or price changes
-   $(document).on("input", ".item-qty, .item-orignal-price, .item-tax-percent", calculate_amount);
+    $(document).on("input", ".item-qty, .item-orignal-price, .item-tax-percent", calculate_amount);
 
 
     // Whenever discount or GST changes
@@ -772,247 +793,250 @@ $(document).on("input", ".item-orignal-price, .item-tax-percent, .item-qty", fun
         // const gstAmount = amountAfterDiscount * gst_per / 100;
 
         // Final total
-        const totalAmount = amountAfterDiscount ;
+        const totalAmount = amountAfterDiscount;
 
         $("#total_amount").val(totalAmount.toFixed(2));
     }
 
 
-   $("#finalbtn").click(function (e) {
-    e.preventDefault(); // stop default submit
-   // Hide old errors first
-    $("#erritem").hide();
+    $("#finalbtn").click(function(e) {
+        e.preventDefault(); // stop default submit
+        // Hide old errors first
+        $("#erritem").hide();
 
 
-    $("#errnewname").css("display", "none");
+        $("#errnewname").css("display", "none");
 
-    let clientId = $("#c_id").val();
+        let clientId = $("#c_id").val();
 
-    if (clientId == "" || clientId == null) {
+        if (clientId == "" || clientId == null) {
 
-        $("#errnewname").insertAfter($("#c_id").next(".select2"));
-        $("#errnewname").css("display", "block");
+            $("#errnewname").insertAfter($("#c_id").next(".select2"));
+            $("#errnewname").css("display", "block");
 
-        $("#c_id").select2("open");
-
-
-
-        return false;
-    }
+            $("#c_id").select2("open");
 
 
 
-    const itemsData = [];
-
-    // Collect all service rows
-    $(".item-row").each(function () {
-        const itemId = $(this).data("item-id");
-        const description = $(this).find(".item-desc").val();
-        const qty = parseFloat($(this).find(".item-qty").val()) || 0;
-        const price = parseFloat($(this).find(".item-price").val()) || 0;
-
-        const original_Price = parseFloat($(this).find(".item-orignal-price").val()) || 0;
-
-        const passengerType = $(this).find("input[type=radio]:checked").val();
-        const serviceType = $(this).find(".service-type").val();
-
-
-        const taxtype = parseFloat($(this).find(".item-tax-type").val()) || 'GST';
-        const taxvalue = parseFloat($(this).find(".item-tax-percent").val()) || 0;
-
-
-
-        if (qty > 0 && price > 0) {
-            itemsData.push({
-                item_id: itemId,
-                description: description,
-                qty: qty,
-                price: price ,
-                passenger_type: passengerType,
-                service_type: serviceType,
-                original_price: original_Price,
-                taxtype: taxtype,
-                taxvalue: taxvalue
-            });
+            return false;
         }
+
+
+
+        const itemsData = [];
+
+        // Collect all service rows
+        $(".item-row").each(function() {
+            const itemId = $(this).data("item-id");
+            const description = $(this).find(".item-desc").val();
+            const qty = parseFloat($(this).find(".item-qty").val()) || 0;
+            const price = parseFloat($(this).find(".item-price").val()) || 0;
+
+            const original_Price = parseFloat($(this).find(".item-orignal-price").val()) || 0;
+
+            const passengerType = $(this).find("input[type=radio]:checked").val();
+            const serviceType = $(this).find(".service-type").val();
+
+
+            const taxtype = parseFloat($(this).find(".item-tax-type").val()) || 'GST';
+            const taxvalue = parseFloat($(this).find(".item-tax-percent").val()) || 0;
+
+
+
+            if (qty > 0 && price > 0) {
+                itemsData.push({
+                    item_id: itemId,
+                    description: description,
+                    qty: qty,
+                    price: price,
+                    passenger_type: passengerType,
+                    service_type: serviceType,
+                    original_price: original_Price,
+                    taxtype: taxtype,
+                    taxvalue: taxvalue
+                });
+            }
+        });
+
+        //  No service added
+        if (itemsData.length === 0) {
+            $("#erritem").show().delay(2500).hide();
+            return;
+        }
+
+        // Assign JSON to hidden input
+        $("#services_item").val(JSON.stringify(itemsData));
+
+        // Recalculate total one last time
+        calculate_amount();
+
+        // Submit the form
+        $("#quotationform").submit();
     });
 
-    //  No service added
-    if (itemsData.length === 0) {
-        $("#erritem").show().delay(2500).hide();
-        return;
-    }
-
-    // Assign JSON to hidden input
-    $("#services_item").val(JSON.stringify(itemsData));
-
-    // Recalculate total one last time
-    calculate_amount();
-
-    // Submit the form
-    $("#quotationform").submit();
-});
-
-    $(".number").on('keypress keyup focusout', function()
-    {
-        this.value = this.value.replace(/[^0-9\.]/g,'');
+    $(".number").on('keypress keyup focusout', function() {
+        this.value = this.value.replace(/[^0-9\.]/g, '');
         calculate_amount();
     });
 
-    $(".number1").on('keyup', function()
-    {
-        this.value = this.value.replace(/[^0-9\.]/g,'');
+    $(".number1").on('keyup', function() {
+        this.value = this.value.replace(/[^0-9\.]/g, '');
         calculate_amount();
     });
 
-    function number1(id)
-    {
-        var amt=$("#item_price_"+id+"").val();
-        var value = amt.replace(/[^0-9\.]/g,'');
-        $("#item_price_"+id+"").val(value);
+    function number1(id) {
+        var amt = $("#item_price_" + id + "").val();
+        var value = amt.replace(/[^0-9\.]/g, '');
+        $("#item_price_" + id + "").val(value);
         calculate_amount();
     }
 
 
     $("#gst").on('change', gst_fun);
-$("#vat").on('change', vat_fun);
+    $("#vat").on('change', vat_fun);
 
 
-    function gst_fun()
-{
-    if ($('#gst').is(':checked'))
-    {
-        $("#vat").prop("checked", false);
+    function gst_fun() {
+        if ($('#gst').is(':checked')) {
+            $("#vat").prop("checked", false);
 
-        $("#company_bank").show();
-        $("#private_bank").hide();
+            $("#company_bank").show();
+            $("#private_bank").hide();
 
-        $("#gst_div").show();
-        $("#tax_label").text('GST (%)');
-              $("#igst_div").show();
-    }
-    else
-    {
-        $("#company_bank").hide();
-        $("#private_bank").show();
-        $("#igst").prop("checked", false);
+            $("#gst_div").show();
+            $("#tax_label").text('GST (%)');
+            $("#igst_div").show();
+        } else {
+            $("#company_bank").hide();
+            $("#private_bank").show();
+            $("#igst").prop("checked", false);
 
-        // Hide ONLY if VAT is not checked
-        if (!$('#vat').is(':checked')) {
-            $("#gst_div").hide();
-            $("#gst_per").val(0);
+            // Hide ONLY if VAT is not checked
+            if (!$('#vat').is(':checked')) {
+                $("#gst_div").hide();
+                $("#gst_per").val(0);
+            }
         }
+
+        calculate_amount();
     }
 
-    calculate_amount();
-}
 
+    function vat_fun() {
+        if ($('#vat').is(':checked')) {
+            $("#gst").prop("checked", false);
+            $("#igst").prop("checked", false);
 
-    function vat_fun()
-{
-    if ($('#vat').is(':checked'))
-    {
-        $("#gst").prop("checked", false);
-        $("#igst").prop("checked", false);
+            $("#gst_div").show();
+            $("#tax_label").text('VAT (%)');
 
-        $("#gst_div").show();
-        $("#tax_label").text('VAT (%)');
-
-          $("#igst_div").hide();
-    }
-    else
-    {
-        // Hide ONLY if GST is not checked
-        if (!$('#gst').is(':checked')) {
-            $("#gst_div").hide();
-            $("#gst_per").val(0);
+            $("#igst_div").hide();
+        } else {
+            // Hide ONLY if GST is not checked
+            if (!$('#gst').is(':checked')) {
+                $("#gst_div").hide();
+                $("#gst_per").val(0);
+            }
         }
+
+        calculate_amount();
     }
 
-    calculate_amount();
-}
 
 
-
-    $('#terms_conditions_flag').click(function()
-    {
-        var id=$(this).val();
-        if($(this).is(':checked'))
-        {
-            $("#term").css('display','block');
-        }
-        else
-        {
-            $("#terms_conditions").prop('required',false);
-            $("#term").css('display','none');
+    $('#terms_conditions_flag').click(function() {
+        var id = $(this).val();
+        if ($(this).is(':checked')) {
+            $("#term").css('display', 'block');
+        } else {
+            $("#terms_conditions").prop('required', false);
+            $("#term").css('display', 'none');
         }
     });
 
-    $('#payment_terms_conditions_flag').click(function()
-    {
-        var id=$(this).val();
-        if($(this).is(':checked'))
-        {
+    $('#payment_terms_conditions_flag').click(function() {
+        var id = $(this).val();
+        if ($(this).is(':checked')) {
             // $("#payment_terms_conditions").prop('required',true);
-            $("#pay_term").css('display','block');
-        }
-        else
-        {
-            $("#payment_terms_conditions").prop('required',false);
-            $("#pay_term").css('display','none');
+            $("#pay_term").css('display', 'block');
+        } else {
+            $("#payment_terms_conditions").prop('required', false);
+            $("#pay_term").css('display', 'none');
         }
     });
 
-    $('#bank_details_flag').click(function()
-    {
-        var id=$(this).val();
-        if($(this).is(':checked'))
-        {
-            $("#bank").css('display','block');
-        }
-        else
-        {
-            $("#bank_details").prop('required',false);
+    // $('#bank_details_flag').click(function()
+    // {
+    //     var id=$(this).val();
+    //     if($(this).is(':checked'))
+    //     {
+    //         $("#bank").css('display','block');
+    //     }
+    //     else
+    //     {
+    //         $("#bank_details").prop('required',false);
+    //     }
+
+    //     gst_fun();
+    // });
+
+
+    $(document).ready(function() {
+
+        function toggleBank() {
+            if ($('#bank_details_flag').is(':checked')) {
+                $("#bank").show();
+            } else {
+                $("#bank").hide();
+                $("#bank_details").prop('required', false);
+            }
         }
 
-        gst_fun();
+        //  Run on page load
+        toggleBank();
+
+        //  Run on click
+        $('#bank_details_flag').on('click', function() {
+            toggleBank();
+            gst_fun();
+        });
+
     });
 </script>
 
 <!-- -------  add services -------- -->
 <script>
+    let rowCounter = 0;
 
-let rowCounter = 0;
+    // Add Item Button
+    $("#add_item").on("click", function() {
+        const itemId = $("#item_id").val();
+        if (!itemId) return;
 
-// Add Item Button
-$("#add_item").on("click", function() {
-    const itemId = $("#item_id").val();
-    if (!itemId) return;
+        rowCounter++;
+        addItemRow(itemId, rowCounter);
+    });
 
-    rowCounter++;
-    addItemRow(itemId, rowCounter);
-});
+    function addItemRow(itemId, rowId) {
+        const symbol = "{{ $currency_data->symbol }}";
+        const name = $("#item_id option:selected").text();
+        const description = $("#item_id option:selected").data("name");
+        const categoryId = $("#item_id option:selected").data("category-id");
 
+        const add_item_admin_cost = $("#item_id option:selected").data("admin-cost");
 
-function addItemRow(itemId, rowId) {
-    const symbol = "{{ $currency_data->symbol }}";
-    const name = $("#item_id option:selected").text();
-    const description = $("#item_id option:selected").data("name");
-    const categoryId = $("#item_id option:selected").data("category-id");
+        const add_item_tax_type = $("#item_id option:selected").data("tax-type");
+        const add_item_tax_value = $("#item_id option:selected").data("tax-value");
 
-    const add_item_admin_cost = $("#item_id option:selected").data("admin-cost");
+        const vendorName = $("#item_id option:selected").data("vendor");
 
-    const add_item_tax_type = $("#item_id option:selected").data("tax-type");
-    const add_item_tax_value = $("#item_id option:selected").data("tax-value");
-
-
-
-    const row = `
+        const row = `
     <div class="row form-group item-row" data-row-id="${rowId}" data-item-id="${itemId}">
 
         <!-- LEFT PART -->
         <div class="col-md-6">
             <h4><b>${name}</b></h4>
+            <p><b>Vendor:</b> ${vendorName ? vendorName : 'N/A'}</p>
             <textarea
                 class="item-desc summernote"
                 placeholder="${name} Description"
@@ -1140,74 +1164,69 @@ function addItemRow(itemId, rowId) {
     </div>
     `;
 
-    $("#items").after(row);
-    $('.summernote').summernote();
-}
-
-
-function getServiceOptionsByCategory(categoryId) {
-    const category = SERVICE_TYPES.find(c => c.id == categoryId);
-
-    if (!category) {
-        return `<option value="">No Services Available</option>`;
+        $("#items").after(row);
+        $('.summernote').summernote();
     }
 
-    return category.services.map(service =>
-        `<option value="${service.code}">${service.name}</option>`
-    ).join('');
-}
+
+    function getServiceOptionsByCategory(categoryId) {
+        const category = SERVICE_TYPES.find(c => c.id == categoryId);
+
+        if (!category) {
+            return `<option value="">No Services Available</option>`;
+        }
+
+        return category.services.map(service =>
+            `<option value="${service.code}">${service.name}</option>`
+        ).join('');
+    }
 
 
 
-// Remove Item (Event Delegation)
-$(document).on("click", ".remove-item", function() {
-    $(this).closest(".item-row").remove();
+    // Remove Item (Event Delegation)
+    $(document).on("click", ".remove-item", function() {
+        $(this).closest(".item-row").remove();
 
-    calculate_amount();
-});
+        calculate_amount();
+    });
 </script>
 
 @if(isset($details_array['igst']))
-    <script>
-        $( document ).ready(function()
-        {
-            var igst="{{ $details_array['igst'] }}";
-            if(igst == 1)
-            {
-                $("#igst").prop("checked", true);
-            }
+<script>
+    $(document).ready(function() {
+        var igst = "{{ $details_array['igst'] }}";
+        if (igst == 1) {
+            $("#igst").prop("checked", true);
+        }
 
-            $('.item').each(function ()
-            {
-                var id=$(this).val();
-                $("#item_id option[value="+id+"]").prop('disabled', true);
-            });
+        $('.item').each(function() {
+            var id = $(this).val();
+            $("#item_id option[value=" + id + "]").prop('disabled', true);
         });
-    </script>
+    });
+</script>
 @endif
 
 @if(isset($details_array['gst']))
-    <script>
-        $( document ).ready(function()
-        {
-            var gst="{{ $details_array['gst'] }}";
-            if(gst == 1)
-            {
-                $("#gst").prop("checked", true);
-                gst_fun();
-            }
-        });
-    </script>
+<script>
+    $(document).ready(function() {
+        var gst = "{{ $details_array['gst'] }}";
+        if (gst == 1) {
+            $("#gst").prop("checked", true);
+            gst_fun();
+        }
+    });
+</script>
 @endif
 
 @if(isset($details_array['vat']))
 <script>
-$(document).ready(function () {
-    if ("{{ $details_array['vat'] }}" == 1) {
-        $("#vat").prop("checked", true);
-        vat_fun();
-    }
-});
+    $(document).ready(function() {
+        if ("{{ $details_array['vat'] }}" == 1) {
+            $("#vat").prop("checked", true);
+            vat_fun();
+        }
+    });
 </script>
 @endif
 
@@ -1215,46 +1234,43 @@ $(document).ready(function () {
 
 
 @if(!isset($details_array['quotation_id']))
-    <script>
-        $( document ).ready(function()
-        {
-            $('.item').each(function ()
-            {
-                var id=$(this).val();
-                $("#item_price_"+id+"").prop('disabled',true);
-                $("#item_desc_"+id+"").prop('disabled',true);
-                $("#item_qty_"+id+"").prop('disabled',true);
-            });
+<script>
+    $(document).ready(function() {
+        $('.item').each(function() {
+            var id = $(this).val();
+            $("#item_price_" + id + "").prop('disabled', true);
+            $("#item_desc_" + id + "").prop('disabled', true);
+            $("#item_qty_" + id + "").prop('disabled', true);
         });
-    </script>
+    });
+</script>
 @endif
 <script>
-
-    $(document).ready(function () {
-         if ($('#gst').is(':checked')) {
-        gst_fun();
-    }
-    if ($('#vat').is(':checked')) {
-        vat_fun();
-    }
-
+    $(document).ready(function() {
+        if ($('#gst').is(':checked')) {
+            gst_fun();
+        }
+        if ($('#vat').is(':checked')) {
+            vat_fun();
+        }
 
 
-    //    console.log('Document ready fired');
+
+        //    console.log('Document ready fired');
         $('#item_id').select2({
             dropdownParent: $('#myModal'),
-            width:'100%'
+            width: '100%'
         });
 
         $('.select2-container').css('display', 'inline-table');
-         $('.select2-container').css('width', '100%');
+        $('.select2-container').css('width', '100%');
         $('.modal-footer').css('padding', '5px');
 
         $('.tox-notifications-container').css('display', 'none !important');
 
         // $('.summernote').summernote();
 
-         try {
+        try {
             // console.log('Initializing Summernote');
             $('.summernote').summernote();
         } catch (e) {
@@ -1262,6 +1278,55 @@ $(document).ready(function () {
         }
 
         gst_fun();
+
+
+
+
+
+        $('#bank_details').summernote({
+            height: 150,
+            toolbar: false
+        });
+
+        // disable editing
+        $('#bank_details').next('.note-editor').find('.note-editable').attr('contenteditable', false);
+
+
+
+
+
+        $('#bank_select').on('change', function() {
+
+            let bankId = $(this).val();
+
+            if (!bankId) {
+                $("#company_bank_section").hide();
+                return;
+            } else {
+                $("#company_bank_section").show();
+            }
+
+            $.ajax({
+                url: "{{ route('bank.get') }}",
+                method: 'GET',
+                data: {
+                    id: bankId
+                },
+                success: function(res) {
+
+                    $('#bank_details').summernote('code', res.data.bank_detail);
+
+                    //  force read-only again
+                    $('#bank_details').next('.note-editor')
+                        .find('.note-editable')
+                        .attr('contenteditable', false);
+                }
+            });
+
+        });
+
+
+        $('#bank_select').trigger('change');
     });
 </script>
 @endsection
