@@ -123,8 +123,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Address </label>
-                                                    <textarea class="form-control" id="address" name="address" rows="5" cols="100" required>{{ isset($data->address) ? $data->address : '' }}
-                                                    </textarea>
+                                                    <textarea class="form-control" id="address" name="address" rows="5" cols="100" required>{{ isset($data->address) ? $data->address : '' }}</textarea>
                                                     <span id="erraddress" style="display:none;color: #ff0000;">Please Enter Address</span>
                                                 </div>
 

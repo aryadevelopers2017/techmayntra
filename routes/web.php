@@ -155,6 +155,22 @@ Route::get('/delete_vendor/{id}', [App\Http\Controllers\VendorController::class,
 Route::get('/vendor_add', [App\Http\Controllers\VendorController::class, 'vendor_add']);
 Route::post('/add_vendor', [App\Http\Controllers\VendorController::class, 'add_vendor']);
 
+// vendor_account
+Route::get('/vendor-account', [App\Http\Controllers\VendorAccountController::class, 'vendor_account_list'])->name('vendor.account.list');
+Route::get('/vendor-account/create', [App\Http\Controllers\VendorAccountController::class, 'create'])->name('vendor_accounts.create');
+
+Route::post('/add_vendor_account', [App\Http\Controllers\VendorAccountController::class, 'store']);
+Route::get('/vendor-account/edit/{id}', [App\Http\Controllers\VendorAccountController::class, 'edit'])
+    ->name('vendor_accounts.edit');
+Route::post('/update_vendor_account', [App\Http\Controllers\VendorAccountController::class, 'update'])
+    ->name('vendor_accounts.update');
+Route::get('/vendor_accounts_generate_invoice/{id}', [App\Http\Controllers\VendorAccountController::class, 'vendor_accounts_generate_invoice']);
+
+
+
+    // vendor_account
+
+
 Route::get('/project_list', [App\Http\Controllers\ProjectController::class, 'index']);
 Route::get('/project_add', [App\Http\Controllers\ProjectController::class, 'project_add']);
 Route::post('/add_project', [App\Http\Controllers\ProjectController::class, 'add_project']);

@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\VendorServiceprovider;
 use App\Models\Customer;
 use App\Models\item_master;
+use App\Models\proforma_invoice;
+
+
+
 use App\Models\CountryPhoneCode;
 use App\Models\vendor_master;
 use DB ;
@@ -133,27 +137,68 @@ class VendorController extends Controller
     }
 }
 
-public function getVendorDetails(Request $request)
-{
-    $vendor = vendor_master::where('id', $request->vendor_id)->first();
+    public function getVendorDetails(Request $request)
+    {
+        $vendor = vendor_master::where('id', $request->vendor_id)->first();
 
-    $country = DB::table('country')->where('name', $vendor->country)->first();
-    $state   = DB::table('states')->where('name', $vendor->state)->first();
-    $city    = DB::table('city')->where('name', $vendor->city)->first();
+        $country = DB::table('country')->where('name', $vendor->country)->first();
+        $state   = DB::table('states')->where('name', $vendor->state)->first();
+        $city    = DB::table('city')->where('name', $vendor->city)->first();
 
-    return response()->json([
-        'company_name' => $vendor->company_name,
-        'address'      => $vendor->address,
+        //  STEP 1: Get invoice items total (PAID invoices only)
+        $invoice_ids = DB::table('proforma_invoice')
+            ->where('status', 1)
+            ->pluck('id');
 
-        'country'      => $vendor->country,
-        'state'        => $vendor->state,
-        'city'         => $vendor->city,
+        $invoice_total = DB::table('proforma_invoice_item as pii')
+            ->join('item_master as im', 'im.id', '=', 'pii.item_id')
+            ->whereIn('pii.proforma_invoice_id', $invoice_ids)
+            ->where('im.vendor_id', $request->vendor_id)
+            ->sum(DB::raw('im.admin_cost * pii.qty'));
 
-        'country_id'   => $country ? $country->id : '',
-        'state_id'     => $state ? $state->id : '',
-        'city_id'      => $city ? $city->id : '',
-    ]);
-}
+        //  DEBUG LOG
+        // \Log::info('Vendor Invoice Total', [
+        //     'vendor_id' => $request->vendor_id,
+        //     'invoice_total' => $invoice_total
+        // ]);
+
+        //  STEP 2: Vendor paid amount
+        $vendor_paid = DB::table('vendor_accounts')
+            ->where('vendor_id', $request->vendor_id)
+            ->where('status', 1)
+            ->sum('total_amount');   // OR sub_total_amount (based on your DB)
+
+        //  DEBUG LOG
+        // \Log::info('Vendor Paid Amount', [
+        //     'vendor_id' => $request->vendor_id,
+        //     'vendor_paid' => $vendor_paid
+        // ]);
+
+        //  STEP 3: FINAL PENDING
+        $pending_amount = $invoice_total - $vendor_paid;
+        $pending_amount = $pending_amount ?? 0;
+
+        //  FINAL DEBUG
+        // \Log::info('Vendor Final Pending', [
+        //     'vendor_id' => $request->vendor_id,
+        //     'pending_amount' => $pending_amount
+        // ]);
+
+        return response()->json([
+            'company_name' => $vendor->company_name,
+            'address'      => $vendor->address,
+
+            'country'      => $vendor->country,
+            'state'        => $vendor->state,
+            'city'         => $vendor->city,
+
+            'country_id'   => $country ? $country->id : '',
+            'state_id'     => $state ? $state->id : '',
+            'city_id'      => $city ? $city->id : '',
+
+            'pending_amount' => $pending_amount
+        ]);
+    }
 
 
 }

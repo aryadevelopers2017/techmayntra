@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,17 +50,15 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <style>
-        .form-inline
-        {
-            display: block!important;
+        .form-inline {
+            display: block !important;
         }
 
-        .dataTables_length
-        {
+        .dataTables_length {
             margin-right: 70px !important;
         }
-        .pace-done
-        {
+
+        .pace-done {
             padding-right: 0px !important;
         }
 
@@ -70,6 +69,7 @@
         }*/
     </style>
 </head>
+
 <body>
     <div id="app">
         <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
@@ -88,7 +88,7 @@
 
 
 
-                           {{-- Lead Master --}}
+                        {{-- Lead Master --}}
                         @can('lead.list')
                         <li>
                             <a href="{{ url('/lead_list') }}">
@@ -137,7 +137,7 @@
                         @can('payment_receipt.download')
                         <li>
                             <a href="{{ url('/invoice_list/0') }}">
-                               <i class="fa fa-sticky-note-o" aria-hidden="true"></i>Receipt
+                                <i class="fa fa-sticky-note-o" aria-hidden="true"></i>Receipt
                             </a>
                         </li>
                         @endcan
@@ -196,6 +196,15 @@
                         </li>
                         @endcan
 
+                        {{-- Vendor Receipt --}}
+                        @can('vendor.list')
+                        <li>
+                            <a href="{{ route('vendor.account.list') }}">
+                                <i class="fa fa-file-text" aria-hidden="true"></i>Vendor Account
+                            </a>
+                        </li>
+                        @endcan
+
                         {{-- Vendor --}}
                         @can('vendor.list')
                         <li>
@@ -209,7 +218,7 @@
 
 
 
-                         <!-- @can('lead.list')
+                        <!-- @can('lead.list')
                         <li>
                             <a href="{{ url('/lead_list') }}"><i class="ti-layers"></i>Lead Master</a>
                         </li>
@@ -336,4 +345,5 @@
         @include('layouts.Admin.footer')
     </div>
 </body>
+
 </html>
