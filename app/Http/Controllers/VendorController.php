@@ -7,8 +7,7 @@ use App\Providers\VendorServiceprovider;
 use App\Models\Customer;
 use App\Models\item_master;
 use App\Models\proforma_invoice;
-
-
+use App\Models\company_module_master;
 
 use App\Models\CountryPhoneCode;
 use App\Models\vendor_master;
@@ -33,7 +32,13 @@ class VendorController extends Controller
     {
     	$data=VendorServiceprovider::get_list();
 
-        return view('vendor_list')->with('data', $data['data']);
+        $company_data = company_module_master::first();
+
+        $currency_data = DB::table('currency')->where('id', $company_data->currency_id)->first();
+
+        // dd($currency_data->symbol);
+
+        return view('vendor_list')->with('data', $data['data'])->with('currency_data', $currency_data);
     }
 
     public static function vendor_add()

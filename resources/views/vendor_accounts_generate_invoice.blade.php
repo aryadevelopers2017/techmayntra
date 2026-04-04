@@ -61,7 +61,7 @@
         <img src="{{ asset('asset/images/'.$company_data->company_logo) }}" alt="">
         <h3>{{ $company_data->company_name }}</h3>
         <p>{{ $company_data->address }}</p>
-    </div>
+    </div>vendor_accounts_generate_invoice.blade
 
     <!-- Receipt Info -->
     <div class="section">

@@ -37,6 +37,8 @@ class vendor_master extends Model
     'status'
 ];
 
+    protected $appends = ['pending_amount', 'paid_amount'];
+
 
     public static function vendor_list()
     {
@@ -145,5 +147,37 @@ class vendor_master extends Model
 {
     return $this->belongsTo(item_master::class, 'service_id');
 }
+
+    public function getPendingAmountAttribute()
+    {
+        $invoice_total = DB::table('proforma_invoice_item as pii')
+            ->join('item_master as im', 'im.id', '=', 'pii.item_id')
+            ->join('proforma_invoice as pi', 'pi.id', '=', 'pii.proforma_invoice_id')
+            ->where('pi.status', 1)
+            ->where('im.vendor_id', $this->id)
+            ->sum(DB::raw('im.admin_cost * pii.qty'));
+
+        $vendor_paid = DB::table('vendor_accounts')
+            ->where('vendor_id', $this->id)
+            ->where('status', 1)
+            ->sum('total_amount');
+
+        return $invoice_total - $vendor_paid;
+    }
+
+    public function accounts()
+    {
+        return $this->hasMany(VendorAccount::class, 'vendor_id');
+    }
+
+    public function getPaidAmountAttribute()
+    {
+        $amount = $this->accounts()
+            ->where('status', 1)
+            ->sum('total_amount');
+
+        return max(0, $amount ?? 0);
+    }
+
 
 }

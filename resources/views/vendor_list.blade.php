@@ -30,11 +30,11 @@
                 <div class="page-header">
                     <div class="page-title">
 
-                                                                        @can('vendor.add')
+                        @can('vendor.add')
 
                         <a href="{{ url('/vendor_add') }}" class="btn btn-primary">Add New Vendor</a>
 
-                                                                            @endcan
+                        @endcan
 
                     </div>
                 </div>
@@ -55,33 +55,38 @@
                                                 <th>Mobile</th>
                                                 <th>Email-ID</th>
                                                 <th>Address</th>
-                                                <th>City</th>
-                                                <th>State</th>
+                                                <!-- <th>City</th>
+                                                <th>State</th> -->
+                                                <th>Pending Amount</th>
+                                                <th>Paid Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @php
-                                                $i=1;
+                                            $i=1;
                                             @endphp
                                             @foreach($data as $item)
-                                                <tr>
-                                                    <td>{{ $i++ }}</td>
+                                            <tr>
+                                                <td>{{ $i++ }}</td>
 
-                                                    <td>
-                                                                        @can('vendor.edit')
+                                                <td>
+                                                    @can('vendor.edit')
 
-                                                        <a href="{{ url('/vendor_info').'/'.$item->id }}"> {{$item->name}}</a>
-                                                        @else
-                                                        {{$item->name}}
-                                                        @endcan
-                                                    </td>
-                                                    <td>{{$item->company_name}}</td>
-                                                    <td>{{$item->country_code}} {{$item->mobile}}</td>
-                                                    <td>{{$item->email}}</td>
-                                                    <td>{{ strip_tags($item->address)}}</td>
-                                                    <td>{{$item->city}}</td>
-                                                    <td>{{$item->state}}</td>
-                                                </tr>
+                                                    <a href="{{ url('/vendor_info').'/'.$item->id }}"> {{$item->name}}</a>
+                                                    @else
+                                                    {{$item->name}}
+                                                    @endcan
+                                                </td>
+                                                <td>{{$item->company_name}}</td>
+                                                <td>{{$item->country_code}} {{$item->mobile}}</td>
+                                                <td>{{$item->email}}</td>
+                                                <td>{{ strip_tags($item->address)}} , {{$item->city}} , {{$item->state}}</td>
+                                            <!--<td>{{$item->city}}</td>
+                                                <td>{{$item->state}}</td> -->
+                                                <td> {{$currency_data->symbol}} {{$item->pending_amount}}</td>
+                                                <td> {{$currency_data->symbol}} {{$item->paid_amount}}</td>
+
+                                            </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
