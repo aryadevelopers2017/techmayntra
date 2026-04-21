@@ -447,7 +447,7 @@
             <p class="legal"><strong><b>Terms & Conditions :</b></strong></p>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6" style="font-size:10px;">
                     @if(!empty($data['original_quotation_data']->terms_conditions))
                     {!! $data['original_quotation_data']->terms_conditions !!}
                     @else
@@ -484,7 +484,7 @@
             <p style="text-align: right;"><b>For, {{ $data['company_data']->company_name }}</b></p>
         </div>
 
-        
+
         <div class="legalcopy">
             <p><b>Declaration :- </b></p>
             <p style="margin-left: 10px;font-weight: 400;">Please advise us of any discrepancies within 2 working days from the date of receipt, otherwise the invoice/receipt is considered as accepted. After that, no queries will be entertained under any circumstances.</p>

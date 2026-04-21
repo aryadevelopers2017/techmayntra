@@ -383,8 +383,8 @@
 
         </div>
 
-        @if(isset($data['original_quotation_data']) && $data['original_quotation_data']->terms_conditions_flag == 1)
-        <div id="legalcopy">
+        <!-- @if(isset($data['original_quotation_data']) && $data['original_quotation_data']->terms_conditions_flag == 1) -->
+        <!-- <div id="legalcopy">
             <p class="legal"><strong><b>Terms & Conditions :</b></strong></p>
 
             <div class="row">
@@ -396,8 +396,8 @@
                     @endif
                 </div>
             </div>
-        </div>
-        @endif
+        </div> -->
+        <!-- @endif -->
 
 
         <div class="legalcopy" style="text-align: right;">
