@@ -137,11 +137,11 @@
                                                 <label>Payment Term & Condition </label>
                                                 <textarea class="summernote" id="payment_terms_conditions" name="payment_terms_conditions">{{ isset($module_data[0]->payment_terms_conditions) ? $module_data[0]->terms_conditions : '' }}</textarea>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group d-none">
                                                 <label>Bank Details </label>
                                                 <textarea class="summernote" id="bank_details" name="bank_details">{{ isset($module_data[0]->bank_details) ? $module_data[0]->bank_details : '' }}</textarea>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group d-none">
                                                 <label>Personal Bank Details </label>
                                                 <textarea class="summernote" id="personal_bank_details" name="personal_bank_details">{{ isset($module_data[0]->personal_bank_details) ? $module_data[0]->personal_bank_details : '' }}</textarea>
                                             </div>
